@@ -55,5 +55,28 @@
       });
     });
   </script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyBls4lVDQ821H9h8tlR6_Igc9nvf_AQErw",
+      authDomain: "disease-prediction-537ed.firebaseapp.com",
+      projectId: "disease-prediction-537ed",
+      storageBucket: "disease-prediction-537ed.appspot.com",
+      messagingSenderId: "192700544176",
+      appId: "1:192700544176:web:672fec42e6e9731de3f775",
+      measurementId: "G-KZRL660BFN"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
 </body>
 </html>
