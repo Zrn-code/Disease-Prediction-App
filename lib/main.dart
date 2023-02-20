@@ -26,52 +26,84 @@ class FormExample extends StatefulWidget {
 
 class _FormExampleState extends State<FormExample> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final items = ["Taiwan", "Korean", "Japan"];
+  final items = ["model A", "model B", "model C"];
 
   String value = '';
-  String dropdownValue = 'Taiwan';
+  String dropdownValue = 'model A';
   bool isSwitched = false;
   bool optionsA = false;
   bool optionsB = false;
   String? radioValue = "1";
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController searchController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
+  TextEditingController weightController = TextEditingController();
+  TextEditingController heightController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    var textField = Container(
-      margin: EdgeInsets.all(20.0),
-      child: TextField(
-        controller: searchController,
-        decoration: InputDecoration(
-          hintText: 'Search',
-        ),
-        onChanged: (String text) {
-          setState(() {
-            value = "Search: $text";
-          });
-        },
-      ),
-    );
-
-    var nameTextFiled = Container(
+    var ageTextFiled = Container(
       margin: EdgeInsets.all(20.0),
       child: TextFormField(
         autofocus: true,
-        controller: nameController,
+        controller: ageController,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          labelText: 'Full Name',
+          labelText: '實際年齡(Required)',
         ),
         onChanged: (String text) {
           setState(() {
-            value = "Full name: $text";
+            value = "輸入的年齡: $text";
           });
         },
         validator: (String? value) {
           if (value == null || value.isEmpty) {
-            return '姓名不得為空';
+            return '年齡不得為空';
+          }
+          return null;
+        },
+      ),
+    );
+
+    var weightTextFiled = Container(
+      margin: EdgeInsets.all(20.0),
+      child: TextFormField(
+        autofocus: true,
+        controller: weightController,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: '體重(Required)',
+        ),
+        onChanged: (String text) {
+          setState(() {
+            value = "輸入的體重: $text";
+          });
+        },
+        validator: (String? value) {
+          if (value == null || value.isEmpty) {
+            return '體重不得為空';
+          }
+          return null;
+        },
+      ),
+    );
+
+    var heightTextFiled = Container(
+      margin: EdgeInsets.all(20.0),
+      child: TextFormField(
+        autofocus: true,
+        controller: heightController,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: '身高(Required)',
+        ),
+        onChanged: (String text) {
+          setState(() {
+            value = "輸入的身高: $text";
+          });
+        },
+        validator: (String? value) {
+          if (value == null || value.isEmpty) {
+            return '身高不得為空';
           }
           return null;
         },
@@ -125,7 +157,7 @@ class _FormExampleState extends State<FormExample> {
       children: [
         Checkbox(
           value: optionsA,
-          activeColor: Colors.red, //选中时的颜色
+          activeColor: Colors.red,
           onChanged: (value) {
             setState(() {
               optionsA = value!;
@@ -135,7 +167,7 @@ class _FormExampleState extends State<FormExample> {
         Text("A"),
         Checkbox(
           value: optionsB,
-          activeColor: Colors.red, //选中时的颜色
+          activeColor: Colors.red,
           onChanged: (value) {
             setState(() {
               optionsB = value!;
@@ -146,21 +178,30 @@ class _FormExampleState extends State<FormExample> {
       ],
     );
 
-    var theDropdownButton = DropdownButton(
-      value: dropdownValue,
-      icon: Icon(Icons.keyboard_arrow_down),
-      onChanged: (String? value) {
-        print(value);
-        setState(() {
-          dropdownValue = value!;
-        });
-      },
-      items: items.map((String item) {
-        return DropdownMenuItem(
-          value: item,
-          child: Text(item),
-        );
-      }).toList(),
+    var theDropdownButton = Container(
+      margin: EdgeInsets.all(16),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      /*decoration: BoxDecoration(
+        border: Border.all(width: 4.0, color: Colors.black),
+        borderRadius: BorderRadius.circular(12),
+      ),*/
+      child: DropdownButton(
+        value: dropdownValue,
+        isExpanded: true,
+        icon: Icon(Icons.keyboard_arrow_down),
+        onChanged: (String? value) {
+          print(value);
+          setState(() {
+            dropdownValue = value!;
+          });
+        },
+        items: items.map((String item) {
+          return DropdownMenuItem(
+            value: item,
+            child: Text(item),
+          );
+        }).toList(),
+      ),
     );
 
     var submit = ElevatedButton(
@@ -178,15 +219,16 @@ class _FormExampleState extends State<FormExample> {
       style: ElevatedButton.styleFrom(primary: Colors.red),
       onPressed: () {
         _formKey.currentState!.reset();
-        searchController.clear();
-        nameController.clear();
+        heightController.clear();
+        weightController.clear();
+        ageController.clear();
         setState(() {
           value = "";
           optionsA = false;
           optionsB = false;
           isSwitched = false;
           radioValue = "1";
-          dropdownValue = "Taiwan";
+          dropdownValue = "model A";
         });
       },
       child: const Text('重置'),
@@ -204,12 +246,13 @@ class _FormExampleState extends State<FormExample> {
       key: _formKey,
       child: Column(
         children: [
-          textField,
-          nameTextFiled,
+          theDropdownButton,
+          ageTextFiled,
+          weightTextFiled,
+          heightTextFiled,
           inputValue,
           theSwitch,
           theCheckBox,
-          theDropdownButton,
           theRadio,
           buttons,
         ],
