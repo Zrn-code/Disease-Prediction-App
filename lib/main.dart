@@ -9,7 +9,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: const Text('Disease Prediction')),
+        appBar: AppBar(
+          title: const Text('Disease Prediction Form'),
+          centerTitle: true,
+        ),
         body: const Center(
           child: FormExample(),
         ),
@@ -42,12 +45,13 @@ class _FormExampleState extends State<FormExample> {
   @override
   Widget build(BuildContext context) {
     var ageTextFiled = Container(
-      margin: EdgeInsets.all(20.0),
+      margin: EdgeInsets.only(left: 20, right: 20, top: 20),
       child: TextFormField(
         autofocus: true,
         controller: ageController,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
+          prefixIcon: Icon(Icons.verified_outlined),
           labelText: '實際年齡(Required)',
         ),
         onChanged: (String text) {
@@ -65,12 +69,13 @@ class _FormExampleState extends State<FormExample> {
     );
 
     var weightTextFiled = Container(
-      margin: EdgeInsets.all(20.0),
+      margin: EdgeInsets.only(left: 20, right: 20, top: 20),
       child: TextFormField(
         autofocus: true,
         controller: weightController,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
+          prefixIcon: Icon(Icons.verified_outlined),
           labelText: '體重(Required)',
         ),
         onChanged: (String text) {
@@ -88,12 +93,13 @@ class _FormExampleState extends State<FormExample> {
     );
 
     var heightTextFiled = Container(
-      margin: EdgeInsets.all(20.0),
+      margin: EdgeInsets.only(left: 20, right: 20, top: 20),
       child: TextFormField(
         autofocus: true,
         controller: heightController,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
+          prefixIcon: Icon(Icons.verified_outlined),
           labelText: '身高(Required)',
         ),
         onChanged: (String text) {
@@ -108,11 +114,6 @@ class _FormExampleState extends State<FormExample> {
           return null;
         },
       ),
-    );
-
-    var inputValue = Container(
-      margin: EdgeInsets.all(5),
-      child: Text(value),
     );
 
     var theRadio = Row(
@@ -179,30 +180,34 @@ class _FormExampleState extends State<FormExample> {
     );
 
     var theDropdownButton = Container(
-      margin: EdgeInsets.all(16),
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      /*decoration: BoxDecoration(
-        border: Border.all(width: 4.0, color: Colors.black),
-        borderRadius: BorderRadius.circular(12),
-      ),*/
-      child: DropdownButton(
-        value: dropdownValue,
-        isExpanded: true,
-        icon: Icon(Icons.keyboard_arrow_down),
-        onChanged: (String? value) {
-          print(value);
-          setState(() {
-            dropdownValue = value!;
-          });
-        },
-        items: items.map((String item) {
-          return DropdownMenuItem(
-            value: item,
-            child: Text(item),
-          );
-        }).toList(),
-      ),
-    );
+        margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+        child: DropdownButtonFormField(
+          value: dropdownValue,
+          isExpanded: true,
+          decoration: InputDecoration(
+              labelText: "預測疾病",
+              prefixIcon: Icon(
+                Icons.accessibility_new_rounded,
+                color: Colors.blue,
+              )),
+          dropdownColor: Colors.blue.shade50,
+          icon: Icon(
+            Icons.arrow_drop_down_circle_rounded,
+            color: Colors.blue,
+          ),
+          onChanged: (String? value) {
+            print(value);
+            setState(() {
+              dropdownValue = value!;
+            });
+          },
+          items: items.map((String item) {
+            return DropdownMenuItem(
+              value: item,
+              child: Text(item),
+            );
+          }).toList(),
+        ));
 
     var submit = ElevatedButton(
       onPressed: () {
@@ -212,7 +217,9 @@ class _FormExampleState extends State<FormExample> {
           );
         }
       },
-      child: const Text('送出'),
+      style: OutlinedButton.styleFrom(minimumSize: Size(200, 50)),
+      child: Text("Submit Form".toUpperCase(),
+          style: TextStyle(fontWeight: FontWeight.bold)),
     );
 
     var reset = ElevatedButton(
@@ -237,8 +244,8 @@ class _FormExampleState extends State<FormExample> {
     var buttons = Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        submit,
         reset,
+        submit,
       ],
     );
 
@@ -246,11 +253,13 @@ class _FormExampleState extends State<FormExample> {
       key: _formKey,
       child: Column(
         children: [
-          theDropdownButton,
+          Text(
+            "Disease Prediction",
+          ),
           ageTextFiled,
           weightTextFiled,
           heightTextFiled,
-          inputValue,
+          theDropdownButton,
           theSwitch,
           theCheckBox,
           theRadio,
