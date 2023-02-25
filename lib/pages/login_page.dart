@@ -25,41 +25,171 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _isLoading
-          ? Center(
-              child: CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor),
-            )
-          : SingleChildScrollView(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      const Text(
-                        "Disease Prediction",
-                        style: TextStyle(
-                            fontSize: 35, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Text(
-                        "Login now for your health!",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w400),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 20,
-                        ),
-                      ),
-                      TextFormField(
+        body: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(
+                    color: Theme.of(context).primaryColor),
+              )
+            : LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                return (constraints.maxWidth < 800)
+                    ? normalContainer()
+                    : wideContainer();
+              }));
+  }
+
+  Widget normalContainer() {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+        child: Form(
+          key: formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              const Text(
+                "Disease Prediction",
+                style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                "Login now for your health!",
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 20,
+                ),
+              ),
+              TextFormField(
+                decoration: textInputDecoration.copyWith(
+                  labelText: "Email",
+                  prefixIcon: Icon(
+                    Icons.email,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    email = value;
+                  });
+                },
+                validator: (value) {
+                  return RegExp(
+                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                          .hasMatch(value!)
+                      ? null
+                      : "Please enter a valid email";
+                },
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              TextFormField(
+                obscureText: true,
+                decoration: textInputDecoration.copyWith(
+                  labelText: "Password",
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    password = value;
+                  });
+                },
+                validator: (value) {
+                  if (value!.length < 6) {
+                    return "Password must be at least 6 characters";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30))),
+                  child: const Text(
+                    "Sign In",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                  onPressed: () {
+                    login();
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text.rich(TextSpan(
+                  text: "Don't have an account? ",
+                  style: const TextStyle(color: Colors.black, fontSize: 14),
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: "Register here",
+                        style: const TextStyle(
+                            color: Colors.black,
+                            decoration: TextDecoration.underline),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            nextScreen(context, const RegisterPage());
+                          })
+                  ]))
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget wideContainer() {
+    return Container(
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+          Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                const Text(
+                  "Disease Prediction",
+                  style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Text(
+                  "Login now for your health!",
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.w400),
+                ),
+              ]),
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      width: 200,
+                      child: TextFormField(
                         decoration: textInputDecoration.copyWith(
                           labelText: "Email",
                           prefixIcon: Icon(
@@ -80,10 +210,13 @@ class _LoginPageState extends State<LoginPage> {
                               : "Please enter a valid email";
                         },
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      TextFormField(
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      width: 200,
+                      child: TextFormField(
                         obscureText: true,
                         decoration: textInputDecoration.copyWith(
                           labelText: "Password",
@@ -105,53 +238,54 @@ class _LoginPageState extends State<LoginPage> {
                           }
                         },
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context).primaryColor,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30))),
-                          child: const Text(
-                            "Sign In",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: 200,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Theme.of(context).primaryColor,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30))),
+                        child: const Text(
+                          "Sign In",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
                           ),
-                          onPressed: () {
-                            login();
-                          },
                         ),
+                        onPressed: () {
+                          login();
+                        },
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text.rich(TextSpan(
-                          text: "Don't have an account? ",
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 14),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: "Register here",
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    decoration: TextDecoration.underline),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    nextScreen(context, const RegisterPage());
-                                  })
-                          ]))
-                    ],
-                  ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text.rich(TextSpan(
+                        text: "Don't have an account? ",
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 14),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: "Register here",
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.underline),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  nextScreen(context, const RegisterPage());
+                                })
+                        ]))
+                  ],
                 ),
               ),
             ),
-    );
+          )
+        ]));
   }
 
   login() async {
@@ -162,7 +296,9 @@ class _LoginPageState extends State<LoginPage> {
         .loginWithUserNameandPassword(email, password)
         .then((value) async {
       if (value == true) {
-        QuerySnapshot snapshot = await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid).gettingUserData(email);
+        QuerySnapshot snapshot =
+            await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+                .gettingUserData(email);
         await HelperFunctions.saveUserLoggedInStatus(true);
         await HelperFunctions.saveUserEmailSF(email);
         await HelperFunctions.saveUserNameSF(snapshot.docs[0]['fullName']);

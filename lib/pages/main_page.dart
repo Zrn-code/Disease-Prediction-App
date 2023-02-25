@@ -190,7 +190,7 @@ class _FormExampleState extends State<FormExample> {
         controller: ageController,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          prefixIcon: Icon(Icons.verified_outlined),
+          prefixIcon: Icon(Icons.cake_rounded),
           labelText: 'Age(Required)',
         ),
         onChanged: (String text) {
@@ -214,7 +214,7 @@ class _FormExampleState extends State<FormExample> {
         controller: weightController,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          prefixIcon: Icon(Icons.verified_outlined),
+          prefixIcon: Icon(Icons.monitor_weight_rounded),
           labelText: 'Weight(Required)',
         ),
         onChanged: (String text) {
@@ -238,7 +238,7 @@ class _FormExampleState extends State<FormExample> {
         controller: heightController,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          prefixIcon: Icon(Icons.verified_outlined),
+          prefixIcon: Icon(Icons.emoji_people_rounded),
           labelText: 'Height(Required)',
         ),
         onChanged: (String text) {
