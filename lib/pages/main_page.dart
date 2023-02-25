@@ -191,16 +191,16 @@ class _FormExampleState extends State<FormExample> {
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.verified_outlined),
-          labelText: '實際年齡(Required)',
+          labelText: 'Age(Required)',
         ),
         onChanged: (String text) {
           setState(() {
-            value = "輸入的年齡: $text";
+            value = "Input age: $text.";
           });
         },
         validator: (String? value) {
           if (value == null || value.isEmpty) {
-            return '年齡不得為空';
+            return "age cannot be null.";
           }
           return null;
         },
@@ -215,16 +215,16 @@ class _FormExampleState extends State<FormExample> {
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.verified_outlined),
-          labelText: '體重(Required)',
+          labelText: 'Weight(Required)',
         ),
         onChanged: (String text) {
           setState(() {
-            value = "輸入的體重: $text";
+            value = "Input Weight: $text.";
           });
         },
         validator: (String? value) {
           if (value == null || value.isEmpty) {
-            return '體重不得為空';
+            return 'Weight cannot be null.';
           }
           return null;
         },
@@ -239,16 +239,16 @@ class _FormExampleState extends State<FormExample> {
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.verified_outlined),
-          labelText: '身高(Required)',
+          labelText: 'Height(Required)',
         ),
         onChanged: (String text) {
           setState(() {
-            value = "輸入的身高: $text";
+            value = "Input height: $text.";
           });
         },
         validator: (String? value) {
           if (value == null || value.isEmpty) {
-            return '身高不得為空';
+            return 'Height cannot be null.';
           }
           return null;
         },
@@ -267,7 +267,7 @@ class _FormExampleState extends State<FormExample> {
             });
           },
         ),
-        Text("選項一"),
+        Text("Choice 1"),
         Radio<String>(
           value: "2",
           groupValue: radioValue,
@@ -277,7 +277,7 @@ class _FormExampleState extends State<FormExample> {
             });
           },
         ),
-        Text("選項二"),
+        Text("Choice 2"),
       ],
     );
 
@@ -324,7 +324,7 @@ class _FormExampleState extends State<FormExample> {
           value: dropdownValue,
           isExpanded: true,
           decoration: InputDecoration(
-              labelText: "預測疾病",
+              labelText: "Predict Disease Type",
               prefixIcon: Icon(
                 Icons.accessibility_new_rounded,
                 color: Colors.blue,
@@ -377,7 +377,7 @@ class _FormExampleState extends State<FormExample> {
           dropdownValue = "model A";
         });
       },
-      child: const Text('重置'),
+      child: const Text('Reset'),
     );
 
     var buttons = Row(
