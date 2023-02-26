@@ -33,12 +33,12 @@ class _LoginPageState extends State<LoginPage> {
             : LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
                 return (constraints.maxWidth < 800)
-                    ? normalContainer()
-                    : wideContainer();
+                    ? normalLoginContainer()
+                    : wideLoginContainer();
               }));
   }
 
-  Widget normalContainer() {
+  Widget normalLoginContainer() {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
@@ -158,24 +158,23 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget wideContainer() {
-    return Container(
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
+  Widget wideLoginContainer() {
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
           Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                const Text(
+              children: const <Widget>[
+                Text(
                   "Disease Prediction",
                   style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 10,
                 ),
-                const Text(
+                Text(
                   "Login now for your health!",
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.w400),
                 ),
@@ -285,7 +284,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           )
-        ]));
+        ]);
   }
 
   login() async {
