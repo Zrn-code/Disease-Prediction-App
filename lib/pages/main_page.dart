@@ -183,234 +183,168 @@ class _FormExampleState extends State<FormExample> {
 
   @override
   Widget build(BuildContext context) {
-    var ageTextFiled = Container(
-      margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-      child: TextFormField(
-        autofocus: true,
-        controller: ageController,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          prefixIcon: Icon(Icons.cake_rounded),
-          labelText: 'Age(Required)',
-        ),
-        onChanged: (String text) {
-          setState(() {
-            value = "Input age: $text.";
-          });
-        },
-        validator: (String? value) {
-          if (value == null || value.isEmpty) {
-            return "age cannot be null.";
-          }
-          return null;
-        },
-      ),
-    );
-
-    var weightTextFiled = Container(
-      margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-      child: TextFormField(
-        autofocus: true,
-        controller: weightController,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          prefixIcon: Icon(Icons.monitor_weight_rounded),
-          labelText: 'Weight(Required)',
-        ),
-        onChanged: (String text) {
-          setState(() {
-            value = "Input Weight: $text.";
-          });
-        },
-        validator: (String? value) {
-          if (value == null || value.isEmpty) {
-            return 'Weight cannot be null.';
-          }
-          return null;
-        },
-      ),
-    );
-
-    var heightTextFiled = Container(
-      margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-      child: TextFormField(
-        autofocus: true,
-        controller: heightController,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          prefixIcon: Icon(Icons.emoji_people_rounded),
-          labelText: 'Height(Required)',
-        ),
-        onChanged: (String text) {
-          setState(() {
-            value = "Input height: $text.";
-          });
-        },
-        validator: (String? value) {
-          if (value == null || value.isEmpty) {
-            return 'Height cannot be null.';
-          }
-          return null;
-        },
-      ),
-    );
-
-    var theRadio = Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Radio<String>(
-          value: "1",
-          groupValue: radioValue,
-          onChanged: (value) {
-            setState(() {
-              radioValue = value;
-            });
-          },
-        ),
-        Text("Choice 1"),
-        Radio<String>(
-          value: "2",
-          groupValue: radioValue,
-          onChanged: (value) {
-            setState(() {
-              radioValue = value;
-            });
-          },
-        ),
-        Text("Choice 2"),
-      ],
-    );
-
-    var theSwitch = Switch(
-      value: isSwitched,
-      onChanged: (value) {
-        setState(() {
-          isSwitched = value;
-        });
-      },
-      activeTrackColor: Colors.yellow,
-      activeColor: Colors.orangeAccent,
-    );
-
-    var theCheckBox = Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Checkbox(
-          value: optionsA,
-          activeColor: Colors.red,
-          onChanged: (value) {
-            setState(() {
-              optionsA = value!;
-            });
-          },
-        ),
-        Text("A"),
-        Checkbox(
-          value: optionsB,
-          activeColor: Colors.red,
-          onChanged: (value) {
-            setState(() {
-              optionsB = value!;
-            });
-          },
-        ),
-        Text("B"),
-      ],
-    );
-
-    var theDropdownButton = Container(
-        margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-        child: DropdownButtonFormField(
-          value: dropdownValue,
-          isExpanded: true,
-          decoration: InputDecoration(
-              labelText: "Predict Disease Type",
-              prefixIcon: Icon(
-                Icons.accessibility_new_rounded,
-                color: Colors.blue,
-              )),
-          dropdownColor: Colors.blue.shade50,
-          icon: Icon(
-            Icons.arrow_drop_down_circle_rounded,
-            color: Colors.blue,
-          ),
-          onChanged: (String? value) {
-            print(value);
-            setState(() {
-              dropdownValue = value!;
-            });
-          },
-          items: items.map((String item) {
-            return DropdownMenuItem(
-              value: item,
-              child: Text(item),
-            );
-          }).toList(),
-        ));
-
-    var submit = ElevatedButton(
-      onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Processing Data')),
-          );
-        }
-      },
-      style: OutlinedButton.styleFrom(minimumSize: Size(200, 50)),
-      child: Text("Submit Form".toUpperCase(),
-          style: TextStyle(fontWeight: FontWeight.bold)),
-    );
-
-    var reset = ElevatedButton(
-      style: ElevatedButton.styleFrom(primary: Colors.red),
-      onPressed: () {
-        _formKey.currentState!.reset();
-        heightController.clear();
-        weightController.clear();
-        ageController.clear();
-        setState(() {
-          value = "";
-          optionsA = false;
-          optionsB = false;
-          isSwitched = false;
-          radioValue = "1";
-          dropdownValue = "model A";
-        });
-      },
-      child: const Text('Reset'),
-    );
-
-    var buttons = Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        reset,
-        submit,
-      ],
-    );
-
-    var form = Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          Text(
-            "Disease Prediction",
-          ),
-          ageTextFiled,
-          weightTextFiled,
-          heightTextFiled,
-          theDropdownButton,
-          theSwitch,
-          theCheckBox,
-          theRadio,
-          buttons,
-        ],
-      ),
-    );
-
     return Scaffold(
-      body: Center(
-        child: form,
-      ),
-    );
+        body: SingleChildScrollView(
+            child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                child: Form(
+                    key: _formKey,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            margin:
+                                EdgeInsets.only(left: 20, right: 20, top: 20),
+                            child: TextFormField(
+                              autofocus: true,
+                              controller: ageController,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.cake_rounded),
+                                labelText: 'Age(Required)',
+                              ),
+                              onChanged: (String text) {
+                                setState(() {
+                                  value = "Input age: $text.";
+                                });
+                              },
+                              validator: (String? value) {
+                                if (value == null || value.isEmpty) {
+                                  return "age cannot be null.";
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          Container(
+                            margin:
+                                EdgeInsets.only(left: 20, right: 20, top: 20),
+                            child: TextFormField(
+                              autofocus: true,
+                              controller: weightController,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.monitor_weight_rounded),
+                                labelText: 'Weight(Required)',
+                              ),
+                              onChanged: (String text) {
+                                setState(() {
+                                  value = "Input Weight: $text.";
+                                });
+                              },
+                              validator: (String? value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Weight cannot be null.';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          Container(
+                            margin:
+                                EdgeInsets.only(left: 20, right: 20, top: 20),
+                            child: TextFormField(
+                              autofocus: true,
+                              controller: heightController,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.emoji_people_rounded),
+                                labelText: 'Height(Required)',
+                              ),
+                              onChanged: (String text) {
+                                setState(() {
+                                  value = "Input height: $text.";
+                                });
+                              },
+                              validator: (String? value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Height cannot be null.';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          Container(
+                              margin:
+                                  EdgeInsets.only(left: 20, right: 20, top: 20),
+                              child: DropdownButtonFormField(
+                                value: dropdownValue,
+                                isExpanded: true,
+                                decoration: InputDecoration(
+                                    labelText: "Predict Disease Type",
+                                    prefixIcon: Icon(
+                                      Icons.accessibility_new_rounded,
+                                      color: Colors.blue,
+                                    )),
+                                dropdownColor: Colors.blue.shade50,
+                                icon: Icon(
+                                  Icons.arrow_drop_down_circle_rounded,
+                                  color: Colors.blue,
+                                ),
+                                onChanged: (String? value) {
+                                  print(value);
+                                  setState(() {
+                                    dropdownValue = value!;
+                                  });
+                                },
+                                items: items.map((String item) {
+                                  return DropdownMenuItem(
+                                    value: item,
+                                    child: Text(item),
+                                  );
+                                }).toList(),
+                              )),
+                          Switch(
+                            value: isSwitched,
+                            onChanged: (value) {
+                              setState(() {
+                                isSwitched = value;
+                              });
+                            },
+                            activeTrackColor: Colors.yellow,
+                            activeColor: Colors.orangeAccent,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.red),
+                                onPressed: () {
+                                  _formKey.currentState!.reset();
+                                  heightController.clear();
+                                  weightController.clear();
+                                  ageController.clear();
+                                  setState(() {
+                                    value = "";
+                                    optionsA = false;
+                                    optionsB = false;
+                                    isSwitched = false;
+                                    radioValue = "1";
+                                    dropdownValue = "model A";
+                                  });
+                                },
+                                child: const Text('Reset'),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text('Processing Data')),
+                                    );
+                                  }
+                                },
+                                style: OutlinedButton.styleFrom(
+                                    minimumSize: Size(200, 50)),
+                                child: Text("Submit Form".toUpperCase(),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold)),
+                              ),
+                            ],
+                          )
+                        ])))));
   }
 }
