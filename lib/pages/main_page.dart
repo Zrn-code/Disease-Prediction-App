@@ -167,10 +167,13 @@ class _FormExampleState extends State<FormExample> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final items = ["model A", "model B", "model C"];
 
-  String value = '';
   String dropdownValue = 'model A';
   String userName = "";
   String email = "";
+  int _age = 0;
+  double _bmi = 0;
+  double _height = 0;
+  double _weight = 0;
   bool isSwitched = false;
   bool optionsA = false;
   bool optionsB = false;
@@ -203,18 +206,22 @@ class _FormExampleState extends State<FormExample> {
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
                                 prefixIcon: Icon(Icons.cake_rounded),
-                                labelText: 'Age(Required)',
+                                labelText: 'Age',
+                                hintText: 'Enter your age',
                               ),
-                              onChanged: (String text) {
-                                setState(() {
-                                  value = "Input age: $text.";
-                                });
-                              },
-                              validator: (String? value) {
-                                if (value == null || value.isEmpty) {
-                                  return "age cannot be null.";
+                              validator: (value) {
+                                if (value?.isEmpty ?? true) {
+                                  // 使用空值判斷符號
+                                  return 'Please enter your age';
+                                }
+                                if (int.tryParse(value!) == null) {
+                                  // 使用 '!' 運算符號
+                                  return 'Please enter a valid age';
                                 }
                                 return null;
+                              },
+                              onSaved: (value) {
+                                _age = int.parse(value!); // 使用 '!' 運算符號
                               },
                             ),
                           ),
@@ -227,18 +234,22 @@ class _FormExampleState extends State<FormExample> {
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
                                 prefixIcon: Icon(Icons.monitor_weight_rounded),
-                                labelText: 'Weight(Required)',
+                                labelText: 'Weight(kg)',
+                                hintText: 'Enter your weight',
                               ),
-                              onChanged: (String text) {
-                                setState(() {
-                                  value = "Input Weight: $text.";
-                                });
-                              },
-                              validator: (String? value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Weight cannot be null.';
+                              validator: (value) {
+                                if (value?.isEmpty ?? true) {
+                                  // 使用空值判斷符號
+                                  return 'Please enter your weight';
+                                }
+                                if (double.tryParse(value!) == null) {
+                                  // 使用 '!' 運算符號
+                                  return 'Please enter a valid weight';
                                 }
                                 return null;
+                              },
+                              onSaved: (value) {
+                                _weight = double.parse(value!); // 使用 '!' 運算符號
                               },
                             ),
                           ),
@@ -251,18 +262,22 @@ class _FormExampleState extends State<FormExample> {
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
                                 prefixIcon: Icon(Icons.emoji_people_rounded),
-                                labelText: 'Height(Required)',
+                                labelText: 'height(cm)',
+                                hintText: 'Enter your height',
                               ),
-                              onChanged: (String text) {
-                                setState(() {
-                                  value = "Input height: $text.";
-                                });
-                              },
-                              validator: (String? value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Height cannot be null.';
+                              validator: (value) {
+                                if (value?.isEmpty ?? true) {
+                                  // 使用空值判斷符號
+                                  return 'Please enter your height';
+                                }
+                                if (double.tryParse(value!) == null) {
+                                  // 使用 '!' 運算符號
+                                  return 'Please enter a valid height';
                                 }
                                 return null;
+                              },
+                              onSaved: (value) {
+                                _height = double.parse(value!); // 使用 '!' 運算符號
                               },
                             ),
                           ),
@@ -318,11 +333,9 @@ class _FormExampleState extends State<FormExample> {
                                   weightController.clear();
                                   ageController.clear();
                                   setState(() {
-                                    value = "";
-                                    optionsA = false;
-                                    optionsB = false;
-                                    isSwitched = false;
-                                    radioValue = "1";
+                                    _age = 0;
+                                    _height = 0;
+                                    _weight = 0;
                                     dropdownValue = "model A";
                                   });
                                 },
@@ -331,10 +344,8 @@ class _FormExampleState extends State<FormExample> {
                               ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text('Processing Data')),
-                                    );
+                                    _formKey.currentState!.save();
+                                    _calculateBMI();
                                   }
                                 },
                                 style: OutlinedButton.styleFrom(
@@ -344,7 +355,21 @@ class _FormExampleState extends State<FormExample> {
                                         TextStyle(fontWeight: FontWeight.bold)),
                               ),
                             ],
-                          )
+                          ),
+                          if (_bmi != 0) // 顯示 BMI
+                            Text('Your BMI is: ${_bmi.toStringAsFixed(1)}'),
                         ])))));
+  }
+
+  void _calculateBMI() {
+    // 將身高轉換為公尺
+    final double heightInMeters = _height / 100;
+
+    // 計算 BMI
+    final double bmi = _weight / (heightInMeters * heightInMeters);
+
+    setState(() {
+      _bmi = bmi;
+    });
   }
 }
