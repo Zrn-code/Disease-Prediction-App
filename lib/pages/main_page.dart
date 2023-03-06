@@ -175,9 +175,6 @@ class _FormExampleState extends State<FormExample> {
   double _height = 0;
   double _weight = 0;
   bool isSwitched = false;
-  bool optionsA = false;
-  bool optionsB = false;
-  String? radioValue = "1";
   AuthService authService = AuthService();
 
   TextEditingController ageController = TextEditingController();
@@ -235,7 +232,7 @@ class _FormExampleState extends State<FormExample> {
                                 border: OutlineInputBorder(),
                                 prefixIcon: Icon(Icons.monitor_weight_rounded),
                                 labelText: 'Weight(kg)',
-                                hintText: 'Enter your weight',
+                                hintText: 'Enter your weight in kg',
                               ),
                               validator: (value) {
                                 if (value?.isEmpty ?? true) {
@@ -278,6 +275,9 @@ class _FormExampleState extends State<FormExample> {
                               },
                               onSaved: (value) {
                                 _height = double.parse(value!); // 使用 '!' 運算符號
+                              },
+                              onFieldSubmitted: (value) {
+                                _submitForm();
                               },
                             ),
                           ),
@@ -346,6 +346,7 @@ class _FormExampleState extends State<FormExample> {
                                   if (_formKey.currentState!.validate()) {
                                     _formKey.currentState!.save();
                                     _calculateBMI();
+                                    _showResult(); // 顯示結果
                                   }
                                 },
                                 style: OutlinedButton.styleFrom(
@@ -361,15 +362,50 @@ class _FormExampleState extends State<FormExample> {
                         ])))));
   }
 
+  void _submitForm() {
+    if (_formKey.currentState?.validate() ?? false) {
+      _formKey.currentState!.save();
+      _calculateBMI();
+      _showResult();
+    }
+  }
+
   void _calculateBMI() {
-    // 將身高轉換為公尺
-    final double heightInMeters = _height / 100;
+    double heightInMeters = _height / 100;
+    _bmi = _weight / (heightInMeters * heightInMeters);
+  }
 
-    // 計算 BMI
-    final double bmi = _weight / (heightInMeters * heightInMeters);
-
-    setState(() {
-      _bmi = bmi;
-    });
+  void _showResult() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Container(
+          height: 300.0,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10.0),
+              topRight: Radius.circular(10.0),
+            ),
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Your BMI is:',
+                  style: TextStyle(fontSize: 24.0),
+                ),
+                Text(
+                  _bmi.toStringAsFixed(1),
+                  style: TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

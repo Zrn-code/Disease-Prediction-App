@@ -229,6 +229,9 @@ class _LoginPageState extends State<LoginPage> {
                             password = value;
                           });
                         },
+                        onFieldSubmitted: (value) {
+                          login();
+                        },
                         validator: (value) {
                           if (value!.length < 6) {
                             return "Password must be at least 6 characters";
