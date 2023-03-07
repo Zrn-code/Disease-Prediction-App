@@ -18,7 +18,9 @@ class _RegisterPageState extends State<RegisterPage> {
   String email = "";
   String password = "";
   String fullName = "";
+  String password_check = "";
   bool _isLoading = false;
+  bool check = false;
   AuthService authService = AuthService();
   @override
   Widget build(BuildContext context) {
@@ -130,6 +132,24 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(
                 height: 20,
               ),
+              TextFormField(
+                obscureText: true,
+                decoration: textInputDecoration.copyWith(
+                  labelText: "Check Password",
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    password_check = value;
+                  });
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -146,7 +166,16 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   onPressed: () {
-                    register();
+                    if (password == password_check)
+                      register();
+                    else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Your password must be same!'),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    }
                   },
                 ),
               ),
@@ -279,6 +308,27 @@ class _RegisterPageState extends State<RegisterPage> {
                         },
                       ),
                     ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: 200,
+                      child: TextFormField(
+                        obscureText: true,
+                        decoration: textInputDecoration.copyWith(
+                          labelText: "Check Password",
+                          prefixIcon: Icon(
+                            Icons.lock,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            password_check = value;
+                          });
+                        },
+                      ),
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -298,7 +348,16 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                         onPressed: () {
-                          register();
+                          if (password == password_check)
+                            register();
+                          else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Your password must be same!'),
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
+                          }
                         },
                       ),
                     ),
