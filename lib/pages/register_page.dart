@@ -18,7 +18,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String email = "";
   String password = "";
   String fullName = "";
-  String password_check = "";
+  String passwordCheck = "";
   bool _isLoading = false;
   bool check = false;
   AuthService authService = AuthService();
@@ -141,9 +141,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
+                onFieldSubmitted: (value) {
+                  if (password == passwordCheck) register();
+                },
                 onChanged: (value) {
                   setState(() {
-                    password_check = value;
+                    passwordCheck = value;
                   });
                 },
               ),
@@ -166,7 +169,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   onPressed: () {
-                    if (password == password_check)
+                    if (password == passwordCheck)
                       register();
                     else {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -220,7 +223,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: 10,
                 ),
                 Text(
-                  "Login now for your health!",
+                  "Create an account for your health!",
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.w400),
                 ),
               ]),
@@ -322,9 +325,12 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: Theme.of(context).primaryColor,
                           ),
                         ),
+                        onFieldSubmitted: (value) {
+                          if (password == passwordCheck) register();
+                        },
                         onChanged: (value) {
                           setState(() {
-                            password_check = value;
+                            passwordCheck = value;
                           });
                         },
                       ),
@@ -348,7 +354,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                         onPressed: () {
-                          if (password == password_check)
+                          if (password == passwordCheck)
                             register();
                           else {
                             ScaffoldMessenger.of(context).showSnackBar(

@@ -98,6 +98,9 @@ class _LoginPageState extends State<LoginPage> {
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
+                onFieldSubmitted: (value) {
+                  login();
+                },
                 onChanged: (value) {
                   setState(() {
                     password = value;

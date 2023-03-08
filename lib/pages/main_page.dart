@@ -5,6 +5,7 @@ import '../services/database_service.dart';
 import '../widgets/widgets.dart';
 import '../services/auth_service.dart';
 import 'login_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -165,7 +166,7 @@ class FormExample extends StatefulWidget {
 
 class _FormExampleState extends State<FormExample> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final List<String> _items = ['BMI', 'Age'];
+  final List<String> _items = ['BMI', 'Age', 'Initial Data'];
   String userName = "";
   String email = "";
   int _age = 0;
@@ -174,6 +175,8 @@ class _FormExampleState extends State<FormExample> {
   double _weight = 0;
   bool isSwitched = false;
   String _selectedField = "BMI";
+  int _selectedGender = -1;
+  List<String> _gender = ["male", "female"];
 
   AuthService authService = AuthService();
 
@@ -217,7 +220,37 @@ class _FormExampleState extends State<FormExample> {
                               });
                             },
                           ),
-                          if (_selectedField == 'Age')
+                          SizedBox(
+                            height: 20,
+                          ),
+                          if (_selectedField == "Initial Data")
+                            ToggleButtons(
+                                children: [
+                                  Text('Male'),
+                                  Text('Female'),
+                                ],
+                                constraints: BoxConstraints(
+                                  minWidth: 100,
+                                  minHeight: 50,
+                                ),
+                                borderRadius: BorderRadius.circular(16.0),
+                                selectedBorderColor: Colors.blue,
+                                isSelected: _selectedGender == -1
+                                    ? List.generate(
+                                        _gender.length, (_) => false)
+                                    : List.generate(_gender.length,
+                                        (index) => index == _selectedGender),
+                                onPressed: (int index) {
+                                  setState(() {
+                                    if (_selectedGender == index) {
+                                      _selectedGender = -1;
+                                    } else {
+                                      _selectedGender = index;
+                                    }
+                                  });
+                                }),
+                          if (_selectedField == 'Age' ||
+                              _selectedField == "Initial Data")
                             Container(
                               margin:
                                   EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -246,7 +279,8 @@ class _FormExampleState extends State<FormExample> {
                                 },
                               ),
                             ),
-                          if (_selectedField == "BMI")
+                          if (_selectedField == "BMI" ||
+                              _selectedField == "Initial Data")
                             Container(
                               margin:
                                   EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -276,7 +310,8 @@ class _FormExampleState extends State<FormExample> {
                                 },
                               ),
                             ),
-                          if (_selectedField == "BMI")
+                          if (_selectedField == "BMI" ||
+                              _selectedField == "Initial Data")
                             Container(
                               margin:
                                   EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -304,7 +339,11 @@ class _FormExampleState extends State<FormExample> {
                                   _height = double.parse(value!); // 使用 '!' 運算符號
                                 },
                                 onFieldSubmitted: (value) {
-                                  _submitForm();
+                                  if (_selectedField == 'BMI')
+                                    _submitFormBMI();
+                                  else if (_selectedField == "Initial Data") {
+                                    _initialData();
+                                  }
                                 },
                               ),
                             ),
@@ -332,10 +371,10 @@ class _FormExampleState extends State<FormExample> {
                               ),
                               ElevatedButton(
                                 onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    _formKey.currentState!.save();
-                                    _calculateBMI();
-                                    _showResult(); // 顯示結果
+                                  if (_selectedField == "BMI") {
+                                    _submitFormBMI();
+                                  } else if (_selectedField == "Initial Data") {
+                                    _initialData();
                                   }
                                 },
                                 style: OutlinedButton.styleFrom(
@@ -349,7 +388,13 @@ class _FormExampleState extends State<FormExample> {
                         ])))));
   }
 
-  void _submitForm() {
+  void _initialData() {
+    if (_formKey.currentState?.validate() ?? false) {
+      _formKey.currentState!.save();
+    }
+  }
+
+  void _submitFormBMI() {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState!.save();
       _calculateBMI();
