@@ -8,9 +8,16 @@ class ProfilePage extends StatefulWidget {
   String userName = "";
   String email = "";
   String gender = "";
-  int Weight = 0;
-  int Height = 0;
-  ProfilePage({Key? key, required this.email, required this.userName})
+  int weight;
+  int height;
+  int age;
+  ProfilePage(
+      {Key? key,
+      required this.email,
+      required this.userName,
+      required this.age,
+      required this.height,
+      required this.weight})
       : super(key: key);
 
   @override
@@ -175,7 +182,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   style: TextStyle(fontSize: 17),
                 ),
                 Text(
-                  widget.Height.toString(),
+                  widget.height.toString(),
                   style: const TextStyle(fontSize: 17),
                 )
               ],
@@ -191,7 +198,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   style: TextStyle(fontSize: 17),
                 ),
                 Text(
-                  widget.Weight.toString(),
+                  widget.weight.toString(),
                   style: const TextStyle(fontSize: 17),
                 )
               ],
@@ -203,11 +210,11 @@ class _ProfilePageState extends State<ProfilePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  "Gender",
+                  "Age",
                   style: TextStyle(fontSize: 17),
                 ),
                 Text(
-                  widget.gender,
+                  widget.age.toString(),
                   style: const TextStyle(fontSize: 17),
                 )
               ],

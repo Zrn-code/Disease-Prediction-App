@@ -5,7 +5,7 @@ import '../services/database_service.dart';
 import '../widgets/widgets.dart';
 import '../services/auth_service.dart';
 import 'login_page.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -17,6 +17,10 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   String userName = "";
   String email = "";
+  int age = -2;
+  int height = -2;
+  int weight = -2;
+  final uid = "";
   AuthService authService = AuthService();
 
   @override
@@ -89,12 +93,21 @@ class _MainPageState extends State<MainPage> {
                     style: TextStyle(color: Colors.black),
                   )),
               ListTile(
-                  onTap: () {
+                  onTap: () async {
                     nextScreen(
                         context,
                         ProfilePage(
                           email: email,
                           userName: userName,
+                          age: await DatabaseService(
+                                  uid: FirebaseAuth.instance.currentUser!.uid)
+                              .getAge(email),
+                          height: await DatabaseService(
+                                  uid: FirebaseAuth.instance.currentUser!.uid)
+                              .getHeight(email),
+                          weight: await DatabaseService(
+                                  uid: FirebaseAuth.instance.currentUser!.uid)
+                              .getWeight(email),
                         ));
                   },
                   contentPadding:
@@ -160,23 +173,24 @@ class _MainPageState extends State<MainPage> {
 
 class FormExample extends StatefulWidget {
   const FormExample({super.key});
+
   @override
   State<FormExample> createState() => _FormExampleState();
 }
 
 class _FormExampleState extends State<FormExample> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final List<String> _items = ['BMI', 'Age', 'Initial Data'];
-  String userName = "";
-  String email = "";
+  final List<String> _items = ['Initial Data', 'BMI'];
   int _age = 0;
   double _bmi = 0;
   double _height = 0;
   double _weight = 0;
+  int _gender = -1;
   bool isSwitched = false;
-  String _selectedField = "BMI";
-  int _selectedGender = -1;
-  List<String> _gender = ["male", "female"];
+
+  String _selectedField = "Initial Data";
+
+  List<String> _genderList = ["male", "female"];
 
   AuthService authService = AuthService();
 
@@ -235,22 +249,21 @@ class _FormExampleState extends State<FormExample> {
                                 ),
                                 borderRadius: BorderRadius.circular(16.0),
                                 selectedBorderColor: Colors.blue,
-                                isSelected: _selectedGender == -1
+                                isSelected: _gender == -1
                                     ? List.generate(
-                                        _gender.length, (_) => false)
-                                    : List.generate(_gender.length,
-                                        (index) => index == _selectedGender),
+                                        _genderList.length, (_) => false)
+                                    : List.generate(_genderList.length,
+                                        (index) => index == _gender),
                                 onPressed: (int index) {
                                   setState(() {
-                                    if (_selectedGender == index) {
-                                      _selectedGender = -1;
+                                    if (_gender == index) {
+                                      _gender = -1;
                                     } else {
-                                      _selectedGender = index;
+                                      _gender = index;
                                     }
                                   });
                                 }),
-                          if (_selectedField == 'Age' ||
-                              _selectedField == "Initial Data")
+                          if (_selectedField == "Initial Data")
                             Container(
                               margin:
                                   EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -391,6 +404,8 @@ class _FormExampleState extends State<FormExample> {
   void _initialData() {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState!.save();
+      DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+          .initialUserData(_height, _weight, _age);
     }
   }
 
