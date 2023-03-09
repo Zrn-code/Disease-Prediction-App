@@ -17,9 +17,9 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   String userName = "";
   String email = "";
-  int age = -2;
-  int height = -2;
-  int weight = -2;
+  int age = 0;
+  int height = 0;
+  int weight = 0;
   final uid = "";
   AuthService authService = AuthService();
 
@@ -180,7 +180,14 @@ class FormExample extends StatefulWidget {
 
 class _FormExampleState extends State<FormExample> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final List<String> _items = ['Initial Data', 'BMI'];
+  final List<String> _items = [
+    'Initial Data',
+    'BMI',
+    'Prediction A',
+    'Prediction B',
+    'Prediction C',
+    'Prediction D'
+  ];
   int _age = 0;
   double _bmi = 0;
   double _height = 0;
@@ -406,6 +413,7 @@ class _FormExampleState extends State<FormExample> {
       _formKey.currentState!.save();
       DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
           .initialUserData(_height, _weight, _age);
+      _showMore("Your data has been record!");
     }
   }
 
@@ -413,7 +421,7 @@ class _FormExampleState extends State<FormExample> {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState!.save();
       _calculateBMI();
-      _showResult();
+      _showResult("Your BMI is:", _bmi);
     }
   }
 
@@ -422,7 +430,7 @@ class _FormExampleState extends State<FormExample> {
     _bmi = _weight / (heightInMeters * heightInMeters);
   }
 
-  void _showResult() {
+  void _showResult(String message, double result) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -441,15 +449,86 @@ class _FormExampleState extends State<FormExample> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'Your BMI is:',
+                  message,
                   style: TextStyle(fontSize: 24.0),
                 ),
                 Text(
-                  _bmi.toStringAsFixed(1),
+                  result.toStringAsFixed(1),
                   style: TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showMore(String message) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                'Your data has been recorded!',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              SizedBox(height: 20.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  ElevatedButton(
+                    child: Text('BMI'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      setState(() {
+                        _selectedField = "BMI";
+                      });
+                    },
+                  ),
+                  ElevatedButton(
+                    child: Text('Prediction A'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      setState(() {
+                        _selectedField = "Prediction A";
+                      });
+                    },
+                  ),
+                  ElevatedButton(
+                    child: Text('Prediction B'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      setState(() {
+                        _selectedField = "Prediction B";
+                      });
+                    },
+                  ),
+                  ElevatedButton(
+                    child: Text('Prediction C'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      setState(() {
+                        _selectedField = "Prediction C";
+                      });
+                    },
+                  ),
+                  ElevatedButton(
+                    child: Text('Prediction D'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      setState(() {
+                        _selectedField = "Prediction D";
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ],
           ),
         );
       },
