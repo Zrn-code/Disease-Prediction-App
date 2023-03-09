@@ -16,17 +16,18 @@ class DatabaseService {
       "height": 0,
       "weight": 0,
       "age": 0,
+      "gender": -1,
       "uid": uid,
     });
   }
 
-  Future initialUserData(double height, double weight, int age) async {
+  Future initialUserData(
+      double height, double weight, int age, String gender) async {
     return await userCollection.doc(uid).update({
       "height": height,
       "weight": weight,
       "age": age,
-      //"gender": gender,
-      "uid": uid,
+      "gender": gender,
     });
   }
 
@@ -48,6 +49,21 @@ class DatabaseService {
       print('Error getting age: $e');
       // Return a default value or rethrow the exception
       return 0;
+    }
+  }
+
+  Future<String> getGender(String email) async {
+    QuerySnapshot snapshot =
+        await userCollection.where("email", isEqualTo: email).get();
+    QueryDocumentSnapshot firstDocumentSnapshot = snapshot.docs[0];
+    try {
+      String gender = firstDocumentSnapshot.get('gender');
+      return gender;
+    } catch (e) {
+      // Handle the exception here
+      print('Error getting age: $e');
+      // Return a default value or rethrow the exception
+      return "Undefined";
     }
   }
 

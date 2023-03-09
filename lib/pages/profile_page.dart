@@ -17,7 +17,8 @@ class ProfilePage extends StatefulWidget {
       required this.userName,
       required this.age,
       required this.height,
-      required this.weight})
+      required this.weight,
+      required this.gender})
       : super(key: key);
 
   @override
@@ -235,6 +236,22 @@ class _ProfilePageState extends State<ProfilePage> {
                     widget.age.toString(),
                     style: const TextStyle(fontSize: 17),
                   )
+              ],
+            ),
+            const Divider(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Gender",
+                  style: TextStyle(fontSize: 17),
+                ),
+                Text(
+                  widget.gender,
+                  style: const TextStyle(fontSize: 17),
+                )
               ],
             ),
           ],

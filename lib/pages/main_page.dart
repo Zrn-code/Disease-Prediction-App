@@ -108,6 +108,9 @@ class _MainPageState extends State<MainPage> {
                           weight: await DatabaseService(
                                   uid: FirebaseAuth.instance.currentUser!.uid)
                               .getWeight(email),
+                          gender: await DatabaseService(
+                                  uid: FirebaseAuth.instance.currentUser!.uid)
+                              .getGender(email),
                         ));
                   },
                   contentPadding:
@@ -393,8 +396,13 @@ class _FormExampleState extends State<FormExample> {
                                 onPressed: () {
                                   if (_selectedField == "BMI") {
                                     _submitFormBMI();
-                                  } else if (_selectedField == "Initial Data") {
+                                  } else if (_selectedField == "Initial Data" &&
+                                      _gender != -1) {
                                     _initialData();
+                                  } else if (_selectedField == "Initial Data" &&
+                                      _gender == -1) {
+                                    showSnackBar(context, Colors.red,
+                                        'You should choose your gender.');
                                   }
                                 },
                                 style: OutlinedButton.styleFrom(
@@ -412,7 +420,12 @@ class _FormExampleState extends State<FormExample> {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState!.save();
       DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-          .initialUserData(_height, _weight, _age);
+          .initialUserData(
+        _height,
+        _weight,
+        _age,
+        _genderList[_gender],
+      );
       _showMore("Your data has been record!");
     }
   }
@@ -468,8 +481,18 @@ class _FormExampleState extends State<FormExample> {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
+        final double screenWidth = MediaQuery.of(context).size.width;
+        final double buttonWidth = (screenWidth - 64.0) / 3.0;
+        final List<String> buttonNames = [
+          "BMI",
+          "Prediction A",
+          "Prediction B",
+          "Prediction C",
+          "Prediction D"
+        ];
+
         return Container(
-          padding: EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -477,56 +500,26 @@ class _FormExampleState extends State<FormExample> {
                 'Your data has been recorded!',
                 style: TextStyle(fontSize: 18.0),
               ),
-              SizedBox(height: 20.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  ElevatedButton(
-                    child: Text('BMI'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      setState(() {
-                        _selectedField = "BMI";
-                      });
-                    },
-                  ),
-                  ElevatedButton(
-                    child: Text('Prediction A'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      setState(() {
-                        _selectedField = "Prediction A";
-                      });
-                    },
-                  ),
-                  ElevatedButton(
-                    child: Text('Prediction B'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      setState(() {
-                        _selectedField = "Prediction B";
-                      });
-                    },
-                  ),
-                  ElevatedButton(
-                    child: Text('Prediction C'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      setState(() {
-                        _selectedField = "Prediction C";
-                      });
-                    },
-                  ),
-                  ElevatedButton(
-                    child: Text('Prediction D'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      setState(() {
-                        _selectedField = "Prediction D";
-                      });
-                    },
-                  ),
-                ],
+              SizedBox(height: 16.0),
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount: (screenWidth / buttonWidth).ceil(),
+                  shrinkWrap: true,
+                  children: List.generate(buttonNames.length, (index) {
+                    return Container(
+                      margin: EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        child: Text(buttonNames[index]),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          setState(() {
+                            _selectedField = buttonNames[index];
+                          });
+                        },
+                      ),
+                    );
+                  }),
+                ),
               ),
             ],
           ),
