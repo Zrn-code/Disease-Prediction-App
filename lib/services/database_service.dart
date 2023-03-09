@@ -13,6 +13,9 @@ class DatabaseService {
     return await userCollection.doc(uid).set({
       "fullName": fullName,
       "email": email,
+      "height": 0,
+      "weight": 0,
+      "age": 0,
       "uid": uid,
     });
   }
@@ -37,20 +40,44 @@ class DatabaseService {
     QuerySnapshot snapshot =
         await userCollection.where("email", isEqualTo: email).get();
     QueryDocumentSnapshot firstDocumentSnapshot = snapshot.docs[0];
-    return firstDocumentSnapshot.get('age');
+    try {
+      int age = firstDocumentSnapshot.get('age');
+      return age;
+    } catch (e) {
+      // Handle the exception here
+      print('Error getting age: $e');
+      // Return a default value or rethrow the exception
+      return 0;
+    }
   }
 
   Future<int> getHeight(String email) async {
     QuerySnapshot snapshot =
         await userCollection.where("email", isEqualTo: email).get();
     QueryDocumentSnapshot firstDocumentSnapshot = snapshot.docs[0];
-    return firstDocumentSnapshot.get('height');
+    try {
+      int height = firstDocumentSnapshot.get('height');
+      return height;
+    } catch (e) {
+      // Handle the exception here
+      print('Error getting height: $e');
+      // Return a default value or rethrow the exception
+      return 0;
+    }
   }
 
   Future<int> getWeight(String email) async {
     QuerySnapshot snapshot =
         await userCollection.where("email", isEqualTo: email).get();
     QueryDocumentSnapshot firstDocumentSnapshot = snapshot.docs[0];
-    return firstDocumentSnapshot.get('weight');
+    try {
+      int weight = firstDocumentSnapshot.get('weight');
+      return weight;
+    } catch (e) {
+      // Handle the exception here
+      print('Error getting weight: $e');
+      // Return a default value or rethrow the exception
+      return 0;
+    }
   }
 }

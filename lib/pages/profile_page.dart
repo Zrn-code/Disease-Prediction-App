@@ -181,10 +181,16 @@ class _ProfilePageState extends State<ProfilePage> {
                   "Height",
                   style: TextStyle(fontSize: 17),
                 ),
-                Text(
-                  widget.height.toString(),
-                  style: const TextStyle(fontSize: 17),
-                )
+                if (widget.height == 0)
+                  Text(
+                    "Undefined",
+                    style: const TextStyle(fontSize: 17),
+                  )
+                else
+                  Text(
+                    widget.height.toString(),
+                    style: const TextStyle(fontSize: 17),
+                  )
               ],
             ),
             const Divider(
@@ -197,10 +203,16 @@ class _ProfilePageState extends State<ProfilePage> {
                   "Weight",
                   style: TextStyle(fontSize: 17),
                 ),
-                Text(
-                  widget.weight.toString(),
-                  style: const TextStyle(fontSize: 17),
-                )
+                if (widget.weight == 0)
+                  Text(
+                    "Undefined",
+                    style: const TextStyle(fontSize: 17),
+                  )
+                else
+                  Text(
+                    widget.weight.toString(),
+                    style: const TextStyle(fontSize: 17),
+                  )
               ],
             ),
             const Divider(
@@ -213,10 +225,16 @@ class _ProfilePageState extends State<ProfilePage> {
                   "Age",
                   style: TextStyle(fontSize: 17),
                 ),
-                Text(
-                  widget.age.toString(),
-                  style: const TextStyle(fontSize: 17),
-                )
+                if (widget.age == 0)
+                  Text(
+                    "Undefined",
+                    style: const TextStyle(fontSize: 17),
+                  )
+                else
+                  Text(
+                    widget.age.toString(),
+                    style: const TextStyle(fontSize: 17),
+                  )
               ],
             ),
           ],
