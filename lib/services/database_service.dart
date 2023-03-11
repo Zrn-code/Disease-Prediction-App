@@ -67,12 +67,12 @@ class DatabaseService {
     }
   }
 
-  Future<int> getHeight(String email) async {
+  Future<double> getHeight(String email) async {
     QuerySnapshot snapshot =
         await userCollection.where("email", isEqualTo: email).get();
     QueryDocumentSnapshot firstDocumentSnapshot = snapshot.docs[0];
     try {
-      int height = firstDocumentSnapshot.get('height');
+      double height = firstDocumentSnapshot.get('height');
       return height;
     } catch (e) {
       // Handle the exception here
@@ -82,12 +82,12 @@ class DatabaseService {
     }
   }
 
-  Future<int> getWeight(String email) async {
+  Future<double> getWeight(String email) async {
     QuerySnapshot snapshot =
         await userCollection.where("email", isEqualTo: email).get();
     QueryDocumentSnapshot firstDocumentSnapshot = snapshot.docs[0];
     try {
-      int weight = firstDocumentSnapshot.get('weight');
+      double weight = firstDocumentSnapshot.get('weight');
       return weight;
     } catch (e) {
       // Handle the exception here
