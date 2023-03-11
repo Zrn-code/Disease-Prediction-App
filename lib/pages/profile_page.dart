@@ -17,8 +17,7 @@ class ProfilePage extends StatefulWidget {
       required this.userName,
       required this.age,
       required this.height,
-      required this.weight,
-      required this.gender})
+      required this.weight})
       : super(key: key);
 
   @override

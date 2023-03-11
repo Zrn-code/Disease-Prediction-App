@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application/pages/profile_page.dart';
-import '../form/initial_data.dart';
 import '../helper/helper_functions.dart';
 import '../services/database_service.dart';
 import '../widgets/widgets.dart';
@@ -11,6 +10,7 @@ import 'login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../helper/function.dart';
 import '../form/covid_prediction.dart';
+import '../form/initial_data.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -123,9 +123,9 @@ class _MainPageState extends State<MainPage> {
                           weight: await DatabaseService(
                                   uid: FirebaseAuth.instance.currentUser!.uid)
                               .getWeight(email),
-                          gender: await DatabaseService(
-                                  uid: FirebaseAuth.instance.currentUser!.uid)
-                              .getGender(email),
+                          //gender: await DatabaseService(
+                          //uid: FirebaseAuth.instance.currentUser!.uid)
+                          //.getGender(email),
                         ));
                   },
                   contentPadding:
@@ -198,19 +198,12 @@ class FormExample extends StatefulWidget {
 
 class _FormExampleState extends State<FormExample> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final List<String> _items = [
-    'Initial Data',
-    'BMI',
-    'Prediction A',
-    'Prediction B',
-    'Prediction C',
-    'Prediction D'
-  ];
+  final List<String> _items = ['Prediction', 'Initial Data', 'Other Function'];
 
   String output = 'Prediction';
   bool isSwitched = false;
 
-  String _selectedField = "Prediction A";
+  String _selectedField = "Prediction";
 
   List<String> _genderList = ["male", "female"];
 
@@ -243,7 +236,14 @@ class _FormExampleState extends State<FormExample> {
                               filled: true,
                               fillColor: Colors.grey[200],
                             ),
-                            value: _selectedField,
+                            value: (_selectedField == "Prediction A" ||
+                                    _selectedField == "Prediction B" ||
+                                    _selectedField == "Prediction C" ||
+                                    _selectedField == "Prediction D")
+                                ? "Prediction"
+                                : (_selectedField == "BMI")
+                                    ? "Other Function"
+                                    : _selectedField,
                             items: _items.map((item) {
                               return DropdownMenuItem<String>(
                                 value: item,
@@ -259,6 +259,104 @@ class _FormExampleState extends State<FormExample> {
                           const SizedBox(
                             height: 20,
                           ),
+                          if (_selectedField == "Prediction")
+                            Container(
+                              padding: EdgeInsets.all(16.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      SizedBox(
+                                        width: 150.0,
+                                        height: 60.0,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              _selectedField = "Prediction A";
+                                            });
+                                          },
+                                          child: Text('Covid Prediction'),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 150.0,
+                                        height: 60.0,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            //按鈕2的操作
+                                          },
+                                          child: Text('按鈕2'),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 16.0),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      SizedBox(
+                                        width: 150.0,
+                                        height: 60.0,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            //按鈕3的操作
+                                          },
+                                          child: Text('按鈕3'),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 150.0,
+                                        height: 60.0,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            //按鈕4的操作
+                                          },
+                                          child: Text('按鈕4'),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          if (_selectedField == "Prediction A")
+                            Container(
+                              padding: EdgeInsets.all(20),
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(
+                                          'Cough:',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.green),
+                                        ),
+                                        cough_DropdownButtonExample(),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(
+                                          'Fever:',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.green),
+                                        ),
+                                        fever_DropdownButtonExample(),
+                                      ],
+                                    ),
+                                  ]),
+                            ),
                           if (_selectedField == "Initial Data")
                             Container(
                               margin: const EdgeInsets.only(
@@ -348,9 +446,9 @@ class _FormExampleState extends State<FormExample> {
                                   _height = double.parse(value!); // 使用 '!' 運算符號
                                 },
                                 onFieldSubmitted: (value) {
-                                  if (_selectedField == 'BMI')
+                                  if (_selectedField == 'BMI') {
                                     _submitFormBMI();
-                                  else if (_selectedField == "Initial Data") {
+                                  } else if (_selectedField == "Initial Data") {
                                     _initialData();
                                   }
                                 },
@@ -359,36 +457,78 @@ class _FormExampleState extends State<FormExample> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () {
-                                  if (_selectedField == "BMI") {
-                                    _submitFormBMI();
-                                  } else if (_selectedField == "Initial Data" &&
-                                      gender != -1) {
-                                    _initialData();
-                                  } else if (_selectedField == "Initial Data" &&
-                                      gender == -1) {
-                                    showSnackBar(context, Colors.red,
-                                        'You should choose your gender.');
-                                  } else if (_selectedField == "Prediction A") {
-                                    _submitPrediction();
-                                  }
-                                },
-                                style: OutlinedButton.styleFrom(
-                                    minimumSize: const Size(200, 50)),
-                                child: Text("Submit Form".toUpperCase(),
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold)),
+                          if (_selectedField == "Other Function")
+                            Container(
+                              padding: EdgeInsets.all(16.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      SizedBox(
+                                        width: 150.0,
+                                        height: 60.0,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              _selectedField = "BMI";
+                                            });
+                                          },
+                                          child: Text('BMI'),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 150.0,
+                                        height: 60.0,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              _selectedField = "BMI";
+                                            });
+                                          },
+                                          child: Text('Initial Your Data'),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          if (_selectedField != "Prediction" &&
+                              _selectedField != "Other Function")
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    if (_selectedField == "BMI") {
+                                      _submitFormBMI();
+                                    } else if (_selectedField ==
+                                        "Initial Data") {
+                                      _initialData();
+                                      //} else if (_selectedField == "Initial Data" &&
+                                      // gender == -1) {
+                                      // showSnackBar(context, Colors.red,
+                                      //      'You should choose your gender.');
+                                    } else if (_selectedField ==
+                                        "Prediction A") {
+                                      _submitPredictionA();
+                                    }
+                                  },
+                                  style: OutlinedButton.styleFrom(
+                                      minimumSize: const Size(200, 50)),
+                                  child: Text("Submit Form".toUpperCase(),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                              ],
+                            ),
                         ])))));
   }
 
-  Future<void> _submitPrediction() async {
+  Future<void> _submitPredictionA() async {
     url += 'cough=';
     url += cough;
     url += '&fever=';
@@ -398,6 +538,7 @@ class _FormExampleState extends State<FormExample> {
 
     var data = await fetchData(url);
     var decoded = jsonDecode(data);
+    print(url);
     setState(() {
       output = decoded['output'];
       url = 'https://flask-app-test-yqkj.onrender.com/api?';
@@ -413,7 +554,7 @@ class _FormExampleState extends State<FormExample> {
         _height,
         _weight,
         _age,
-        _genderList[gender],
+        //_genderList[gender],
       );
       _showMore("Your data has been record!");
     }

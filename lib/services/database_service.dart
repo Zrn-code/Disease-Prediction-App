@@ -21,13 +21,12 @@ class DatabaseService {
     });
   }
 
-  Future initialUserData(
-      double height, double weight, int age, String gender) async {
+  Future initialUserData(double height, double weight, int age) async {
     return await userCollection.doc(uid).update({
       "height": height,
       "weight": weight,
       "age": age,
-      "gender": gender,
+      //"gender": gender,
     });
   }
 
