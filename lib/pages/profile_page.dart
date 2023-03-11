@@ -8,8 +8,8 @@ class ProfilePage extends StatefulWidget {
   String userName = "";
   String email = "";
   String gender = "";
-  int weight;
-  int height;
+  double weight;
+  double height;
   int age;
   ProfilePage(
       {Key? key,
@@ -182,10 +182,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   "Height",
                   style: TextStyle(fontSize: 17),
                 ),
-                if (widget.height == 0)
-                  Text(
+                if (widget.height <= 0)
+                  const Text(
                     "Undefined",
-                    style: const TextStyle(fontSize: 17),
+                    style: TextStyle(fontSize: 17),
                   )
                 else
                   Text(
@@ -204,10 +204,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   "Weight",
                   style: TextStyle(fontSize: 17),
                 ),
-                if (widget.weight == 0)
-                  Text(
+                if (widget.weight <= 0)
+                  const Text(
                     "Undefined",
-                    style: const TextStyle(fontSize: 17),
+                    style: TextStyle(fontSize: 17),
                   )
                 else
                   Text(
@@ -226,10 +226,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   "Age",
                   style: TextStyle(fontSize: 17),
                 ),
-                if (widget.age == 0)
-                  Text(
+                if (widget.age <= 0)
+                  const Text(
                     "Undefined",
-                    style: const TextStyle(fontSize: 17),
+                    style: TextStyle(fontSize: 17),
                   )
                 else
                   Text(

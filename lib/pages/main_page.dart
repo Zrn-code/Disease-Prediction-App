@@ -18,8 +18,8 @@ class _MainPageState extends State<MainPage> {
   String userName = "";
   String email = "";
   int age = 0;
-  int height = 0;
-  int weight = 0;
+  double height = 0;
+  double weight = 0;
   final uid = "";
   AuthService authService = AuthService();
 
@@ -244,7 +244,7 @@ class _FormExampleState extends State<FormExample> {
                               });
                             },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           if (_selectedField == "Initial Data")
@@ -253,7 +253,7 @@ class _FormExampleState extends State<FormExample> {
                                   Text('Male'),
                                   Text('Female'),
                                 ],
-                                constraints: BoxConstraints(
+                                constraints: const BoxConstraints(
                                   minWidth: 100,
                                   minHeight: 50,
                                 ),
@@ -276,11 +276,11 @@ class _FormExampleState extends State<FormExample> {
                           if (_selectedField == "Initial Data")
                             Container(
                               margin:
-                                  EdgeInsets.only(left: 20, right: 20, top: 20),
+                                  const EdgeInsets.only(left: 20, right: 20, top: 20),
                               child: TextFormField(
                                 autofocus: true,
                                 controller: ageController,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   prefixIcon: Icon(Icons.cake_rounded),
                                   labelText: 'Age',
@@ -306,11 +306,11 @@ class _FormExampleState extends State<FormExample> {
                               _selectedField == "Initial Data")
                             Container(
                               margin:
-                                  EdgeInsets.only(left: 20, right: 20, top: 20),
+                                  const EdgeInsets.only(left: 20, right: 20, top: 20),
                               child: TextFormField(
                                 autofocus: true,
                                 controller: weightController,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   prefixIcon:
                                       Icon(Icons.monitor_weight_rounded),
@@ -337,11 +337,11 @@ class _FormExampleState extends State<FormExample> {
                               _selectedField == "Initial Data")
                             Container(
                               margin:
-                                  EdgeInsets.only(left: 20, right: 20, top: 20),
+                                  const EdgeInsets.only(left: 20, right: 20, top: 20),
                               child: TextFormField(
                                 autofocus: true,
                                 controller: heightController,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   prefixIcon: Icon(Icons.emoji_people_rounded),
                                   labelText: 'height(cm)',
@@ -370,7 +370,7 @@ class _FormExampleState extends State<FormExample> {
                                 },
                               ),
                             ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Row(
@@ -406,10 +406,10 @@ class _FormExampleState extends State<FormExample> {
                                   }
                                 },
                                 style: OutlinedButton.styleFrom(
-                                    minimumSize: Size(200, 50)),
+                                    minimumSize: const Size(200, 50)),
                                 child: Text("Submit Form".toUpperCase(),
                                     style:
-                                        TextStyle(fontWeight: FontWeight.bold)),
+                                        const TextStyle(fontWeight: FontWeight.bold)),
                               ),
                             ],
                           ),
@@ -450,7 +450,7 @@ class _FormExampleState extends State<FormExample> {
       builder: (BuildContext context) {
         return Container(
           height: 300.0,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10.0),
@@ -463,11 +463,11 @@ class _FormExampleState extends State<FormExample> {
               children: <Widget>[
                 Text(
                   message,
-                  style: TextStyle(fontSize: 24.0),
+                  style: const TextStyle(fontSize: 24.0),
                 ),
                 Text(
                   result.toStringAsFixed(1),
-                  style: TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -496,18 +496,18 @@ class _FormExampleState extends State<FormExample> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text(
+              const Text(
                 'Your data has been recorded!',
                 style: TextStyle(fontSize: 18.0),
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               Expanded(
                 child: GridView.count(
                   crossAxisCount: (screenWidth / buttonWidth).ceil(),
                   shrinkWrap: true,
                   children: List.generate(buttonNames.length, (index) {
                     return Container(
-                      margin: EdgeInsets.all(8.0),
+                      margin: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
                         child: Text(buttonNames[index]),
                         onPressed: () {
