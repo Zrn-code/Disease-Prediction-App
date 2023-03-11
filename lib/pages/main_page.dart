@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application/pages/profile_page.dart';
+import '../form/initial_data.dart';
 import '../helper/helper_functions.dart';
 import '../services/database_service.dart';
 import '../widgets/widgets.dart';
 import '../services/auth_service.dart';
 import 'login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../helper/function.dart';
+import '../form/covid_prediction.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -14,6 +19,15 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
+String cough = '1';
+String fever = '1';
+String url = 'https://flask-app-test-yqkj.onrender.com/api?';
+int _age = 0;
+double _bmi = 0;
+double _height = 0;
+double _weight = 0;
+int gender = -1;
+
 class _MainPageState extends State<MainPage> {
   String userName = "";
   String email = "";
@@ -21,6 +35,7 @@ class _MainPageState extends State<MainPage> {
   int height = 0;
   int weight = 0;
   final uid = "";
+
   AuthService authService = AuthService();
 
   @override
@@ -191,14 +206,11 @@ class _FormExampleState extends State<FormExample> {
     'Prediction C',
     'Prediction D'
   ];
-  int _age = 0;
-  double _bmi = 0;
-  double _height = 0;
-  double _weight = 0;
-  int _gender = -1;
+
+  String output = 'Prediction';
   bool isSwitched = false;
 
-  String _selectedField = "Initial Data";
+  String _selectedField = "Prediction A";
 
   List<String> _genderList = ["male", "female"];
 
@@ -248,31 +260,53 @@ class _FormExampleState extends State<FormExample> {
                             height: 20,
                           ),
                           if (_selectedField == "Initial Data")
-                            ToggleButtons(
+                            Container(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text('Male'),
-                                  Text('Female'),
+                                  Text(
+                                    'Gender:',
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.green),
+                                  ),
+                                  gender_DropdownButtonExample(),
                                 ],
-                                constraints: BoxConstraints(
-                                  minWidth: 100,
-                                  minHeight: 50,
-                                ),
-                                borderRadius: BorderRadius.circular(16.0),
-                                selectedBorderColor: Colors.blue,
-                                isSelected: _gender == -1
-                                    ? List.generate(
-                                        _genderList.length, (_) => false)
-                                    : List.generate(_genderList.length,
-                                        (index) => index == _gender),
-                                onPressed: (int index) {
-                                  setState(() {
-                                    if (_gender == index) {
-                                      _gender = -1;
-                                    } else {
-                                      _gender = index;
-                                    }
-                                  });
-                                }),
+                              ),
+                            ),
+                          if (_selectedField == "Prediction A")
+                            Container(
+                                padding: EdgeInsets.all(20),
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text(
+                                            'Cough:',
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.green),
+                                          ),
+                                          cough_DropdownButtonExample(),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text(
+                                            'Fever:',
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.green),
+                                          ),
+                                          fever_DropdownButtonExample(),
+                                        ],
+                                      ),
+                                    ])),
                           if (_selectedField == "Initial Data")
                             Container(
                               margin:
@@ -377,32 +411,18 @@ class _FormExampleState extends State<FormExample> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: Colors.red),
-                                onPressed: () {
-                                  _formKey.currentState!.reset();
-                                  heightController.clear();
-                                  weightController.clear();
-                                  ageController.clear();
-                                  setState(() {
-                                    _age = 0;
-                                    _height = 0;
-                                    _weight = 0;
-                                  });
-                                },
-                                child: const Text('Reset'),
-                              ),
-                              ElevatedButton(
                                 onPressed: () {
                                   if (_selectedField == "BMI") {
                                     _submitFormBMI();
                                   } else if (_selectedField == "Initial Data" &&
-                                      _gender != -1) {
+                                      gender != -1) {
                                     _initialData();
                                   } else if (_selectedField == "Initial Data" &&
-                                      _gender == -1) {
+                                      gender == -1) {
                                     showSnackBar(context, Colors.red,
                                         'You should choose your gender.');
+                                  } else if (_selectedField == "Prediction A") {
+                                    _submitPrediction();
                                   }
                                 },
                                 style: OutlinedButton.styleFrom(
@@ -416,6 +436,23 @@ class _FormExampleState extends State<FormExample> {
                         ])))));
   }
 
+  Future<void> _submitPrediction() async {
+    url += 'cough=';
+    url += cough;
+    url += '&fever=';
+    url += fever;
+    url +=
+        '&sore_throat=0&shortness_of_breath=1&head_ache=0&age_60_and_above=0&gender=0&test_indication=0';
+
+    var data = await fetchData(url);
+    var decoded = jsonDecode(data);
+    setState(() {
+      output = decoded['output'];
+      url = 'https://flask-app-test-yqkj.onrender.com/api?';
+    });
+    _showResult("Probability of Covid :", output);
+  }
+
   void _initialData() {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState!.save();
@@ -424,7 +461,7 @@ class _FormExampleState extends State<FormExample> {
         _height,
         _weight,
         _age,
-        _genderList[_gender],
+        _genderList[gender],
       );
       _showMore("Your data has been record!");
     }
@@ -434,7 +471,7 @@ class _FormExampleState extends State<FormExample> {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState!.save();
       _calculateBMI();
-      _showResult("Your BMI is:", _bmi);
+      _showResult("Your BMI is:", _bmi.toStringAsFixed(1));
     }
   }
 
@@ -443,7 +480,7 @@ class _FormExampleState extends State<FormExample> {
     _bmi = _weight / (heightInMeters * heightInMeters);
   }
 
-  void _showResult(String message, double result) {
+  void _showResult(String message, String result) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -466,7 +503,7 @@ class _FormExampleState extends State<FormExample> {
                   style: TextStyle(fontSize: 24.0),
                 ),
                 Text(
-                  result.toStringAsFixed(1),
+                  result,
                   style: TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold),
                 ),
               ],
