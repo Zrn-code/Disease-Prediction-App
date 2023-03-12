@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import '../pages/main_page.dart';
-
+/*
 List<String> _genderList = ["female", "male"];
 
 class gender_DropdownButtonExample extends StatefulWidget {
   gender_DropdownButtonExample({super.key});
   @override
   State<gender_DropdownButtonExample> createState() =>
-      cough_DropdownButtonExampleState();
+      gender_DropdownButtonExampleState();
 }
 
-class cough_DropdownButtonExampleState
+class gender_DropdownButtonExampleState
     extends State<gender_DropdownButtonExample> {
   String dropdownValue = _genderList.first;
 
@@ -30,9 +30,9 @@ class cough_DropdownButtonExampleState
         // This is called when the user selects an item.
 
         if (value == 'male') {
-          gender = 1;
+          gender = '1';
         } else {
-          gender = 0;
+          gender = '0';
         }
 
         setState(() {
@@ -48,3 +48,4 @@ class cough_DropdownButtonExampleState
     );
   }
 }
+*/

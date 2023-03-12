@@ -9,7 +9,7 @@ import '../services/auth_service.dart';
 import 'login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../helper/function.dart';
-import '../form/covid_prediction.dart';
+import '../form/dropdown.dart';
 import '../form/initial_data.dart';
 
 class MainPage extends StatefulWidget {
@@ -21,12 +21,19 @@ class MainPage extends StatefulWidget {
 
 String cough = '1';
 String fever = '1';
-String url = 'https://flask-app-test-yqkj.onrender.com/api?';
+String sore_throat = '1';
+String shortness_of_breath = '1';
+String head_ache = '1';
+String age_60_and_above = '1';
+String test_indication = '1';
+String gender = '1';
+
+String url_A = 'https://flask-app-test-yqkj.onrender.com/api?';
+
 int _age = 0;
 double _bmi = 0;
 double _height = 0;
 double _weight = 0;
-int gender = -1;
 
 class _MainPageState extends State<MainPage> {
   String userName = "";
@@ -198,7 +205,7 @@ class FormExample extends StatefulWidget {
 
 class _FormExampleState extends State<FormExample> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final List<String> _items = ['Prediction', 'Initial Data', 'Other Function'];
+  final List<String> _items = ['Prediction', 'Other Function'];
 
   String output = 'Prediction';
   bool isSwitched = false;
@@ -241,7 +248,8 @@ class _FormExampleState extends State<FormExample> {
                                     _selectedField == "Prediction C" ||
                                     _selectedField == "Prediction D")
                                 ? "Prediction"
-                                : (_selectedField == "BMI")
+                                : (_selectedField == "BMI" ||
+                                        _selectedField == "Initial Data")
                                     ? "Other Function"
                                     : _selectedField,
                             items: _items.map((item) {
@@ -286,9 +294,11 @@ class _FormExampleState extends State<FormExample> {
                                         height: 60.0,
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            //按鈕2的操作
+                                            setState(() {
+                                              _selectedField = "Prediction B";
+                                            });
                                           },
-                                          child: Text('按鈕2'),
+                                          child: Text("Prediction B"),
                                         ),
                                       ),
                                     ],
@@ -303,9 +313,11 @@ class _FormExampleState extends State<FormExample> {
                                         height: 60.0,
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            //按鈕3的操作
+                                            setState(() {
+                                              _selectedField = "Prediction C";
+                                            });
                                           },
-                                          child: Text('按鈕3'),
+                                          child: Text('Prediction C'),
                                         ),
                                       ),
                                       SizedBox(
@@ -313,9 +325,11 @@ class _FormExampleState extends State<FormExample> {
                                         height: 60.0,
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            //按鈕4的操作
+                                            setState(() {
+                                              _selectedField = "Prediction D";
+                                            });
                                           },
-                                          child: Text('按鈕4'),
+                                          child: Text('Prediction D'),
                                         ),
                                       ),
                                     ],
@@ -327,136 +341,32 @@ class _FormExampleState extends State<FormExample> {
                             Container(
                               padding: EdgeInsets.all(20),
                               child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text(
-                                          'Cough:',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.green),
-                                        ),
-                                        cough_DropdownButtonExample(),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text(
-                                          'Fever:',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.green),
-                                        ),
-                                        fever_DropdownButtonExample(),
-                                      ],
-                                    ),
+                                    _buildRow('Cough:',
+                                        cough_DropdownButtonExample()),
+                                    _buildRow('Fever:',
+                                        fever_DropdownButtonExample()),
+                                    _buildRow('Sore Throat:',
+                                        sore_throat_DropdownButtonExample()),
+                                    _buildRow('Shortness of Breath:',
+                                        shortness_of_breath_DropdownButtonExample()),
+                                    _buildRow('Age is greater than 60:',
+                                        age_60_and_above_DropdownButtonExample()),
+                                    _buildRow('Gender:',
+                                        gender_DropdownButtonExample()),
+                                    _buildRow('Test Indication:',
+                                        test_indication_DropdownButtonExample()),
                                   ]),
                             ),
-                          if (_selectedField == "Initial Data")
-                            Container(
-                              margin: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 20),
-                              child: TextFormField(
-                                autofocus: true,
-                                controller: ageController,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  prefixIcon: Icon(Icons.cake_rounded),
-                                  labelText: 'Age',
-                                  hintText: 'Enter your age',
-                                ),
-                                validator: (value) {
-                                  if (value?.isEmpty ?? true) {
-                                    // 使用空值判斷符號
-                                    return 'Please enter your age';
-                                  }
-                                  if (int.tryParse(value!) == null) {
-                                    // 使用 '!' 運算符號
-                                    return 'Please enter a valid age';
-                                  }
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  _age = int.parse(value!); // 使用 '!' 運算符號
-                                },
-                              ),
-                            ),
+                          if (_selectedField == "Initial Data") inputAgeForm(),
                           if (_selectedField == "BMI" ||
                               _selectedField == "Initial Data")
-                            Container(
-                              margin: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 20),
-                              child: TextFormField(
-                                autofocus: true,
-                                controller: weightController,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  prefixIcon:
-                                      Icon(Icons.monitor_weight_rounded),
-                                  labelText: 'Weight(kg)',
-                                  hintText: 'Enter your weight in kg',
-                                ),
-                                validator: (value) {
-                                  if (value?.isEmpty ?? true) {
-                                    // 使用空值判斷符號
-                                    return 'Please enter your weight';
-                                  }
-                                  if (double.tryParse(value!) == null) {
-                                    // 使用 '!' 運算符號
-                                    return 'Please enter a valid weight';
-                                  }
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  _weight = double.parse(value!); // 使用 '!' 運算符號
-                                },
-                              ),
-                            ),
+                            inputWeightForm(),
                           if (_selectedField == "BMI" ||
                               _selectedField == "Initial Data")
-                            Container(
-                              margin: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 20),
-                              child: TextFormField(
-                                autofocus: true,
-                                controller: heightController,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  prefixIcon: Icon(Icons.emoji_people_rounded),
-                                  labelText: 'height(cm)',
-                                  hintText: 'Enter your height',
-                                ),
-                                validator: (value) {
-                                  if (value?.isEmpty ?? true) {
-                                    // 使用空值判斷符號
-                                    return 'Please enter your height';
-                                  }
-                                  if (double.tryParse(value!) == null) {
-                                    // 使用 '!' 運算符號
-                                    return 'Please enter a valid height';
-                                  }
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  _height = double.parse(value!); // 使用 '!' 運算符號
-                                },
-                                onFieldSubmitted: (value) {
-                                  if (_selectedField == 'BMI') {
-                                    _submitFormBMI();
-                                  } else if (_selectedField == "Initial Data") {
-                                    _initialData();
-                                  }
-                                },
-                              ),
-                            ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                            inputHeightForm(),
                           if (_selectedField == "Other Function")
                             Container(
                               padding: EdgeInsets.all(16.0),
@@ -485,7 +395,7 @@ class _FormExampleState extends State<FormExample> {
                                         child: ElevatedButton(
                                           onPressed: () {
                                             setState(() {
-                                              _selectedField = "BMI";
+                                              _selectedField = "Initial Data";
                                             });
                                           },
                                           child: Text('Initial Your Data'),
@@ -508,13 +418,17 @@ class _FormExampleState extends State<FormExample> {
                                     } else if (_selectedField ==
                                         "Initial Data") {
                                       _initialData();
-                                      //} else if (_selectedField == "Initial Data" &&
-                                      // gender == -1) {
-                                      // showSnackBar(context, Colors.red,
-                                      //      'You should choose your gender.');
                                     } else if (_selectedField ==
                                         "Prediction A") {
-                                      _submitPredictionA();
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              "your data has been submitted."),
+                                          duration: Duration(seconds: 3),
+                                        ),
+                                      );
+                                      _submitPredictionA(url_A);
                                     }
                                   },
                                   style: OutlinedButton.styleFrom(
@@ -528,20 +442,28 @@ class _FormExampleState extends State<FormExample> {
                         ])))));
   }
 
-  Future<void> _submitPredictionA() async {
+  Future<void> _submitPredictionA(String url) async {
     url += 'cough=';
     url += cough;
     url += '&fever=';
     url += fever;
-    url +=
-        '&sore_throat=0&shortness_of_breath=1&head_ache=0&age_60_and_above=0&gender=0&test_indication=0';
-
+    url += '&sore_throat=';
+    url += sore_throat;
+    url += '&shortness_of_breath=';
+    url += shortness_of_breath;
+    url += '&head_ache=';
+    url += head_ache;
+    url += '&age_60_and_above=';
+    url += age_60_and_above;
+    url += '&gender=';
+    url += gender;
+    url += '&test_indication=';
+    url += test_indication;
     var data = await fetchData(url);
     var decoded = jsonDecode(data);
     print(url);
     setState(() {
       output = decoded['output'];
-      url = 'https://flask-app-test-yqkj.onrender.com/api?';
     });
     _showResult("Probability of Covid :", output);
   }
@@ -614,7 +536,6 @@ class _FormExampleState extends State<FormExample> {
         final double screenWidth = MediaQuery.of(context).size.width;
         final double buttonWidth = (screenWidth - 64.0) / 3.0;
         final List<String> buttonNames = [
-          "BMI",
           "Prediction A",
           "Prediction B",
           "Prediction C",
@@ -657,4 +578,120 @@ class _FormExampleState extends State<FormExample> {
       },
     );
   }
+
+  Container inputAgeForm() {
+    return Container(
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
+      child: TextFormField(
+        autofocus: true,
+        controller: ageController,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          prefixIcon: Icon(Icons.cake_rounded),
+          labelText: 'Age',
+          hintText: 'Enter your age',
+        ),
+        validator: (value) {
+          if (value?.isEmpty ?? true) {
+            // 使用空值判斷符號
+            return 'Please enter your age';
+          }
+          if (int.tryParse(value!) == null) {
+            // 使用 '!' 運算符號
+            return 'Please enter a valid age';
+          }
+          return null;
+        },
+        onSaved: (value) {
+          _age = int.parse(value!); // 使用 '!' 運算符號
+        },
+      ),
+    );
+  }
+
+  Container inputWeightForm() {
+    return Container(
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
+      child: TextFormField(
+        autofocus: true,
+        controller: weightController,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          prefixIcon: Icon(Icons.monitor_weight_rounded),
+          labelText: 'Weight(kg)',
+          hintText: 'Enter your weight in kg',
+        ),
+        validator: (value) {
+          if (value?.isEmpty ?? true) {
+            // 使用空值判斷符號
+            return 'Please enter your weight';
+          }
+          if (double.tryParse(value!) == null) {
+            // 使用 '!' 運算符號
+            return 'Please enter a valid weight';
+          }
+          return null;
+        },
+        onSaved: (value) {
+          _weight = double.parse(value!); // 使用 '!' 運算符號
+        },
+      ),
+    );
+  }
+
+  Container inputHeightForm() {
+    return Container(
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
+      child: TextFormField(
+        autofocus: true,
+        controller: heightController,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          prefixIcon: Icon(Icons.emoji_people_rounded),
+          labelText: 'height(cm)',
+          hintText: 'Enter your height',
+        ),
+        validator: (value) {
+          if (value?.isEmpty ?? true) {
+            // 使用空值判斷符號
+            return 'Please enter your height';
+          }
+          if (double.tryParse(value!) == null) {
+            // 使用 '!' 運算符號
+            return 'Please enter a valid height';
+          }
+          return null;
+        },
+        onSaved: (value) {
+          _height = double.parse(value!); // 使用 '!' 運算符號
+        },
+        onFieldSubmitted: (value) {
+          if (_selectedField == 'BMI') {
+            _submitFormBMI();
+          } else if (_selectedField == "Initial Data") {
+            _initialData();
+          }
+        },
+      ),
+    );
+  }
+}
+
+Widget _buildRow(String label, Widget dropdown) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      SizedBox(
+        width: 300,
+        child: Text(
+          label,
+          style: TextStyle(fontSize: 20, color: Colors.green),
+        ),
+      ),
+      SizedBox(
+        width: 80,
+        child: dropdown,
+      ),
+    ],
+  );
 }
