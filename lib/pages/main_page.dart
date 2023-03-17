@@ -10,7 +10,7 @@ import 'login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../helper/function.dart';
 import '../form/dropdown.dart';
-import '../form/initial_data.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -27,7 +27,8 @@ String head_ache = '1';
 String age_60_and_above = '1';
 String test_indication = '1';
 String gender = '1';
-
+final List<String> _items = ['Prediction', 'Other Function'];
+String _selectedValue = "Prediction";
 String url_A = 'https://flask-app-test-yqkj.onrender.com/api?';
 
 int _age = 0;
@@ -338,28 +339,7 @@ class _FormExampleState extends State<FormExample> {
                               ),
                             ),
                           if (_selectedField == "Prediction A")
-                            Container(
-                              padding: EdgeInsets.all(20),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    _buildRow('Cough:',
-                                        cough_DropdownButtonExample()),
-                                    _buildRow('Fever:',
-                                        fever_DropdownButtonExample()),
-                                    _buildRow('Sore Throat:',
-                                        sore_throat_DropdownButtonExample()),
-                                    _buildRow('Shortness of Breath:',
-                                        shortness_of_breath_DropdownButtonExample()),
-                                    _buildRow('Age is greater than 60:',
-                                        age_60_and_above_DropdownButtonExample()),
-                                    _buildRow('Gender:',
-                                        gender_DropdownButtonExample()),
-                                    _buildRow('Test Indication:',
-                                        test_indication_DropdownButtonExample()),
-                                  ]),
-                            ),
+                            prediction_A_Form(),
                           if (_selectedField == "Initial Data") inputAgeForm(),
                           if (_selectedField == "BMI" ||
                               _selectedField == "Initial Data")
@@ -434,6 +414,43 @@ class _FormExampleState extends State<FormExample> {
                                   style: OutlinedButton.styleFrom(
                                       minimumSize: const Size(200, 50)),
                                   child: Text("Submit Form".toUpperCase(),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                              ],
+                            ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          if (_selectedField != "Prediction" &&
+                              _selectedField != "Other Function")
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    if (_selectedField == "BMI") {
+                                      _submitFormBMI();
+                                    } else if (_selectedField ==
+                                        "Initial Data") {
+                                      _initialData();
+                                    } else if (_selectedField ==
+                                        "Prediction A") {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              "your data has been submitted."),
+                                          duration: Duration(seconds: 3),
+                                        ),
+                                      );
+                                      _submitPredictionA(url_A);
+                                    }
+                                  },
+                                  style: OutlinedButton.styleFrom(
+                                      minimumSize: const Size(150, 50),
+                                      backgroundColor: Colors.red),
+                                  child: Text("Return Menu".toUpperCase(),
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold)),
                                 ),
@@ -579,6 +596,52 @@ class _FormExampleState extends State<FormExample> {
     );
   }
 
+  Container prediction_A_Form() {
+    return Container(
+      padding: EdgeInsets.all(20),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildRow('Cough:', (value) {
+              setState(() {
+                cough = value;
+              });
+            }),
+            _buildRow('Fever:', (value) {
+              setState(() {
+                fever = value;
+              });
+            }),
+            _buildRow('Sore Throat:', (value) {
+              setState(() {
+                sore_throat = value;
+              });
+            }),
+            _buildRow('Shortness of Breath:', (value) {
+              setState(() {
+                shortness_of_breath = value;
+              });
+            }),
+            _buildRow('Age is greater than 60:', (value) {
+              setState(() {
+                age_60_and_above = value;
+              });
+            }),
+            _buildRow('Gender:', (value) {
+              setState(() {
+                gender = value;
+              });
+            }),
+            _buildRow('Test Indication:', (value) {
+              setState(() {
+                test_indication = value;
+              });
+            }),
+          ]),
+    );
+  }
+
   Container inputAgeForm() {
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -677,7 +740,7 @@ class _FormExampleState extends State<FormExample> {
   }
 }
 
-Widget _buildRow(String label, Widget dropdown) {
+Widget _buildRow(String label, Function onChanged) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -689,8 +752,14 @@ Widget _buildRow(String label, Widget dropdown) {
         ),
       ),
       SizedBox(
-        width: 80,
-        child: dropdown,
+        width: 200,
+        child: Center(
+          child: CustomDropdownButtonExample(
+            labelText: label,
+            list: label == 'Gender:' ? ['Female', "Male"] : ['Yes', 'No'],
+            onChanged: onChanged,
+          ),
+        ),
       ),
     ],
   );
