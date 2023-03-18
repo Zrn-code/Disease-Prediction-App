@@ -26,10 +26,26 @@ String shortness_of_breath = '1';
 String head_ache = '1';
 String age_60_and_above = '1';
 String test_indication = '1';
-String gender = '1';
+String gender = '0';
+String Polyuria = '1';
+String Polydipsia = '1';
+String sudden_weight_loss = '1';
+String weakness = '1';
+String Polyphagia = '1';
+String Genital_thrush = '1';
+String visual_blurring = '1';
+String Itching = '1';
+String Irritability = '1';
+String delayed_healing = '1';
+String partial_paresis = '1';
+String muscle_stiffness = '1';
+String Alopecia = '1';
+String Obesity = '1';
+
 final List<String> _items = ['Prediction', 'Other Function'];
 String _selectedValue = "Prediction";
 String url_A = 'https://flask-app-test-yqkj.onrender.com/api?';
+String url_B = 'https://early-stage-diabetes-risk-prediction.onrender.com/api?';
 
 int _age = 0;
 double _bmi = 0;
@@ -340,13 +356,15 @@ class _FormExampleState extends State<FormExample> {
                             ),
                           if (_selectedField == "Prediction A")
                             prediction_A_Form(),
-                          if (_selectedField == "Initial Data") inputAgeForm(),
-                          if (_selectedField == "BMI" ||
-                              _selectedField == "Initial Data")
-                            inputWeightForm(),
-                          if (_selectedField == "BMI" ||
-                              _selectedField == "Initial Data")
-                            inputHeightForm(),
+                          if (_selectedField == "Prediction B")
+                            prediction_B_Form(),
+                          if (_selectedField == "Prediction C")
+                            prediction_C_Form(),
+                          if (_selectedField == "Prediction D")
+                            prediction_D_Form(),
+                          if (_selectedField == "Initial Data")
+                            initialDataForm(),
+                          if (_selectedField == "BMI") bmiForm(),
                           if (_selectedField == "Other Function")
                             Container(
                               padding: EdgeInsets.all(16.0),
@@ -386,6 +404,7 @@ class _FormExampleState extends State<FormExample> {
                                 ],
                               ),
                             ),
+                          SizedBox(height: 16.0),
                           if (_selectedField != "Prediction" &&
                               _selectedField != "Other Function")
                             Row(
@@ -405,10 +424,25 @@ class _FormExampleState extends State<FormExample> {
                                         SnackBar(
                                           content: Text(
                                               "your data has been submitted."),
-                                          duration: Duration(seconds: 3),
+                                          duration: Duration(seconds: 1),
                                         ),
                                       );
                                       _submitPredictionA(url_A);
+                                    } else if (_selectedField ==
+                                        "Prediction B") {
+                                      if (_formKey.currentState?.validate() ??
+                                          false) {
+                                        _formKey.currentState!.save();
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                                "your data has been submitted."),
+                                            duration: Duration(seconds: 1),
+                                          ),
+                                        );
+                                        _submitPredictionB(url_B);
+                                      }
                                     }
                                   },
                                   style: OutlinedButton.styleFrom(
@@ -435,22 +469,17 @@ class _FormExampleState extends State<FormExample> {
                                         "Initial Data") {
                                       _initialData();
                                     } else if (_selectedField ==
-                                        "Prediction A") {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                              "your data has been submitted."),
-                                          duration: Duration(seconds: 3),
-                                        ),
-                                      );
-                                      _submitPredictionA(url_A);
+                                            "Prediction A" ||
+                                        _selectedField == "Prediction B") {
+                                      setState(() {
+                                        _selectedField = "Prediction";
+                                      });
                                     }
                                   },
                                   style: OutlinedButton.styleFrom(
                                       minimumSize: const Size(150, 50),
                                       backgroundColor: Colors.red),
-                                  child: Text("Return Menu".toUpperCase(),
+                                  child: Text("Return To Menu".toUpperCase(),
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold)),
                                 ),
@@ -483,6 +512,49 @@ class _FormExampleState extends State<FormExample> {
       output = decoded['output'];
     });
     _showResult("Probability of Covid :", output);
+  }
+
+//https://early-stage-diabetes-risk-prediction.onrender.com/api?Age=20&Gender=0&Polyuria=0&Polydipsia=0&sudden_weight_loss=0&weakness=0&Polyphagia=0&Genital_thrush=0&visual_blurring=0&Itching=0&Irritability=0&delayed_healing=0&partial_paresis=0&muscle_stiffness=0&Alopecia=0&Obesity=0
+  Future<void> _submitPredictionB(String url) async {
+    url += 'Age=';
+    url += _age.toString();
+    url += '&Gender=';
+    url += gender;
+    url += '&Polyuria=';
+    url += Polyuria;
+    url += '&Polydipsia=';
+    url += Polydipsia;
+    url += '&sudden_weight_loss=';
+    url += sudden_weight_loss;
+    url += '&weakness=';
+    url += weakness;
+    url += '&Polyphagia=';
+    url += Polyphagia;
+    url += '&Genital_thrush=';
+    url += Genital_thrush;
+    url += '&visual_blurring=';
+    url += visual_blurring;
+    url += '&Itching=';
+    url += Itching;
+    url += '&Irritability=';
+    url += Irritability;
+    url += '&delayed_healing=';
+    url += delayed_healing;
+    url += '&partial_paresis=';
+    url += partial_paresis;
+    url += '&muscle_stiffness=';
+    url += muscle_stiffness;
+    url += '&Alopecia=';
+    url += Alopecia;
+    url += '&Obesity=';
+    url += Obesity;
+    var data = await fetchData(url);
+    var decoded = jsonDecode(data);
+    print(url);
+    setState(() {
+      output = decoded['output'];
+    });
+    _showResult("Probability of Diabetes mellitus:", output);
   }
 
   void _initialData() {
@@ -642,6 +714,195 @@ class _FormExampleState extends State<FormExample> {
     );
   }
 
+  Container prediction_B_Form() {
+    return Container(
+      padding: EdgeInsets.all(20),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            inputAgeForm(),
+            _buildRow('Gender:', (value) {
+              setState(() {
+                gender = value;
+              });
+            }),
+            _buildRow('Polyuria:', (value) {
+              setState(() {
+                Polyuria = value;
+              });
+            }),
+            _buildRow('Polydipsia:', (value) {
+              setState(() {
+                Polydipsia = value;
+              });
+            }),
+            _buildRow('Sudden weight loss:', (value) {
+              setState(() {
+                sudden_weight_loss = value;
+              });
+            }),
+            _buildRow('Polyphagia:', (value) {
+              setState(() {
+                Polyphagia = value;
+              });
+            }),
+            _buildRow('Genital thrush:', (value) {
+              setState(() {
+                Genital_thrush = value;
+              });
+            }),
+            _buildRow('Visual blurring:', (value) {
+              setState(() {
+                visual_blurring = value;
+              });
+            }),
+            _buildRow('Itching:', (value) {
+              setState(() {
+                Itching = value;
+              });
+            }),
+            _buildRow('Irritability:', (value) {
+              setState(() {
+                Irritability = value;
+              });
+            }),
+            _buildRow('Delayed healing:', (value) {
+              setState(() {
+                delayed_healing = value;
+              });
+            }),
+            _buildRow('Partial paresis:', (value) {
+              setState(() {
+                partial_paresis = value;
+              });
+            }),
+            _buildRow('Muscle stiffness:', (value) {
+              setState(() {
+                muscle_stiffness = value;
+              });
+            }),
+            _buildRow('Alopecia:', (value) {
+              setState(() {
+                Alopecia = value;
+              });
+            }),
+            _buildRow('Obesity:', (value) {
+              setState(() {
+                Obesity = value;
+              });
+            }),
+          ]),
+    );
+  }
+
+  Container prediction_C_Form() {
+    return Container(
+      padding: EdgeInsets.all(20),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildRow('Cough:', (value) {
+              setState(() {
+                cough = value;
+              });
+            }),
+            _buildRow('Fever:', (value) {
+              setState(() {
+                fever = value;
+              });
+            }),
+            _buildRow('Sore Throat:', (value) {
+              setState(() {
+                sore_throat = value;
+              });
+            }),
+            _buildRow('Shortness of Breath:', (value) {
+              setState(() {
+                shortness_of_breath = value;
+              });
+            }),
+            _buildRow('Age is greater than 60:', (value) {
+              setState(() {
+                age_60_and_above = value;
+              });
+            }),
+            _buildRow('Gender:', (value) {
+              setState(() {
+                gender = value;
+              });
+            }),
+            _buildRow('Test Indication:', (value) {
+              setState(() {
+                test_indication = value;
+              });
+            }),
+          ]),
+    );
+  }
+
+  Container prediction_D_Form() {
+    return Container(
+      padding: EdgeInsets.all(20),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildRow('Cough:', (value) {
+              setState(() {
+                cough = value;
+              });
+            }),
+            _buildRow('Fever:', (value) {
+              setState(() {
+                fever = value;
+              });
+            }),
+            _buildRow('Sore Throat:', (value) {
+              setState(() {
+                sore_throat = value;
+              });
+            }),
+            _buildRow('Shortness of Breath:', (value) {
+              setState(() {
+                shortness_of_breath = value;
+              });
+            }),
+            _buildRow('Age is greater than 60:', (value) {
+              setState(() {
+                age_60_and_above = value;
+              });
+            }),
+            _buildRow('Gender:', (value) {
+              setState(() {
+                gender = value;
+              });
+            }),
+            _buildRow('Test Indication:', (value) {
+              setState(() {
+                test_indication = value;
+              });
+            }),
+          ]),
+    );
+  }
+
+  Container bmiForm() {
+    return Container(
+      child: Column(
+        children: [inputHeightForm(), inputWeightForm()],
+      ),
+    );
+  }
+
+  Container initialDataForm() {
+    return Container(
+      child: Column(
+          children: [inputAgeForm(), inputHeightForm(), inputWeightForm()]),
+    );
+  }
+
   Container inputAgeForm() {
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -666,7 +927,12 @@ class _FormExampleState extends State<FormExample> {
           return null;
         },
         onSaved: (value) {
-          _age = int.parse(value!); // 使用 '!' 運算符號
+          _age = int.parse(value!);
+        },
+        onChanged: (value) {
+          setState(() {
+            _age = int.parse(value);
+          });
         },
       ),
     );
