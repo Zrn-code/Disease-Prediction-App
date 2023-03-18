@@ -315,7 +315,7 @@ class _FormExampleState extends State<FormExample> {
                                               _selectedField = "Prediction B";
                                             });
                                           },
-                                          child: Text("Prediction B"),
+                                          child: Text("Diabetes mellitus"),
                                         ),
                                       ),
                                     ],
@@ -1007,25 +1007,16 @@ class _FormExampleState extends State<FormExample> {
 }
 
 Widget _buildRow(String label, Function onChanged) {
-  return Row(
+  return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       SizedBox(
-        width: 300,
-        child: Text(
-          label,
-          style: TextStyle(fontSize: 20, color: Colors.green),
-        ),
+        height: 20,
       ),
-      SizedBox(
-        width: 200,
-        child: Center(
-          child: CustomDropdownButtonExample(
-            labelText: label,
-            list: label == 'Gender:' ? ['Female', "Male"] : ['Yes', 'No'],
-            onChanged: onChanged,
-          ),
-        ),
+      CustomDropdownButtonExample(
+        labelText: label,
+        list: label == 'Gender:' ? ['Female', "Male"] : ['Yes', 'No'],
+        onChanged: onChanged,
       ),
     ],
   );
