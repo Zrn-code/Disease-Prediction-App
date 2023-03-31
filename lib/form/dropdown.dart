@@ -89,6 +89,15 @@ class CustomDropdownButtonExampleState
             else if (value == 'flat')
               widget.onChanged('1');
             else if (value == 'downsloping') widget.onChanged('2');
+            if (value == 'Excellent')
+              widget.onChanged('4');
+            else if (value == 'Very Good')
+              widget.onChanged('3');
+            else if (value == 'Good')
+              widget.onChanged('2');
+            else if (value == 'Poor')
+              widget.onChanged('1');
+            else if (value == 'Fair') widget.onChanged('0');
 
             if (value == 'greater than 120mg/ml')
               widget.onChanged('1');

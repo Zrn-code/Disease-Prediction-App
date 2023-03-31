@@ -67,13 +67,29 @@ String COUGHING = "1";
 String SHORTNESS_OF_BREATH = "1";
 String SWALLOWING_DIFFICULTY = "1";
 String CHEST_PAIN = "1";
+String BMI = "1";
+String Smoking = "1";
+String AlcoholDrinking = "1";
+String Stroke = "1";
+String PhysicalHealth = "1";
+String MentalHealth = "1";
+String DiffWalking = "1";
+String AgeCategory = "1";
+String Diabetic = "1";
+String PhysicalActivity = "1";
+String GenHealth = "1";
+String SleepTime = "1";
+String Asthma = "1";
+String KidneyDisease = "1";
+String SkinCancer = "1";
 
 final List<String> _items = ['Prediction', 'Other Function'];
 String _selectedValue = "Prediction";
 String url_A = 'https://flask-app-test-yqkj.onrender.com/api?';
 String url_B = 'https://early-stage-diabetes-risk-prediction.onrender.com/api?';
-// https://heart-attack-analysis-prediction.onrender.com/api?age=63&sex=1&cp=3&trtbps=145&chol=233&fbs=1&restecg=0&thalachh=150&exng=0&oldpeak=2.3&slp=0&caa=0&thall=1
-String url_C = 'https://heart-attack-analysis-prediction.onrender.com/api?';
+// https://personal-key-indicators-of-heart-disease.onrender.com/api?BMI=16.6&Smoking=1&AlcoholDrinking=0&Stroke=0&PhysicalHealth=3&MentalHealth=30&DiffWalking=0&Sex=0&AgeCategory=7&Diabetic=1&PhysicalActivity=1&GenHealth=3&SleepTime=5&Asthma=1&KidneyDisease=0&SkinCancer=1
+String url_C =
+    'https://personal-key-indicators-of-heart-disease.onrender.com/api?';
 // https://lung-cancer-808h.onrender.com/api?GENDER=1&AGE=50&SMOKING=2&YELLOW_FINGERS=1&ANXIETY=1&PEER_PRESSURE=1&CHRONIC_DISEASE=1&FATIGUE=2&ALLERGY=2&WHEEZING=1&ALCOHOL_CONSUMING=2&COUGHING=2&SHORTNESS_OF_BREATH=1&SWALLOWING_DIFFICULTY=1&CHEST_PAIN=1
 String url_D = 'https://lung-cancer-808h.onrender.com/api?';
 
@@ -270,6 +286,9 @@ class _FormExampleState extends State<FormExample> {
   TextEditingController cholController = TextEditingController();
   TextEditingController thalachhController = TextEditingController();
   TextEditingController oldpeakController = TextEditingController();
+  TextEditingController physicalhealthController = TextEditingController();
+  TextEditingController mentalHealthController = TextEditingController();
+  TextEditingController sleepTimeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -626,34 +645,42 @@ class _FormExampleState extends State<FormExample> {
     _showResult("Probability of Diabetes mellitus:", output);
   }
 
-  // https://heart-attack-analysis-prediction.onrender.com/api?age=63&sex=1&cp=3&trtbps=145&chol=233&fbs=1&restecg=0&thalachh=150&exng=0&oldpeak=2.3&slp=0&caa=0&thall=1
+  // https://personal-key-indicators-of-heart-disease.onrender.com/api?BMI=16.6&Smoking=1&AlcoholDrinking=0&Stroke=0&PhysicalHealth=3&MentalHealth=30&DiffWalking=0&Sex=0&AgeCategory=7&Diabetic=1&PhysicalActivity=1&GenHealth=3&SleepTime=5&Asthma=1&KidneyDisease=0&SkinCancer=1
   Future<void> _submitPredictionC(String url) async {
-    url += 'age=';
-    url += _age.toString();
-    url += '&sex=';
+    _calculateBMI();
+    _calculateAgeCategory();
+    url += 'BMI=';
+    url += _bmi.toString();
+    url += '&Smoking=';
+    url += Smoking;
+    url += '&AlcoholDrinking=';
+    url += AlcoholDrinking;
+    url += '&Stroke=';
+    url += Stroke;
+    url += '&PhysicalHealth=';
+    url += PhysicalHealth;
+    url += '&MentalHealth=';
+    url += MentalHealth;
+    url += '&DiffWalking=';
+    url += DiffWalking;
+    url += '&Sex=';
     url += gender;
-    url += '&cp=';
-    url += cp;
-    url += '&trtbps=';
-    url += trtbps.toString();
-    url += '&chol=';
-    url += chol.toString();
-    url += '&fbs=';
-    url += fbs;
-    url += '&restecg=';
-    url += restecg;
-    url += '&thalachh=';
-    url += thalachh.toString();
-    url += '&exng=';
-    url += exng;
-    url += '&oldpeak=';
-    url += oldpeak.toString();
-    url += '&slp=';
-    url += slp;
-    url += '&caa=';
-    url += caa;
-    url += '&thall=';
-    url += thall;
+    url += '&AgeCategory=';
+    url += AgeCategory;
+    url += '&Diabetic=';
+    url += Diabetic;
+    url += '&PhysicalActivity=';
+    url += PhysicalActivity;
+    url += '&GenHealth=';
+    url += GenHealth;
+    url += '&SleepTime=';
+    url += SleepTime;
+    url += '&Asthma=';
+    url += Asthma;
+    url += '&KidneyDisease=';
+    url += KidneyDisease;
+    url += '&SkinCancer=';
+    url += SkinCancer;
     print(url);
     var data = await fetchData(url);
     var decoded = jsonDecode(data);
@@ -661,7 +688,7 @@ class _FormExampleState extends State<FormExample> {
     setState(() {
       output = decoded['output'];
     });
-    _showResult("Probability of Heart Attack:", output);
+    _showResult("Probability of Heart Disease:", output);
   }
 
   // https://lung-cancer-808h.onrender.com/api?GENDER=1&AGE=50&SMOKING=2&YELLOW_FINGERS=1&ANXIETY=1&PEER_PRESSURE=1&CHRONIC_DISEASE=1&FATIGUE=2&ALLERGY=2&WHEEZING=1&ALCOHOL_CONSUMING=2&COUGHING=2&SHORTNESS_OF_BREATH=1&SWALLOWING_DIFFICULTY=1&CHEST_PAIN=1
@@ -726,6 +753,35 @@ class _FormExampleState extends State<FormExample> {
       _calculateBMI();
       _showResult("Your BMI is:", _bmi.toStringAsFixed(1));
     }
+  }
+
+  void _calculateAgeCategory() {
+    if (_age < 25)
+      AgeCategory = "0";
+    else if (_age < 30)
+      AgeCategory = "1";
+    else if (_age < 35)
+      AgeCategory = "2";
+    else if (_age < 40)
+      AgeCategory = "3";
+    else if (_age < 45)
+      AgeCategory = "4";
+    else if (_age < 50)
+      AgeCategory = "5";
+    else if (_age < 55)
+      AgeCategory = "6";
+    else if (_age < 60)
+      AgeCategory = "7";
+    else if (_age < 65)
+      AgeCategory = "8";
+    else if (_age < 70)
+      AgeCategory = "9";
+    else if (_age < 75)
+      AgeCategory = "10";
+    else if (_age < 80)
+      AgeCategory = "11";
+    else
+      AgeCategory = "12";
   }
 
   void _calculateBMI() {
@@ -945,7 +1001,7 @@ class _FormExampleState extends State<FormExample> {
     );
   }
 
-  // https://heart-attack-analysis-prediction.onrender.com/api?age=63&sex=1&cp=3&trtbps=145&chol=233&fbs=1&restecg=0&thalachh=150&exng=0&oldpeak=2.3&slp=0&caa=0&thall=1
+  // https://personal-key-indicators-of-heart-disease.onrender.com/api?BMI=16.6&Smoking=1&AlcoholDrinking=0&Stroke=0&PhysicalHealth=3&MentalHealth=30&DiffWalking=0&Sex=0&AgeCategory=7&Diabetic=1&PhysicalActivity=1&GenHealth=3&SleepTime=5&Asthma=1&KidneyDisease=0&SkinCancer=1
   Container prediction_C_Form() {
     return Container(
       padding: EdgeInsets.all(20),
@@ -954,48 +1010,59 @@ class _FormExampleState extends State<FormExample> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             inputAgeForm(),
-            inputTrtbpsForm(),
-            inputCholForm(),
-            inputThalachhForm(),
-            inputOldpeakForm(),
-            _buildRow('Gender:', (value) {
+            inputHeightForm(),
+            inputWeightForm(),
+            inputSleepTimeForm(),
+            inputPhysicalHealthForm(),
+            inputMentalHealthForm(),
+            _buildRow('Smoking:', (value) {
               setState(() {
-                gender = value;
+                Smoking = value;
               });
             }),
-            _buildRow('Chest Pain type chest pain type:', (value) {
+            _buildRow('Alcohol Drinking:', (value) {
               setState(() {
-                cp = value;
+                AlcoholDrinking = value;
               });
             }),
-            _buildRow('Fasting blood sugar > 120 mg/dl:', (value) {
+            _buildRow('Stroke:', (value) {
               setState(() {
-                fbs = value;
+                Stroke = value;
               });
             }),
-            _buildRow('Resting electrocardiographic results:', (value) {
+            _buildRow('Difficulty Walking:', (value) {
               setState(() {
-                restecg = value;
+                DiffWalking = value;
               });
             }),
-            _buildRow('Exercise induced angina:', (value) {
+            _buildRow('Diabetic:', (value) {
               setState(() {
-                exng = value;
+                Diabetic = value;
               });
             }),
-            _buildRow('Slope:', (value) {
+            _buildRow('Physical Activity during past 30 days:', (value) {
               setState(() {
-                slp = value;
+                PhysicalActivity = value;
               });
             }),
-            _buildRow('Number of major vessels:', (value) {
+            _buildRow('General Health:', (value) {
               setState(() {
-                caa = value;
+                GenHealth = value;
               });
             }),
-            _buildRow('Thal rate:', (value) {
+            _buildRow('Asthma:', (value) {
               setState(() {
-                thall = value;
+                Asthma = value;
+              });
+            }),
+            _buildRow('Kidney Disease:', (value) {
+              setState(() {
+                KidneyDisease = value;
+              });
+            }),
+            _buildRow('Skin Cancer:', (value) {
+              setState(() {
+                SkinCancer = value;
               });
             }),
           ]),
@@ -1191,6 +1258,95 @@ class _FormExampleState extends State<FormExample> {
     );
   }
 
+  Container inputMentalHealthForm() {
+    return Container(
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
+      child: TextFormField(
+        autofocus: true,
+        controller: mentalHealthController,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          prefixIcon: Icon(Icons.heart_broken_rounded),
+          labelText: 'mental health',
+          hintText: 'How many days during the past 30 days was not good?',
+        ),
+        validator: (value) {
+          if (value?.isEmpty ?? true) {
+            return 'Please enter your mental health';
+          }
+          if (double.tryParse(value!) == null ||
+              int.parse(value) > 30 ||
+              int.parse(value) < 0) {
+            return 'Please enter a valid mental health';
+          }
+          return null;
+        },
+        onSaved: (value) {
+          MentalHealth = int.parse(value!).toString();
+        },
+      ),
+    );
+  }
+
+  Container inputPhysicalHealthForm() {
+    return Container(
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
+      child: TextFormField(
+        autofocus: true,
+        controller: physicalhealthController,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          prefixIcon: Icon(Icons.mood_bad_rounded),
+          labelText: 'mental health',
+          hintText:
+              'Which includes illness and injury, for during the past 30 days?',
+        ),
+        validator: (value) {
+          if (value?.isEmpty ?? true) {
+            return 'Please enter your physical health';
+          }
+          if (int.tryParse(value!) == null ||
+              int.parse(value) > 30 ||
+              int.parse(value) < 0) {
+            return 'Please enter a valid physical health';
+          }
+          return null;
+        },
+        onSaved: (value) {
+          PhysicalHealth = int.parse(value!).toString();
+        },
+      ),
+    );
+  }
+
+  Container inputSleepTimeForm() {
+    return Container(
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
+      child: TextFormField(
+        autofocus: true,
+        controller: sleepTimeController,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          prefixIcon: Icon(Icons.bedtime_rounded),
+          labelText: 'sleep time',
+          hintText: 'Enter your sleep time(in hours)',
+        ),
+        validator: (value) {
+          if (value?.isEmpty ?? true) {
+            return 'Please enter your sleep time';
+          }
+          if (double.tryParse(value!) == null) {
+            return 'Please enter a valid sleep time';
+          }
+          return null;
+        },
+        onSaved: (value) {
+          SleepTime = value!;
+        },
+      ),
+    );
+  }
+
   Container inputTrtbpsForm() {
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -1321,6 +1477,14 @@ Widget _buildRow(String label, Function onChanged) {
       label == 'Shortness of Breath:' ||
       label == 'Swallowing Difficulty:' ||
       label == 'Chest Pain:') list = ['YES', 'NO'];
+  if (label == 'General Health:')
+    list = [
+      'Excellent',
+      'Very Good',
+      'Good',
+      'Poor',
+      'Fair',
+    ];
   if (label == 'Chest Pain type chest pain type:')
     list = [
       'typical angina',
