@@ -108,6 +108,9 @@ class CustomDropdownButtonExampleState
             else if (value == '2')
               widget.onChanged('2');
             else if (value == '3') widget.onChanged('3');
+            if (value == "YES")
+              widget.onChanged('2');
+            else if (value == "NO") widget.onChanged('1');
             setState(() {
               dropdownValue = value!;
             });

@@ -495,6 +495,21 @@ class _FormExampleState extends State<FormExample> {
                                         );
                                         _submitPredictionC(url_C);
                                       }
+                                    } else if (_selectedField ==
+                                        "Prediction D") {
+                                      if (_formKey.currentState?.validate() ??
+                                          false) {
+                                        _formKey.currentState!.save();
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                                "your data has been submitted."),
+                                            duration: Duration(seconds: 1),
+                                          ),
+                                        );
+                                        _submitPredictionD(url_D);
+                                      }
                                     }
                                   },
                                   style: OutlinedButton.styleFrom(
@@ -647,6 +662,48 @@ class _FormExampleState extends State<FormExample> {
       output = decoded['output'];
     });
     _showResult("Probability of Heart Attack:", output);
+  }
+
+  // https://lung-cancer-808h.onrender.com/api?GENDER=1&AGE=50&SMOKING=2&YELLOW_FINGERS=1&ANXIETY=1&PEER_PRESSURE=1&CHRONIC_DISEASE=1&FATIGUE=2&ALLERGY=2&WHEEZING=1&ALCOHOL_CONSUMING=2&COUGHING=2&SHORTNESS_OF_BREATH=1&SWALLOWING_DIFFICULTY=1&CHEST_PAIN=1
+  Future<void> _submitPredictionD(String url) async {
+    url += 'GENDER=';
+    url += gender;
+    url += '&AGE=';
+    url += _age.toString();
+    url += '&SMOKING=';
+    url += SMOKING;
+    url += '&YELLOW_FINGERS=';
+    url += YELLOW_FINGERS;
+    url += '&ANXIETY=';
+    url += ANXIETY;
+    url += '&PEER_PRESSURE=';
+    url += PEER_PRESSURE;
+    url += '&CHRONIC_DISEASE=';
+    url += CHRONIC_DISEASE;
+    url += '&FATIGUE=';
+    url += FATIGUE;
+    url += '&ALLERGY=';
+    url += ALLERGY;
+    url += '&WHEEZING=';
+    url += WHEEZING;
+    url += '&ALCOHOL_CONSUMING=';
+    url += ALCOHOL_CONSUMING;
+    url += '&COUGHING=';
+    url += COUGHING;
+    url += '&SHORTNESS_OF_BREATH=';
+    url += SHORTNESS_OF_BREATH;
+    url += '&SWALLOWING_DIFFICULTY=';
+    url += SWALLOWING_DIFFICULTY;
+    url += '&CHEST_PAIN=';
+    url += CHEST_PAIN;
+    print(url);
+    var data = await fetchData(url);
+    var decoded = jsonDecode(data);
+    //print(url);
+    setState(() {
+      output = decoded['output'];
+    });
+    _showResult("Probability of Lung Cancer:", output);
   }
 
   void _initialData() {
@@ -945,6 +1002,7 @@ class _FormExampleState extends State<FormExample> {
     );
   }
 
+// https://lung-cancer-808h.onrender.com/api?GENDER=1&AGE=50&SMOKING=2&YELLOW_FINGERS=1&ANXIETY=1&PEER_PRESSURE=1&CHRONIC_DISEASE=1&FATIGUE=2&ALLERGY=2&WHEEZING=1&ALCOHOL_CONSUMING=2&COUGHING=2&SHORTNESS_OF_BREATH=1&SWALLOWING_DIFFICULTY=1&CHEST_PAIN=1
   Container prediction_D_Form() {
     return Container(
       padding: EdgeInsets.all(20),
@@ -952,39 +1010,75 @@ class _FormExampleState extends State<FormExample> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildRow('Cough:', (value) {
-              setState(() {
-                cough = value;
-              });
-            }),
-            _buildRow('Fever:', (value) {
-              setState(() {
-                fever = value;
-              });
-            }),
-            _buildRow('Sore Throat:', (value) {
-              setState(() {
-                sore_throat = value;
-              });
-            }),
-            _buildRow('Shortness of Breath:', (value) {
-              setState(() {
-                shortness_of_breath = value;
-              });
-            }),
-            _buildRow('Age is greater than 60:', (value) {
-              setState(() {
-                age_60_and_above = value;
-              });
-            }),
-            _buildRow('Gender:', (value) {
+            inputAgeForm(),
+            _buildRow("Gender:", (value) {
               setState(() {
                 gender = value;
               });
             }),
-            _buildRow('Test Indication:', (value) {
+            _buildRow('Smoking:', (value) {
               setState(() {
-                test_indication = value;
+                SMOKING = value;
+              });
+            }),
+            _buildRow('Yellow Fingers:', (value) {
+              setState(() {
+                YELLOW_FINGERS = value;
+              });
+            }),
+            _buildRow('Anxiety:', (value) {
+              setState(() {
+                ANXIETY = value;
+              });
+            }),
+            _buildRow('Peer Pressure:', (value) {
+              setState(() {
+                PEER_PRESSURE = value;
+              });
+            }),
+            _buildRow('Chronic Disease:', (value) {
+              setState(() {
+                CHRONIC_DISEASE = value;
+              });
+            }),
+            _buildRow('Fatigue:', (value) {
+              setState(() {
+                FATIGUE = value;
+              });
+            }),
+            _buildRow('Allergy:', (value) {
+              setState(() {
+                ALLERGY = value;
+              });
+            }),
+            _buildRow('Wheezing:', (value) {
+              setState(() {
+                WHEEZING = value;
+              });
+            }),
+            _buildRow('Alcohol Consuming:', (value) {
+              setState(() {
+                ALCOHOL_CONSUMING = value;
+              });
+            }),
+            _buildRow('Coughing:', (value) {
+              setState(() {
+                COUGHING = value;
+              });
+            }),
+            _buildRow('Shortness of Breath:', (value) {
+              setState(() {
+                SHORTNESS_OF_BREATH = value;
+              });
+            }),
+            _buildRow('Swallowing Difficulty:', (value) {
+              setState(() {
+                SWALLOWING_DIFFICULTY = value;
+              });
+            }),
+            _buildRow('Chest Pain:', (value) {
+              setState(() {
+                CHEST_PAIN = value;
               });
             }),
           ]),
@@ -1214,6 +1308,19 @@ class _FormExampleState extends State<FormExample> {
 Widget _buildRow(String label, Function onChanged) {
   var list = ['Yes', 'No'];
   if (label == 'Gender:') list = ['Female', "Male"];
+  if (label == 'Smoking:' ||
+      label == 'Yellow Fingers:' ||
+      label == 'Anxiety:' ||
+      label == 'Peer Pressure:' ||
+      label == 'Chronic Disease:' ||
+      label == 'Fatigue:' ||
+      label == 'Allergy:' ||
+      label == 'Wheezing:' ||
+      label == 'Alcohol Consuming:' ||
+      label == 'Coughing:' ||
+      label == 'Shortness of Breath:' ||
+      label == 'Swallowing Difficulty:' ||
+      label == 'Chest Pain:') list = ['YES', 'NO'];
   if (label == 'Chest Pain type chest pain type:')
     list = [
       'typical angina',
