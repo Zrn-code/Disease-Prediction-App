@@ -1268,7 +1268,7 @@ class _FormExampleState extends State<FormExample> {
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.heart_broken_rounded),
           labelText: 'mental health',
-          hintText: 'How many days was not good last month?',
+          hintText: 'Bad feeling days last month.',
         ),
         validator: (value) {
           if (value?.isEmpty ?? true) {
@@ -1298,7 +1298,7 @@ class _FormExampleState extends State<FormExample> {
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.mood_bad_rounded),
           labelText: 'mental health',
-          hintText: 'How many days have illness or injury in 30 days?',
+          hintText: 'Illness or injury in 30 days.',
         ),
         validator: (value) {
           if (value?.isEmpty ?? true) {
