@@ -379,7 +379,7 @@ class _FormExampleState extends State<FormExample> {
                                               _selectedField = "Prediction D";
                                             });
                                           },
-                                          child: Text('Kidney Disease'),
+                                          child: Text('Lung Cancer'),
                                         ),
                                       ),
                                     ],
