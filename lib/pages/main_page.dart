@@ -1015,7 +1015,7 @@ class _FormExampleState extends State<FormExample> {
             inputSleepTimeForm(),
             inputPhysicalHealthForm(),
             inputMentalHealthForm(),
-            _buildRow('Smoking:', (value) {
+            _buildRow('smoking:', (value) {
               setState(() {
                 Smoking = value;
               });
