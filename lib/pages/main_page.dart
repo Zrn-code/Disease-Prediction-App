@@ -1268,7 +1268,7 @@ class _FormExampleState extends State<FormExample> {
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.heart_broken_rounded),
           labelText: 'mental health',
-          hintText: 'How many days during the past 30 days was not good?',
+          hintText: 'How many days was not good last month?',
         ),
         validator: (value) {
           if (value?.isEmpty ?? true) {
@@ -1277,7 +1277,7 @@ class _FormExampleState extends State<FormExample> {
           if (double.tryParse(value!) == null ||
               int.parse(value) > 30 ||
               int.parse(value) < 0) {
-            return 'Please enter a valid mental health';
+            return 'Please enter in range 0 to 30';
           }
           return null;
         },
@@ -1298,8 +1298,7 @@ class _FormExampleState extends State<FormExample> {
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.mood_bad_rounded),
           labelText: 'mental health',
-          hintText:
-              'Which includes illness and injury, for during the past 30 days?',
+          hintText: 'How many days have illness or injury in 30 days?',
         ),
         validator: (value) {
           if (value?.isEmpty ?? true) {
@@ -1308,7 +1307,7 @@ class _FormExampleState extends State<FormExample> {
           if (int.tryParse(value!) == null ||
               int.parse(value) > 30 ||
               int.parse(value) < 0) {
-            return 'Please enter a valid physical health';
+            return 'Please enter in range 0 to 30';
           }
           return null;
         },
