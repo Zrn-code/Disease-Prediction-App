@@ -41,11 +41,41 @@ String partial_paresis = '1';
 String muscle_stiffness = '1';
 String Alopecia = '1';
 String Obesity = '1';
+String cp = "1";
+double trtbps = 0;
+double chol = 0;
+String fbs = "1";
+String restecg = "1";
+double thalachh = 0;
+String exng = "1";
+double oldpeak = 0;
+String slp = "1";
+String caa = "1";
+String thall = "1";
+String GENDER = "1";
+String AGE = "1";
+String SMOKING = "1";
+String YELLOW_FINGERS = "1";
+String ANXIETY = "1";
+String PEER_PRESSURE = "1";
+String CHRONIC_DISEASE = "1";
+String FATIGUE = "1";
+String ALLERGY = "1";
+String WHEEZING = "1";
+String ALCOHOL_CONSUMING = "1";
+String COUGHING = "1";
+String SHORTNESS_OF_BREATH = "1";
+String SWALLOWING_DIFFICULTY = "1";
+String CHEST_PAIN = "1";
 
 final List<String> _items = ['Prediction', 'Other Function'];
 String _selectedValue = "Prediction";
 String url_A = 'https://flask-app-test-yqkj.onrender.com/api?';
 String url_B = 'https://early-stage-diabetes-risk-prediction.onrender.com/api?';
+// https://heart-attack-analysis-prediction.onrender.com/api?age=63&sex=1&cp=3&trtbps=145&chol=233&fbs=1&restecg=0&thalachh=150&exng=0&oldpeak=2.3&slp=0&caa=0&thall=1
+String url_C = 'https://heart-attack-analysis-prediction.onrender.com/api?';
+// https://lung-cancer-808h.onrender.com/api?GENDER=1&AGE=50&SMOKING=2&YELLOW_FINGERS=1&ANXIETY=1&PEER_PRESSURE=1&CHRONIC_DISEASE=1&FATIGUE=2&ALLERGY=2&WHEEZING=1&ALCOHOL_CONSUMING=2&COUGHING=2&SHORTNESS_OF_BREATH=1&SWALLOWING_DIFFICULTY=1&CHEST_PAIN=1
+String url_D = 'https://lung-cancer-808h.onrender.com/api?';
 
 int _age = 0;
 double _bmi = 0;
@@ -236,7 +266,10 @@ class _FormExampleState extends State<FormExample> {
   TextEditingController ageController = TextEditingController();
   TextEditingController weightController = TextEditingController();
   TextEditingController heightController = TextEditingController();
-
+  TextEditingController trtbpsController = TextEditingController();
+  TextEditingController cholController = TextEditingController();
+  TextEditingController thalachhController = TextEditingController();
+  TextEditingController oldpeakController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -334,7 +367,7 @@ class _FormExampleState extends State<FormExample> {
                                               _selectedField = "Prediction C";
                                             });
                                           },
-                                          child: Text('Prediction C'),
+                                          child: Text('Heart Disease'),
                                         ),
                                       ),
                                       SizedBox(
@@ -346,7 +379,7 @@ class _FormExampleState extends State<FormExample> {
                                               _selectedField = "Prediction D";
                                             });
                                           },
-                                          child: Text('Prediction D'),
+                                          child: Text('Kidney Disease'),
                                         ),
                                       ),
                                     ],
@@ -419,15 +452,19 @@ class _FormExampleState extends State<FormExample> {
                                       _initialData();
                                     } else if (_selectedField ==
                                         "Prediction A") {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                              "your data has been submitted."),
-                                          duration: Duration(seconds: 1),
-                                        ),
-                                      );
-                                      _submitPredictionA(url_A);
+                                      if (_formKey.currentState?.validate() ??
+                                          false) {
+                                        _formKey.currentState!.save();
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                                "your data has been submitted."),
+                                            duration: Duration(seconds: 1),
+                                          ),
+                                        );
+                                        _submitPredictionA(url_A);
+                                      }
                                     } else if (_selectedField ==
                                         "Prediction B") {
                                       if (_formKey.currentState?.validate() ??
@@ -442,6 +479,21 @@ class _FormExampleState extends State<FormExample> {
                                           ),
                                         );
                                         _submitPredictionB(url_B);
+                                      }
+                                    } else if (_selectedField ==
+                                        "Prediction C") {
+                                      if (_formKey.currentState?.validate() ??
+                                          false) {
+                                        _formKey.currentState!.save();
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                                "your data has been submitted."),
+                                            duration: Duration(seconds: 1),
+                                          ),
+                                        );
+                                        _submitPredictionC(url_C);
                                       }
                                     }
                                   },
@@ -470,7 +522,9 @@ class _FormExampleState extends State<FormExample> {
                                       _initialData();
                                     } else if (_selectedField ==
                                             "Prediction A" ||
-                                        _selectedField == "Prediction B") {
+                                        _selectedField == "Prediction B" ||
+                                        _selectedField == "Prediction C" ||
+                                        _selectedField == "Prediction D") {
                                       setState(() {
                                         _selectedField = "Prediction";
                                       });
@@ -555,6 +609,44 @@ class _FormExampleState extends State<FormExample> {
       output = decoded['output'];
     });
     _showResult("Probability of Diabetes mellitus:", output);
+  }
+
+  // https://heart-attack-analysis-prediction.onrender.com/api?age=63&sex=1&cp=3&trtbps=145&chol=233&fbs=1&restecg=0&thalachh=150&exng=0&oldpeak=2.3&slp=0&caa=0&thall=1
+  Future<void> _submitPredictionC(String url) async {
+    url += 'age=';
+    url += _age.toString();
+    url += '&sex=';
+    url += gender;
+    url += '&cp=';
+    url += cp;
+    url += '&trtbps=';
+    url += trtbps.toString();
+    url += '&chol=';
+    url += chol.toString();
+    url += '&fbs=';
+    url += fbs;
+    url += '&restecg=';
+    url += restecg;
+    url += '&thalachh=';
+    url += thalachh.toString();
+    url += '&exng=';
+    url += exng;
+    url += '&oldpeak=';
+    url += oldpeak.toString();
+    url += '&slp=';
+    url += slp;
+    url += '&caa=';
+    url += caa;
+    url += '&thall=';
+    url += thall;
+    print(url);
+    var data = await fetchData(url);
+    var decoded = jsonDecode(data);
+    //print(url);
+    setState(() {
+      output = decoded['output'];
+    });
+    _showResult("Probability of Heart Attack:", output);
   }
 
   void _initialData() {
@@ -796,6 +888,7 @@ class _FormExampleState extends State<FormExample> {
     );
   }
 
+  // https://heart-attack-analysis-prediction.onrender.com/api?age=63&sex=1&cp=3&trtbps=145&chol=233&fbs=1&restecg=0&thalachh=150&exng=0&oldpeak=2.3&slp=0&caa=0&thall=1
   Container prediction_C_Form() {
     return Container(
       padding: EdgeInsets.all(20),
@@ -803,39 +896,49 @@ class _FormExampleState extends State<FormExample> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildRow('Cough:', (value) {
-              setState(() {
-                cough = value;
-              });
-            }),
-            _buildRow('Fever:', (value) {
-              setState(() {
-                fever = value;
-              });
-            }),
-            _buildRow('Sore Throat:', (value) {
-              setState(() {
-                sore_throat = value;
-              });
-            }),
-            _buildRow('Shortness of Breath:', (value) {
-              setState(() {
-                shortness_of_breath = value;
-              });
-            }),
-            _buildRow('Age is greater than 60:', (value) {
-              setState(() {
-                age_60_and_above = value;
-              });
-            }),
+            inputAgeForm(),
+            inputTrtbpsForm(),
+            inputCholForm(),
+            inputThalachhForm(),
+            inputOldpeakForm(),
             _buildRow('Gender:', (value) {
               setState(() {
                 gender = value;
               });
             }),
-            _buildRow('Test Indication:', (value) {
+            _buildRow('Chest Pain type chest pain type:', (value) {
               setState(() {
-                test_indication = value;
+                cp = value;
+              });
+            }),
+            _buildRow('Fasting blood sugar > 120 mg/dl:', (value) {
+              setState(() {
+                fbs = value;
+              });
+            }),
+            _buildRow('Resting electrocardiographic results:', (value) {
+              setState(() {
+                restecg = value;
+              });
+            }),
+            _buildRow('Exercise induced angina:', (value) {
+              setState(() {
+                exng = value;
+              });
+            }),
+            _buildRow('Slope:', (value) {
+              setState(() {
+                slp = value;
+              });
+            }),
+            _buildRow('Number of major vessels:', (value) {
+              setState(() {
+                caa = value;
+              });
+            }),
+            _buildRow('Thal rate:', (value) {
+              setState(() {
+                thall = value;
               });
             }),
           ]),
@@ -917,11 +1020,9 @@ class _FormExampleState extends State<FormExample> {
         ),
         validator: (value) {
           if (value?.isEmpty ?? true) {
-            // 使用空值判斷符號
             return 'Please enter your age';
           }
           if (int.tryParse(value!) == null) {
-            // 使用 '!' 運算符號
             return 'Please enter a valid age';
           }
           return null;
@@ -952,11 +1053,9 @@ class _FormExampleState extends State<FormExample> {
         ),
         validator: (value) {
           if (value?.isEmpty ?? true) {
-            // 使用空值判斷符號
             return 'Please enter your weight';
           }
           if (double.tryParse(value!) == null) {
-            // 使用 '!' 運算符號
             return 'Please enter a valid weight';
           }
           return null;
@@ -977,7 +1076,7 @@ class _FormExampleState extends State<FormExample> {
         decoration: const InputDecoration(
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.emoji_people_rounded),
-          labelText: 'height(cm)',
+          labelText: 'Height(cm)',
           hintText: 'Enter your height',
         ),
         validator: (value) {
@@ -992,14 +1091,120 @@ class _FormExampleState extends State<FormExample> {
           return null;
         },
         onSaved: (value) {
-          _height = double.parse(value!); // 使用 '!' 運算符號
+          _height = double.parse(value!);
         },
-        onFieldSubmitted: (value) {
-          if (_selectedField == 'BMI') {
-            _submitFormBMI();
-          } else if (_selectedField == "Initial Data") {
-            _initialData();
+      ),
+    );
+  }
+
+  Container inputTrtbpsForm() {
+    return Container(
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
+      child: TextFormField(
+        autofocus: true,
+        controller: trtbpsController,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          prefixIcon: Icon(Icons.emoji_people_rounded),
+          labelText: 'resting blood pressure (in mm Hg)',
+          hintText: 'Enter your resting blood pressure',
+        ),
+        validator: (value) {
+          if (value?.isEmpty ?? true) {
+            return 'Please enter your resting blood pressure';
           }
+          if (double.tryParse(value!) == null) {
+            return 'Please enter a valid resting blood pressure';
+          }
+          return null;
+        },
+        onSaved: (value) {
+          trtbps = double.parse(value!);
+        },
+      ),
+    );
+  }
+
+  Container inputCholForm() {
+    return Container(
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
+      child: TextFormField(
+        autofocus: true,
+        controller: cholController,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          prefixIcon: Icon(Icons.emoji_people_rounded),
+          labelText: 'cholesterol in mg/dl fetched via BMI sensor',
+          hintText: 'Enter your cholesterol',
+        ),
+        validator: (value) {
+          if (value?.isEmpty ?? true) {
+            return 'Please enter your cholesterol';
+          }
+          if (double.tryParse(value!) == null) {
+            return 'Please enter a valid cholesterol';
+          }
+          return null;
+        },
+        onSaved: (value) {
+          chol = double.parse(value!);
+        },
+      ),
+    );
+  }
+
+  Container inputThalachhForm() {
+    return Container(
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
+      child: TextFormField(
+        autofocus: true,
+        controller: thalachhController,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          prefixIcon: Icon(Icons.emoji_people_rounded),
+          labelText: 'maximum heart rate achieved',
+          hintText: 'Enter your maximum heart rate',
+        ),
+        validator: (value) {
+          if (value?.isEmpty ?? true) {
+            return 'Please enter your maximum heart rate';
+          }
+          if (double.tryParse(value!) == null) {
+            return 'Please enter a valid maximum heart rate';
+          }
+          return null;
+        },
+        onSaved: (value) {
+          thalachh = double.parse(value!);
+        },
+      ),
+    );
+  }
+
+  Container inputOldpeakForm() {
+    return Container(
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
+      child: TextFormField(
+        autofocus: true,
+        controller: oldpeakController,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          prefixIcon: Icon(Icons.emoji_people_rounded),
+          labelText:
+              'oldpeak = ST depression induced by exercise relative to rest',
+          hintText: 'Enter your oldpeak',
+        ),
+        validator: (value) {
+          if (value?.isEmpty ?? true) {
+            return 'Please enter your oldpeak';
+          }
+          if (double.tryParse(value!) == null) {
+            return 'Please enter a valid oldpeak';
+          }
+          return null;
+        },
+        onSaved: (value) {
+          oldpeak = double.parse(value!);
         },
       ),
     );
@@ -1007,6 +1212,34 @@ class _FormExampleState extends State<FormExample> {
 }
 
 Widget _buildRow(String label, Function onChanged) {
+  var list = ['Yes', 'No'];
+  if (label == 'Gender:') list = ['Female', "Male"];
+  if (label == 'Chest Pain type chest pain type:')
+    list = [
+      'typical angina',
+      'atypical angina',
+      'non-anginal pain',
+      'asymptomatic'
+    ];
+  if (label == "Slope:")
+    list = [
+      'upsloping',
+      'flat',
+      'downsloping',
+    ];
+  if (label == "Fasting blood sugar:")
+    list = [
+      'greater than 120mg/ml',
+      'less than 120mg/ml',
+    ];
+  if (label == "Resting electrocardiographic results:")
+    list = [
+      'normal',
+      'ST-T wave abnormality',
+      'left ventricular hypertrophy',
+    ];
+  if (label == "Number of major vessels:" || label == "Thal rate:")
+    list = ['0', '1', '2', '3'];
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -1015,7 +1248,7 @@ Widget _buildRow(String label, Function onChanged) {
       ),
       CustomDropdownButtonExample(
         labelText: label,
-        list: label == 'Gender:' ? ['Female', "Male"] : ['Yes', 'No'],
+        list: list,
         onChanged: onChanged,
       ),
     ],

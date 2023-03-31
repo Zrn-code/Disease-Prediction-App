@@ -19,54 +19,6 @@ class CustomDropdownButtonExample extends StatefulWidget {
       CustomDropdownButtonExampleState();
 }
 
-/*
-class CustomDropdownButtonExampleState
-    extends State<CustomDropdownButtonExample> {
-  String dropdownValue = '';
-
-  @override
-  void initState() {
-    super.initState();
-    dropdownValue = widget.list.first;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        //Text(widget.labelText),
-        DropdownButton<String>(
-          value: dropdownValue,
-          icon: const Icon(Icons.arrow_downward),
-          elevation: 16,
-          style: const TextStyle(color: Colors.green),
-          underline: Container(
-            height: 2,
-            color: Colors.green,
-          ),
-          onChanged: (String? value) {
-            if (value == 'Yes' || value == 'Male') {
-              widget.onChanged('1');
-            } else {
-              widget.onChanged('0');
-            }
-            setState(() {
-              dropdownValue = value!;
-            });
-          },
-          items: widget.list.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-        ),
-      ],
-    );
-  }
-}
-*/
 class CustomDropdownButtonExampleState
     extends State<CustomDropdownButtonExample> {
   String dropdownValue = '';
@@ -85,15 +37,11 @@ class CustomDropdownButtonExampleState
         Text(widget.labelText),
         DropdownButtonFormField2(
           decoration: InputDecoration(
-            //Add isDense true and zero Padding.
-            //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
             isDense: true,
             contentPadding: EdgeInsets.zero,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
             ),
-            //Add more decoration as you want here
-            //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
           ),
           isExpanded: true,
           barrierColor: Colors.black.withOpacity(0.5),
@@ -128,6 +76,38 @@ class CustomDropdownButtonExampleState
             } else {
               widget.onChanged('0');
             }
+            if (value == 'typical angina')
+              widget.onChanged('1');
+            else if (value == 'atypical angina')
+              widget.onChanged('2');
+            else if (value == 'non-anginal pain')
+              widget.onChanged('3');
+            else if (value == 'asymptomatic') widget.onChanged('4');
+
+            if (value == 'upsloping')
+              widget.onChanged('0');
+            else if (value == 'flat')
+              widget.onChanged('1');
+            else if (value == 'downsloping') widget.onChanged('2');
+
+            if (value == 'greater than 120mg/ml')
+              widget.onChanged('1');
+            else if (value == 'less than 120mg/ml') widget.onChanged('0');
+
+            if (value == 'normal')
+              widget.onChanged('0');
+            else if (value == 'ST-T wave abnormality')
+              widget.onChanged('1');
+            else if (value == 'left ventricular hypertrophy')
+              widget.onChanged('2');
+
+            if (value == '0')
+              widget.onChanged('0');
+            else if (value == '1')
+              widget.onChanged('1');
+            else if (value == '2')
+              widget.onChanged('2');
+            else if (value == '3') widget.onChanged('3');
             setState(() {
               dropdownValue = value!;
             });
