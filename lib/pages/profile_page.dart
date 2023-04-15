@@ -109,7 +109,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   Navigator.of(context).pushAndRemoveUntil(
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const LoginPage()),
+                                              const LoginScreen()),
                                       (route) => false);
                                 },
                                 icon: const Icon(

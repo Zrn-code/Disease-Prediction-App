@@ -196,7 +196,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             decoration: TextDecoration.underline),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            nextScreen(context, const LoginPage());
+                            nextScreen(context, const LoginScreen());
                           })
                   ]))
             ],
@@ -382,7 +382,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   decoration: TextDecoration.underline),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  nextScreen(context, const LoginPage());
+                                  nextScreen(context, const LoginScreen());
                                 })
                         ]))
                   ],

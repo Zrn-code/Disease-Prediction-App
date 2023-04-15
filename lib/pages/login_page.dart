@@ -8,15 +8,17 @@ import '../services/auth_service.dart';
 import '../services/database_service.dart';
 import '../widgets/widgets.dart';
 import 'main_page.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:animated_login/animated_login.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<Login> createState() => _LoginState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginState extends State<Login> {
   final formKey = GlobalKey<FormState>();
   String email = "";
   String password = "";
@@ -55,9 +57,26 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(
                 height: 10,
               ),
-              const Text(
-                "Login now for your health!",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+              SizedBox(
+                child: DefaultTextStyle(
+                  style: const TextStyle(
+                    fontSize: 15.0,
+                  ),
+                  child: AnimatedTextKit(
+                    animatedTexts: [
+                      TypewriterAnimatedText('Login in now for your health!',
+                          speed: const Duration(milliseconds: 100)),
+                      TyperAnimatedText('It\'s free and convenient!',
+                          speed: Duration(milliseconds: 100)),
+                      TyperAnimatedText('What are you waiting for?',
+                          speed: Duration(milliseconds: 100)),
+                    ],
+                    pause: const Duration(milliseconds: 2000),
+                    onTap: () {
+                      print("Tap Event");
+                    },
+                  ),
+                ),
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(
@@ -316,4 +335,200 @@ class _LoginPageState extends State<LoginPage> {
       }
     });
   }
+}
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  LanguageOption language = _languageOptions[0];
+  AuthMode currentMode = AuthMode.login;
+  AuthService authService = AuthService();
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedLogin(
+      showPasswordVisibility: true,
+      formKey: GlobalKey<FormState>(),
+      onLogin: LoginFunctions(context).onLogin,
+      onSignup: LoginFunctions(context).onSignup,
+      onForgotPassword: LoginFunctions(context).onForgotPassword,
+      // logo: Image.asset('assets/images/logo.gif'),
+      // backgroundImage: 'images/background_image.jpg',
+      signUpMode: SignUpModes.both,
+      loginDesktopTheme: _desktopTheme,
+      loginMobileTheme: _mobileTheme,
+      loginTexts: _loginTexts,
+      initialMode: currentMode,
+      passwordValidator: _passwordValidator,
+      onAuthModeChange: (AuthMode newMode) => currentMode = newMode,
+    );
+  }
+
+  static List<LanguageOption> get _languageOptions => const <LanguageOption>[
+        LanguageOption(
+          value: 'English',
+          code: 'EN',
+          iconPath: 'assets/images/en.png',
+        ),
+      ];
+
+  /// You can adjust the colors, text styles, button styles, borders
+  /// according to your design preferences for *DESKTOP* view.
+  /// You can also set some additional display options such as [showLabelTexts].
+  LoginViewTheme get _desktopTheme => _mobileTheme.copyWith(
+        // To set the color of button text, use foreground color.
+        actionButtonStyle: ButtonStyle(
+          foregroundColor: MaterialStateProperty.all(Colors.white),
+        ),
+        dialogTheme: const AnimatedDialogTheme(
+          languageDialogTheme: LanguageDialogTheme(
+              optionMargin: EdgeInsets.symmetric(horizontal: 80)),
+        ),
+      );
+
+  /// You can adjust the colors, text styles, button styles, borders
+  /// according to your design preferences for *MOBILE* view.
+  /// You can also set some additional display options such as [showLabelTexts].
+  LoginViewTheme get _mobileTheme => LoginViewTheme(
+        // showLabelTexts: false,
+        backgroundColor: Colors.blue, // const Color(0xFF6666FF),
+        formFieldBackgroundColor: Colors.white,
+        formWidthRatio: 60,
+        // actionButtonStyle: ButtonStyle(
+        //   foregroundColor: MaterialStateProperty.all(Colors.blue),
+        // ),
+      );
+
+  LoginTexts get _loginTexts => LoginTexts(
+        nameHint: _username,
+        login: _login,
+        signUp: _signup,
+        welcome: "Disease Detection",
+        welcomeBack: "Disease Detection",
+        welcomeBackDescription: "Sign up for your health!",
+        signUpFormTitle: "Sign Up",
+      );
+
+  ValidatorModel get _passwordValidator => const ValidatorModel(
+        length: 6,
+        checkUpperCase: false,
+        checkLowerCase: false,
+        checkSpace: false,
+      );
+
+  /// You can adjust the texts in the screen according to the current language
+  /// With the help of [LoginTexts], you can create a multilanguage scren.
+  String get _username => 'Username';
+
+  String get _login => 'Login';
+
+  String get _signup => 'Sign Up';
+}
+
+class LoginFunctions {
+  LoginFunctions(this.context);
+  final BuildContext context;
+  AuthService authService = AuthService();
+
+  /// Login action that will be performed on click to action button in login mode.
+  Future<String?> onLogin(LoginData loginData) async {
+    await authService
+        .loginWithUserNameandPassword(loginData.email, loginData.password)
+        .then((value) async {
+      if (value == true) {
+        QuerySnapshot snapshot =
+            await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+                .gettingUserData(loginData.email);
+        await HelperFunctions.saveUserLoggedInStatus(true);
+        await HelperFunctions.saveUserEmailSF(loginData.email);
+        await HelperFunctions.saveUserNameSF(snapshot.docs[0]['fullName']);
+        nextScreenReplace(context, const MainPage());
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Login Failed'),
+          ),
+        );
+      }
+    });
+    return null;
+  }
+
+  /// Sign up action that will be performed on click to action button in sign up mode.
+  Future<String?> onSignup(SignUpData signupData) async {
+    await authService
+        .registerUserWithEmailandPassword(
+            signupData.name, signupData.email, signupData.password)
+        .then((value) async {
+      if (value == true) {
+        await HelperFunctions.saveUserLoggedInStatus(true);
+        await HelperFunctions.saveUserEmailSF(signupData.email);
+        await HelperFunctions.saveUserNameSF(signupData.name);
+        nextScreenReplace(context, const MainPage());
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Sign Up Failed'),
+          ),
+        );
+      }
+    });
+
+    return null;
+  }
+
+  Future<String?> onForgotPassword(String email) async {
+    DialogBuilder(context).showLoadingDialog();
+    await Future.delayed(const Duration(seconds: 2));
+    Navigator.of(context).pop();
+    // You should determine this path and create the screen.
+    // Navigator.of(context).pushNamed('/forgotPass');
+    DialogBuilder(context).showResultDialog('I am handling forgot password');
+    return null;
+  }
+}
+
+class DialogBuilder {
+  /// Builds various dialogs with different methods.
+  /// * e.g. [showLoadingDialog], [showResultDialog]
+  const DialogBuilder(this.context);
+  final BuildContext context;
+
+  /// Example loading dialog
+  Future<void> showLoadingDialog() => showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => WillPopScope(
+          onWillPop: () async => false,
+          child: const AlertDialog(
+            content: SizedBox(
+              width: 100,
+              height: 100,
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: Color(0xFF6666FF),
+                  strokeWidth: 3,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+
+  /// Example result dialog
+  Future<void> showResultDialog(String text) => showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          content: SizedBox(
+            height: 100,
+            width: 100,
+            child: Center(child: Text(text, textAlign: TextAlign.center)),
+          ),
+        ),
+      );
 }

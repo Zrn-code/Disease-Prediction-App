@@ -48,7 +48,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: _isSignedIn ? const MainPage() : const LoginPage(),
+      home: _isSignedIn ? const MainPage() : const LoginScreen(),
     );
   }
 }

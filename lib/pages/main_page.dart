@@ -10,6 +10,7 @@ import 'login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../helper/function.dart';
 import '../form/dropdown.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 class MainPage extends StatefulWidget {
@@ -230,7 +231,7 @@ class _MainPageState extends State<MainPage> {
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const LoginPage()),
+                                                const LoginScreen()),
                                         (route) => false);
                                   },
                                   icon: const Icon(

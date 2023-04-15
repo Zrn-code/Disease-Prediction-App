@@ -9,6 +9,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.16"
+  animated_login:
+    dependency: "direct main"
+    description:
+      name: animated_login
+      sha256: "351644c5bcd5ab2da56723be988a2ad91591b3f2f6da8ce334b33b56da5788ec"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.5"
+  animated_text_kit:
+    dependency: "direct main"
+    description:
+      name: animated_text_kit
+      sha256: "37392a5376c9a1a503b02463c38bc0342ef814ddbb8f9977bc90f2a84b22fa92"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.2"
+  animations:
+    dependency: transitive
+    description:
+      name: animations
+      sha256: fe8a6bdca435f718bb1dc8a11661b2c22504c6da40ef934cee8327ed77934164
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.7"
   async:
     dependency: transitive
     description:
