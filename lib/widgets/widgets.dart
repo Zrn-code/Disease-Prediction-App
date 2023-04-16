@@ -16,9 +16,10 @@ void nextScreen(context, page) {
   Navigator.push(context, MaterialPageRoute(builder: (context) => page));
 }
 
-void nextScreenReplace(context, page) {
+String nextScreenReplace(context, page) {
   Navigator.pushReplacement(
       context, MaterialPageRoute(builder: (context) => page));
+  return "";
 }
 
 void showSnackBar(context, color, message) {

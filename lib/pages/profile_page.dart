@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
+import '../services/database_service.dart';
+import "../widgets/recordTile.dart";
 import '../widgets/widgets.dart';
 import 'login_page.dart';
 import 'main_page.dart';
@@ -11,21 +14,54 @@ class ProfilePage extends StatefulWidget {
   double weight;
   double height;
   int age;
-  ProfilePage(
-      {Key? key,
-      required this.email,
-      required this.userName,
-      required this.age,
-      required this.height,
-      required this.weight})
-      : super(key: key);
+  ProfilePage({
+    Key? key,
+    required this.email,
+    required this.userName,
+    required this.age,
+    required this.height,
+    required this.weight,
+  }) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  Stream? records;
   AuthService authService = AuthService();
+  @override
+  void initState() {
+    super.initState();
+    gettingRecordsData();
+  }
+
+  List<String> getTitle(String input) {
+    List<String> res = [], tmp = input.split("_");
+    for (int i = 0; i < tmp.length; i++) {
+      res.add(tmp[i].substring(0, tmp[i].indexOf(':')));
+    }
+    return res;
+  }
+
+  List<String> getInfo(String input) {
+    List<String> res = [], tmp = input.split("_");
+    for (int i = 0; i < tmp.length; i++) {
+      res.add(tmp[i].substring(tmp[i].indexOf(':') + 1));
+    }
+    return res;
+  }
+
+  gettingRecordsData() async {
+    await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+        .getRecordsGroups()
+        .then((snapshot) {
+      setState(() {
+        records = snapshot;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,131 +166,194 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
-        child: Column(
-          children: [
-            Icon(
-              Icons.account_circle,
-              size: 200,
-              color: Colors.grey[700],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Scrollbar(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+            child: Column(
               children: [
+                Icon(
+                  Icons.account_circle,
+                  size: 200,
+                  color: Colors.grey[700],
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Full Name",
+                      style: TextStyle(fontSize: 17),
+                    ),
+                    Text(
+                      widget.userName,
+                      style: const TextStyle(fontSize: 17),
+                    )
+                  ],
+                ),
+                const Divider(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Email",
+                      style: TextStyle(fontSize: 17),
+                    ),
+                    Text(
+                      widget.email,
+                      style: const TextStyle(fontSize: 17),
+                    )
+                  ],
+                ),
+                const Divider(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Height",
+                      style: TextStyle(fontSize: 17),
+                    ),
+                    if (widget.height <= 0)
+                      const Text(
+                        "Undefined",
+                        style: TextStyle(fontSize: 17),
+                      )
+                    else
+                      Text(
+                        widget.height.toString(),
+                        style: const TextStyle(fontSize: 17),
+                      )
+                  ],
+                ),
+                const Divider(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Weight",
+                      style: TextStyle(fontSize: 17),
+                    ),
+                    if (widget.weight <= 0)
+                      const Text(
+                        "Undefined",
+                        style: TextStyle(fontSize: 17),
+                      )
+                    else
+                      Text(
+                        widget.weight.toString(),
+                        style: const TextStyle(fontSize: 17),
+                      )
+                  ],
+                ),
+                const Divider(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Age",
+                      style: TextStyle(fontSize: 17),
+                    ),
+                    if (widget.age <= 0)
+                      const Text(
+                        "Undefined",
+                        style: TextStyle(fontSize: 17),
+                      )
+                    else
+                      Text(
+                        widget.age.toString(),
+                        style: const TextStyle(fontSize: 17),
+                      )
+                  ],
+                ),
+                const Divider(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Gender",
+                      style: TextStyle(fontSize: 17),
+                    ),
+                    Text(
+                      widget.gender,
+                      style: const TextStyle(fontSize: 17),
+                    )
+                  ],
+                ),
+                const Divider(
+                  height: 20,
+                ),
                 const Text(
-                  "Full Name",
+                  "Prediction Records",
+                  textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 17),
                 ),
-                Text(
-                  widget.userName,
-                  style: const TextStyle(fontSize: 17),
-                )
-              ],
-            ),
-            const Divider(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Email",
-                  style: TextStyle(fontSize: 17),
+                const Divider(
+                  color: Colors.black,
+                  height: 20,
                 ),
-                Text(
-                  widget.email,
-                  style: const TextStyle(fontSize: 17),
-                )
+                recordsList()
               ],
             ),
-            const Divider(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Height",
-                  style: TextStyle(fontSize: 17),
-                ),
-                if (widget.height <= 0)
-                  const Text(
-                    "Undefined",
-                    style: TextStyle(fontSize: 17),
-                  )
-                else
-                  Text(
-                    widget.height.toString(),
-                    style: const TextStyle(fontSize: 17),
-                  )
-              ],
-            ),
-            const Divider(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Weight",
-                  style: TextStyle(fontSize: 17),
-                ),
-                if (widget.weight <= 0)
-                  const Text(
-                    "Undefined",
-                    style: TextStyle(fontSize: 17),
-                  )
-                else
-                  Text(
-                    widget.weight.toString(),
-                    style: const TextStyle(fontSize: 17),
-                  )
-              ],
-            ),
-            const Divider(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Age",
-                  style: TextStyle(fontSize: 17),
-                ),
-                if (widget.age <= 0)
-                  const Text(
-                    "Undefined",
-                    style: TextStyle(fontSize: 17),
-                  )
-                else
-                  Text(
-                    widget.age.toString(),
-                    style: const TextStyle(fontSize: 17),
-                  )
-              ],
-            ),
-            const Divider(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Gender",
-                  style: TextStyle(fontSize: 17),
-                ),
-                Text(
-                  widget.gender,
-                  style: const TextStyle(fontSize: 17),
-                )
-              ],
-            ),
-          ],
+          ),
         ),
+      ),
+    );
+  }
+
+  recordsList() {
+    return StreamBuilder(
+      stream: records,
+      builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data['records'] != null &&
+              snapshot.data['records'].length != 0) {
+            return ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: snapshot.data['records'].length,
+              itemBuilder: (context, index) {
+                return RecordTile(
+                    titles: getTitle(snapshot.data['records'][index]),
+                    infos: getInfo(snapshot.data['records'][index]),
+                    userName: snapshot.data['fullName']);
+              },
+            );
+          } else {
+            return noRecordWidget();
+          }
+        } else {
+          return Center(
+              child: CircularProgressIndicator(
+                  color: Theme.of(context).primaryColor));
+        }
+      },
+    );
+  }
+
+  noRecordWidget() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 25),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: const [
+          Text(
+            "You've not conducted any prediction.",
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

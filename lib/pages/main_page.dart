@@ -578,6 +578,33 @@ class _FormExampleState extends State<FormExample> {
   }
 
   Future<void> _submitPredictionA(String url) async {
+    List<String> _infos = [
+      cough,
+      fever,
+      sore_throat,
+      shortness_of_breath,
+      head_ache,
+      age_60_and_above,
+      gender,
+      test_indication
+    ];
+    List<String> _titles = [
+      "cough",
+      "fever",
+      "sore throat",
+      "shortness of breath",
+      "head ache",
+      "age 60 and above",
+      "gender",
+      "test indication"
+    ];
+    String _newRecord = "Covid19:";
+    _newRecord +=
+        "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}_";
+    debugPrint(_newRecord);
+    for (int i = 0; i < 8; i++) {
+      _newRecord += "${_titles[i]}:${_infos[i]}_";
+    }
     url += 'cough=';
     url += cough;
     url += '&fever=';
@@ -595,11 +622,14 @@ class _FormExampleState extends State<FormExample> {
     url += '&test_indication=';
     url += test_indication;
     var data = await fetchData(url);
-    var decoded = jsonDecode(data);
+    var decoded = await jsonDecode(data);
     print(url);
     setState(() {
       output = decoded['output'];
     });
+    _newRecord = _newRecord.substring(0, _newRecord.length - 1);
+    await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+        .updateRecords(_newRecord);
     _showResult("Probability of Covid :", output);
   }
 
@@ -638,7 +668,7 @@ class _FormExampleState extends State<FormExample> {
     url += '&Obesity=';
     url += Obesity;
     var data = await fetchData(url);
-    var decoded = jsonDecode(data);
+    var decoded = await jsonDecode(data);
     print(url);
     setState(() {
       output = decoded['output'];
@@ -684,7 +714,7 @@ class _FormExampleState extends State<FormExample> {
     url += SkinCancer;
     print(url);
     var data = await fetchData(url);
-    var decoded = jsonDecode(data);
+    var decoded = await jsonDecode(data);
     //print(url);
     setState(() {
       output = decoded['output'];
@@ -726,7 +756,7 @@ class _FormExampleState extends State<FormExample> {
     url += CHEST_PAIN;
     print(url);
     var data = await fetchData(url);
-    var decoded = jsonDecode(data);
+    var decoded = await jsonDecode(data);
     //print(url);
     setState(() {
       output = decoded['output'];
