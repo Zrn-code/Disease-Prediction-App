@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application/pages/profile_page.dart';
+import '../form/example_candidate_model.dart';
 import '../helper/helper_functions.dart';
 import '../services/database_service.dart';
 import '../widgets/widgets.dart';
@@ -10,8 +11,14 @@ import 'login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../helper/function.dart';
 import '../form/dropdown.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:im_stepper/main.dart';
+import 'package:im_stepper/stepper.dart';
+import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
+import 'package:appinio_swiper/appinio_swiper.dart';
+import 'package:flutter/cupertino.dart';
+import '../form/example_buttons.dart';
+import '../form/example_card.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -83,6 +90,7 @@ String SleepTime = "1";
 String Asthma = "1";
 String KidneyDisease = "1";
 String SkinCancer = "1";
+List<String> prediction_A = ["undefined", "0", "0", "0", "0", "0", "0", "0"];
 
 final List<String> _items = ['Prediction', 'Other Function'];
 String _selectedValue = "Prediction";
@@ -270,14 +278,15 @@ class FormExample extends StatefulWidget {
 class _FormExampleState extends State<FormExample> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final List<String> _items = ['Prediction', 'Other Function'];
-
   String output = 'Prediction';
   bool isSwitched = false;
-
+  int activeStep = 0;
   String _selectedField = "Prediction";
-
+  String current_prediction = "X";
+  double result = 0;
+  int _tabTextIndexSelected = 0;
   List<String> _genderList = ["male", "female"];
-
+  final AppinioSwiperController controller = AppinioSwiperController();
   AuthService authService = AuthService();
 
   TextEditingController ageController = TextEditingController();
@@ -303,39 +312,20 @@ class _FormExampleState extends State<FormExample> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
-                              labelText: 'Category',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide.none,
-                              ),
-                              filled: true,
-                              fillColor: Colors.grey[200],
-                            ),
-                            value: (_selectedField == "Prediction A" ||
-                                    _selectedField == "Prediction B" ||
-                                    _selectedField == "Prediction C" ||
-                                    _selectedField == "Prediction D")
-                                ? "Prediction"
-                                : (_selectedField == "BMI" ||
-                                        _selectedField == "Initial Data")
-                                    ? "Other Function"
-                                    : _selectedField,
-                            items: _items.map((item) {
-                              return DropdownMenuItem<String>(
-                                value: item,
-                                child: Text(item),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
+                          NumberStepper(
+                            numbers: [1, 2, 3],
+                            activeStep: activeStep,
+                            onStepReached: (index) {
                               setState(() {
-                                _selectedField = value!;
+                                if (index == 0) {
+                                  activeStep = 0;
+                                  _selectedField = "Prediction";
+                                } else if (index == 1 && activeStep == 0) {
+                                  activeStep = 0;
+                                  _selectedField = "Prediction";
+                                }
                               });
                             },
-                          ),
-                          const SizedBox(
-                            height: 20,
                           ),
                           if (_selectedField == "Prediction")
                             Container(
@@ -354,6 +344,8 @@ class _FormExampleState extends State<FormExample> {
                                           onPressed: () {
                                             setState(() {
                                               _selectedField = "Prediction A";
+                                              activeStep = 1;
+                                              current_prediction = "A";
                                             });
                                           },
                                           child: Text('Covid Prediction'),
@@ -366,6 +358,8 @@ class _FormExampleState extends State<FormExample> {
                                           onPressed: () {
                                             setState(() {
                                               _selectedField = "Prediction B";
+                                              activeStep = 1;
+                                              current_prediction = "B";
                                             });
                                           },
                                           child: Text("Diabetes mellitus"),
@@ -385,6 +379,8 @@ class _FormExampleState extends State<FormExample> {
                                           onPressed: () {
                                             setState(() {
                                               _selectedField = "Prediction C";
+                                              activeStep = 1;
+                                              current_prediction = "C";
                                             });
                                           },
                                           child: Text('Heart Disease'),
@@ -397,6 +393,8 @@ class _FormExampleState extends State<FormExample> {
                                           onPressed: () {
                                             setState(() {
                                               _selectedField = "Prediction D";
+                                              activeStep = 1;
+                                              current_prediction = "D";
                                             });
                                           },
                                           child: Text('Lung Cancer'),
@@ -407,8 +405,57 @@ class _FormExampleState extends State<FormExample> {
                                 ],
                               ),
                             ),
+                          //if (_selectedField == "Prediction A")
+                          //prediction_A_Form(),
                           if (_selectedField == "Prediction A")
-                            prediction_A_Form(),
+                            CupertinoPageScaffold(
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.75,
+                                    child: AppinioSwiper(
+                                      swipeOptions:
+                                          AppinioSwipeOptions.vertical,
+                                      unlimitedUnswipe: true,
+                                      controller: controller,
+                                      unswipe: _unswipe,
+                                      onSwipe: _swipe,
+                                      padding: const EdgeInsets.only(
+                                        left: 25,
+                                        right: 25,
+                                        top: 50,
+                                        bottom: 40,
+                                      ),
+                                      onEnd: _onEnd,
+                                      cardsCount: candidates.length,
+                                      cardsBuilder:
+                                          (BuildContext context, int index) {
+                                        return ExampleCard(
+                                            candidate: candidates[index]);
+                                      },
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const SizedBox(
+                                        width: 80,
+                                      ),
+                                      swipeLeftButton(controller),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      swipeRightButton(controller),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      unswipeButton(controller),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
                           if (_selectedField == "Prediction B")
                             prediction_B_Form(),
                           if (_selectedField == "Prediction C")
@@ -458,8 +505,12 @@ class _FormExampleState extends State<FormExample> {
                               ),
                             ),
                           SizedBox(height: 16.0),
-                          if (_selectedField != "Prediction" &&
-                              _selectedField != "Other Function")
+                          if (_selectedField == "Prediction A" ||
+                              _selectedField == "Prediction B" ||
+                              _selectedField == "Prediction C" ||
+                              _selectedField == "Prediction D" ||
+                              _selectedField == "BMI" ||
+                              _selectedField == "Initial Data")
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -543,8 +594,10 @@ class _FormExampleState extends State<FormExample> {
                           SizedBox(
                             height: 20,
                           ),
-                          if (_selectedField != "Prediction" &&
-                              _selectedField != "Other Function")
+                          if (_selectedField == "Prediction A" ||
+                              _selectedField == "Prediction B" ||
+                              _selectedField == "Prediction C" ||
+                              _selectedField == "Prediction D")
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -574,26 +627,51 @@ class _FormExampleState extends State<FormExample> {
                                 ),
                               ],
                             ),
+                          if (activeStep == 2)
+                            Container(
+                              child: Column(
+                                children: [
+                                  Text("Result: " + output),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        activeStep = 0;
+                                        _selectedField = "Prediction";
+                                      });
+                                    },
+                                    child: Text(
+                                      "Return To Menu".toUpperCase(),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
                         ])))));
   }
 
   Future<void> _submitPredictionA(String url) async {
+    setState(() {
+      _selectedField = "Result A";
+      activeStep = 2;
+    });
     url += 'cough=';
-    url += cough;
+    url += prediction_A[1];
     url += '&fever=';
-    url += fever;
+    url += prediction_A[2];
     url += '&sore_throat=';
-    url += sore_throat;
+    url += prediction_A[3];
     url += '&shortness_of_breath=';
-    url += shortness_of_breath;
+    url += prediction_A[4];
     url += '&head_ache=';
-    url += head_ache;
+    url += prediction_A[5];
     url += '&age_60_and_above=';
-    url += age_60_and_above;
+    url += prediction_A[6];
     url += '&gender=';
     url += gender;
     url += '&test_indication=';
-    url += test_indication;
+    url += prediction_A[7];
     var data = await fetchData(url);
     var decoded = jsonDecode(data);
     print(url);
@@ -881,7 +959,7 @@ class _FormExampleState extends State<FormExample> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildRow('Cough:', (value) {
+            /*_buildRow('Cough:', (value) {
               setState(() {
                 cough = value;
               });
@@ -916,6 +994,7 @@ class _FormExampleState extends State<FormExample> {
                 test_indication = value;
               });
             }),
+            */
           ]),
     );
   }
@@ -1524,4 +1603,28 @@ Widget _buildRow(String label, Function onChanged) {
       ),
     ],
   );
+}
+
+void _swipe(int index, AppinioSwiperDirection direction) {
+  print("the card was swiped to the: " + direction.name);
+  if (direction.name == "left") {
+    print("left" + index.toString());
+    prediction_A[index] = "0";
+  } else if (direction.name == "right") {
+    print("right" + index.toString());
+    prediction_A[index] = "1";
+  }
+}
+
+void _unswipe(bool unswiped) {
+  if (unswiped) {
+    print("SUCCESS: card was unswiped");
+  } else {
+    print("FAIL: no card left to unswipe");
+  }
+}
+
+void _onEnd() {
+  print("end reached!");
+  print(prediction_A);
 }
