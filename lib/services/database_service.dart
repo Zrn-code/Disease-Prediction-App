@@ -18,6 +18,7 @@ class DatabaseService {
       "age": 0,
       "gender": -1,
       "uid": uid,
+      "records": []
     });
   }
 
@@ -27,6 +28,12 @@ class DatabaseService {
       "weight": weight,
       "age": age,
       //"gender": gender,
+    });
+  }
+  
+  Future updateRecords(String newRecords) async {
+    return await userCollection.doc(uid).update({
+      "records": FieldValue.arrayUnion([newRecords])
     });
   }
 
@@ -94,5 +101,9 @@ class DatabaseService {
       // Return a default value or rethrow the exception
       return 0;
     }
+  }
+
+  getRecordsGroups() async {
+    return userCollection.doc(uid).snapshots();
   }
 }
