@@ -91,6 +91,7 @@ String Asthma = "1";
 String KidneyDisease = "1";
 String SkinCancer = "1";
 List<String> prediction_A = ["undefined", "0", "0", "0", "0", "0", "0", "0"];
+bool _submit = false;
 
 final List<String> _items = ['Prediction', 'Other Function'];
 String _selectedValue = "Prediction";
@@ -313,7 +314,7 @@ class _FormExampleState extends State<FormExample> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           NumberStepper(
-                            numbers: [1, 2, 3],
+                            numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
                             activeStep: activeStep,
                             onStepReached: (index) {
                               setState(() {
@@ -345,6 +346,7 @@ class _FormExampleState extends State<FormExample> {
                                             setState(() {
                                               _selectedField = "Prediction A";
                                               activeStep = 1;
+                                              _submit = false;
                                               current_prediction = "A";
                                             });
                                           },
@@ -407,19 +409,19 @@ class _FormExampleState extends State<FormExample> {
                             ),
                           //if (_selectedField == "Prediction A")
                           //prediction_A_Form(),
-                          if (_selectedField == "Prediction A")
+                          if (_selectedField == "Prediction A" &&
+                              _submit == false)
                             CupertinoPageScaffold(
                               child: Column(
                                 children: [
                                   SizedBox(
                                     height: MediaQuery.of(context).size.height *
-                                        0.75,
+                                        0.5,
                                     child: AppinioSwiper(
                                       swipeOptions:
                                           AppinioSwipeOptions.vertical,
                                       unlimitedUnswipe: true,
                                       controller: controller,
-                                      unswipe: _unswipe,
                                       onSwipe: _swipe,
                                       padding: const EdgeInsets.only(
                                         left: 25,
@@ -427,7 +429,12 @@ class _FormExampleState extends State<FormExample> {
                                         top: 50,
                                         bottom: 40,
                                       ),
-                                      onEnd: _onEnd,
+                                      onEnd: () {
+                                        setState(() {
+                                          print(prediction_A);
+                                          _submit = true;
+                                        });
+                                      },
                                       cardsCount: candidates.length,
                                       cardsBuilder:
                                           (BuildContext context, int index) {
@@ -505,12 +512,13 @@ class _FormExampleState extends State<FormExample> {
                               ),
                             ),
                           SizedBox(height: 16.0),
-                          if (_selectedField == "Prediction A" ||
-                              _selectedField == "Prediction B" ||
-                              _selectedField == "Prediction C" ||
-                              _selectedField == "Prediction D" ||
-                              _selectedField == "BMI" ||
-                              _selectedField == "Initial Data")
+                          if ((_selectedField == "Prediction A" ||
+                                  _selectedField == "Prediction B" ||
+                                  _selectedField == "Prediction C" ||
+                                  _selectedField == "Prediction D" ||
+                                  _selectedField == "BMI" ||
+                                  _selectedField == "Initial Data") &&
+                              _submit == true)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -615,6 +623,8 @@ class _FormExampleState extends State<FormExample> {
                                         _selectedField == "Prediction D") {
                                       setState(() {
                                         _selectedField = "Prediction";
+                                        _submit = false;
+                                        activeStep = 0;
                                       });
                                     }
                                   },
@@ -637,6 +647,7 @@ class _FormExampleState extends State<FormExample> {
                                       setState(() {
                                         activeStep = 0;
                                         _selectedField = "Prediction";
+                                        output = "Prediction";
                                       });
                                     },
                                     child: Text(
@@ -1622,9 +1633,4 @@ void _unswipe(bool unswiped) {
   } else {
     print("FAIL: no card left to unswipe");
   }
-}
-
-void _onEnd() {
-  print("end reached!");
-  print(prediction_A);
 }

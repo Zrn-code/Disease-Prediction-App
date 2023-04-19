@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
-import '../pages/main_page.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 const List<Widget> fruits = <Widget>[Text('Apple'), Text('Banana')];
@@ -25,7 +23,6 @@ class CustomDropdownButtonExample extends StatefulWidget {
 class CustomDropdownButtonExampleState
     extends State<CustomDropdownButtonExample> {
   String dropdownValue = '';
-  int _tabTextIndexSelected = 0;
   @override
   void initState() {
     super.initState();
