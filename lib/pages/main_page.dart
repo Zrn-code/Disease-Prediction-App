@@ -662,7 +662,7 @@ class _FormExampleState extends State<FormExample> {
                         ])))));
   }
 
-  Future<void> _submitPredictionA(String url) async 
+  Future<void> _submitPredictionA(String url) async {
     List<String> _infos = [
       cough,
       fever,
