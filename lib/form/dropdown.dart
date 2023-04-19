@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import '../pages/main_page.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+
+const List<Widget> fruits = <Widget>[Text('Apple'), Text('Banana')];
 
 class CustomDropdownButtonExample extends StatefulWidget {
   final String labelText;
@@ -22,7 +25,7 @@ class CustomDropdownButtonExample extends StatefulWidget {
 class CustomDropdownButtonExampleState
     extends State<CustomDropdownButtonExample> {
   String dropdownValue = '';
-
+  int _tabTextIndexSelected = 0;
   @override
   void initState() {
     super.initState();
@@ -34,7 +37,38 @@ class CustomDropdownButtonExampleState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(widget.labelText),
+        Text(widget.labelText,
+            style: const TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+                fontWeight: FontWeight.bold)),
+        /*FlutterToggleTab(
+          width: 30,
+          borderRadius: 30,
+          height: 30,
+          selectedIndex: _tabTextIndexSelected,
+          selectedBackgroundColors: [Colors.blue, Colors.blueAccent],
+          selectedTextStyle: _tabTextIndexSelected == 0
+              ? TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700)
+              : TextStyle(
+                  color: Colors.green,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700),
+          unSelectedTextStyle: TextStyle(
+              color: Colors.black87, fontSize: 14, fontWeight: FontWeight.w500),
+          labels: ["Yes", "No"],
+          selectedLabelIndex: (index) {
+            setState(() {
+              _tabTextIndexSelected = index;
+            });
+          },
+          isScroll: false,
+        ),
+        */
+
         DropdownButtonFormField2(
           decoration: InputDecoration(
             isDense: true,
