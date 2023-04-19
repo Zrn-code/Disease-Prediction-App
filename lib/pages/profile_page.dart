@@ -10,17 +10,11 @@ import 'main_page.dart';
 class ProfilePage extends StatefulWidget {
   String userName = "";
   String email = "";
-  String gender = "";
-  double weight;
-  double height;
-  int age;
+
   ProfilePage({
     Key? key,
     required this.email,
     required this.userName,
-    required this.age,
-    required this.height,
-    required this.weight,
   }) : super(key: key);
 
   @override
@@ -205,88 +199,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     Text(
                       widget.email,
-                      style: const TextStyle(fontSize: 17),
-                    )
-                  ],
-                ),
-                const Divider(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Height",
-                      style: TextStyle(fontSize: 17),
-                    ),
-                    if (widget.height <= 0)
-                      const Text(
-                        "Undefined",
-                        style: TextStyle(fontSize: 17),
-                      )
-                    else
-                      Text(
-                        widget.height.toString(),
-                        style: const TextStyle(fontSize: 17),
-                      )
-                  ],
-                ),
-                const Divider(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Weight",
-                      style: TextStyle(fontSize: 17),
-                    ),
-                    if (widget.weight <= 0)
-                      const Text(
-                        "Undefined",
-                        style: TextStyle(fontSize: 17),
-                      )
-                    else
-                      Text(
-                        widget.weight.toString(),
-                        style: const TextStyle(fontSize: 17),
-                      )
-                  ],
-                ),
-                const Divider(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Age",
-                      style: TextStyle(fontSize: 17),
-                    ),
-                    if (widget.age <= 0)
-                      const Text(
-                        "Undefined",
-                        style: TextStyle(fontSize: 17),
-                      )
-                    else
-                      Text(
-                        widget.age.toString(),
-                        style: const TextStyle(fontSize: 17),
-                      )
-                  ],
-                ),
-                const Divider(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Gender",
-                      style: TextStyle(fontSize: 17),
-                    ),
-                    Text(
-                      widget.gender,
                       style: const TextStyle(fontSize: 17),
                     )
                   ],

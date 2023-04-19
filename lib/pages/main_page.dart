@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application/form/options.dart';
 import 'package:flutter_application/pages/profile_page.dart';
-import '../form/example_candidate_model.dart';
 import '../helper/helper_functions.dart';
 import '../services/database_service.dart';
 import '../widgets/widgets.dart';
@@ -11,10 +11,7 @@ import 'login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../helper/function.dart';
 import '../form/dropdown.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:im_stepper/main.dart';
 import 'package:im_stepper/stepper.dart';
-import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import '../form/example_buttons.dart';
@@ -27,54 +24,7 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-String cough = '1';
-String fever = '1';
-String sore_throat = '1';
-String shortness_of_breath = '1';
-String head_ache = '1';
-String age_60_and_above = '1';
-String test_indication = '1';
-String gender = '0';
-String Polyuria = '1';
-String Polydipsia = '1';
-String sudden_weight_loss = '1';
-String weakness = '1';
-String Polyphagia = '1';
-String Genital_thrush = '1';
-String visual_blurring = '1';
-String Itching = '1';
-String Irritability = '1';
-String delayed_healing = '1';
-String partial_paresis = '1';
-String muscle_stiffness = '1';
-String Alopecia = '1';
-String Obesity = '1';
-String cp = "1";
-double trtbps = 0;
-double chol = 0;
-String fbs = "1";
-String restecg = "1";
-double thalachh = 0;
-String exng = "1";
-double oldpeak = 0;
-String slp = "1";
-String caa = "1";
-String thall = "1";
-String GENDER = "1";
-String AGE = "1";
-String SMOKING = "1";
-String YELLOW_FINGERS = "1";
-String ANXIETY = "1";
-String PEER_PRESSURE = "1";
-String CHRONIC_DISEASE = "1";
-String FATIGUE = "1";
-String ALLERGY = "1";
-String WHEEZING = "1";
-String ALCOHOL_CONSUMING = "1";
-String COUGHING = "1";
-String SHORTNESS_OF_BREATH = "1";
-String SWALLOWING_DIFFICULTY = "1";
-String CHEST_PAIN = "1";
+String gender = "1";
 String BMI = "1";
 String Smoking = "1";
 String AlcoholDrinking = "1";
@@ -90,10 +40,75 @@ String SleepTime = "1";
 String Asthma = "1";
 String KidneyDisease = "1";
 String SkinCancer = "1";
-List<String> prediction_A = ["undefined", "0", "0", "0", "0", "0", "0", "0"];
-bool _submit = false;
 
-final List<String> _items = ['Prediction', 'Other Function'];
+List<String> prediction_A = [
+  "undefined",
+  "0", // Cough
+  "0", // Fever
+  "0", // Sore Throat
+  "0", // Shortness of Breath
+  "0", // Headache
+  "0", // Age 60 and Above
+  "0", // Gender
+  "0" // Test Indication
+];
+List<String> prediction_B = [
+  "20", // Age
+  "0", // Gender
+  "0", // Polyuria
+  "0", // Polydipsia
+  "0", // Sudden Weight Loss
+  "0", // Weakness
+  "0", // Polyphagia
+  "0", // Genital Thrush
+  "0", // Visual Blurring
+  "0", // Itching
+  "0", // Irritability
+  "0", // Delayed Healing
+  "0", // Partial Paresis
+  "0", // Muscle Stiffness
+  "0", // Alopecia
+  "0", // Obesity
+];
+
+List<String> prediction_C = [
+  "undefined",
+  "0", // BMI
+  "0", // Smoking
+  "0", // Alcohol Drinking
+  "0", // Stroke
+  "0", // Physical Health
+  "0", // Mental Health
+  "0", // Difficult Walking
+  "0", // Age Category
+  "0", // Diabetic
+  "0", // Physical Activity
+  "0", // General Health
+  "0", // Sleep Time
+  "0", // Asthma
+  "0", // Kidney Disease
+  "0", // Skin Cancer
+];
+List<String> prediction_D = [
+  "undefiend",
+  "0", // Gender
+  "30", // Age
+  "0", // Smoking
+  "0", // Yellow Fingers
+  "0", // Anxiety
+  "0", // Peer Pressure
+  "0", // Chronic Disease
+  "0", // Fatigue
+  "0", // Allergy
+  "0", // Wheezing
+  "0", // Alcohol Consuming
+  "0", // Coughing
+  "0", // Shortness of Breath
+  "0", // Swallowing Difficulty
+  "0", // Chest Pain
+];
+
+bool _submit = false;
 String _selectedValue = "Prediction";
 String url_A = 'https://flask-app-test-yqkj.onrender.com/api?';
 String url_B = 'https://early-stage-diabetes-risk-prediction.onrender.com/api?';
@@ -194,18 +209,6 @@ class _MainPageState extends State<MainPage> {
                         ProfilePage(
                           email: email,
                           userName: userName,
-                          age: await DatabaseService(
-                                  uid: FirebaseAuth.instance.currentUser!.uid)
-                              .getAge(email),
-                          height: await DatabaseService(
-                                  uid: FirebaseAuth.instance.currentUser!.uid)
-                              .getHeight(email),
-                          weight: await DatabaseService(
-                                  uid: FirebaseAuth.instance.currentUser!.uid)
-                              .getWeight(email),
-                          //gender: await DatabaseService(
-                          //uid: FirebaseAuth.instance.currentUser!.uid)
-                          //.getGender(email),
                         ));
                   },
                   contentPadding:
@@ -278,15 +281,11 @@ class FormExample extends StatefulWidget {
 
 class _FormExampleState extends State<FormExample> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final List<String> _items = ['Prediction', 'Other Function'];
   String output = 'Prediction';
-  bool isSwitched = false;
   int activeStep = 0;
   String _selectedField = "Prediction";
   String current_prediction = "X";
-  double result = 0;
-  int _tabTextIndexSelected = 0;
-  List<String> _genderList = ["male", "female"];
+  bool _selectedGender = false;
   final AppinioSwiperController controller = AppinioSwiperController();
   AuthService authService = AuthService();
 
@@ -314,16 +313,24 @@ class _FormExampleState extends State<FormExample> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           NumberStepper(
-                            numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                            numbers: [1, 2, 3],
                             activeStep: activeStep,
+                            activeStepColor: Colors.blue,
+                            stepColor: Colors.grey,
+                            numberStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
                             onStepReached: (index) {
                               setState(() {
                                 if (index == 0) {
                                   activeStep = 0;
                                   _selectedField = "Prediction";
+                                  _selectedGender = false;
                                 } else if (index == 1 && activeStep == 0) {
                                   activeStep = 0;
                                   _selectedField = "Prediction";
+                                  _selectedGender = false;
                                 }
                               });
                             },
@@ -361,6 +368,7 @@ class _FormExampleState extends State<FormExample> {
                                             setState(() {
                                               _selectedField = "Prediction B";
                                               activeStep = 1;
+                                              _selectedGender = true;
                                               current_prediction = "B";
                                             });
                                           },
@@ -397,6 +405,7 @@ class _FormExampleState extends State<FormExample> {
                                               _selectedField = "Prediction D";
                                               activeStep = 1;
                                               current_prediction = "D";
+                                              _selectedGender = true;
                                             });
                                           },
                                           child: Text('Lung Cancer'),
@@ -407,8 +416,6 @@ class _FormExampleState extends State<FormExample> {
                                 ],
                               ),
                             ),
-                          //if (_selectedField == "Prediction A")
-                          //prediction_A_Form(),
                           if (_selectedField == "Prediction A" &&
                               _submit == false)
                             CupertinoPageScaffold(
@@ -422,7 +429,17 @@ class _FormExampleState extends State<FormExample> {
                                           AppinioSwipeOptions.vertical,
                                       unlimitedUnswipe: true,
                                       controller: controller,
-                                      onSwipe: _swipe,
+                                      isDisabled: true,
+                                      onSwipe: ((index, direction) {
+                                        setState(() {
+                                          _selectedGender = (index == 6);
+                                        });
+                                        if (direction.name == "left") {
+                                          prediction_A[index] = "0";
+                                        } else if (direction.name == "right") {
+                                          prediction_A[index] = "1";
+                                        }
+                                      }),
                                       padding: const EdgeInsets.only(
                                         left: 25,
                                         right: 25,
@@ -435,11 +452,11 @@ class _FormExampleState extends State<FormExample> {
                                           _submit = true;
                                         });
                                       },
-                                      cardsCount: candidates.length,
+                                      cardsCount: options_A.length,
                                       cardsBuilder:
                                           (BuildContext context, int index) {
                                         return ExampleCard(
-                                            candidate: candidates[index]);
+                                            candidate: options_A[index]);
                                       },
                                     ),
                                   ),
@@ -449,11 +466,15 @@ class _FormExampleState extends State<FormExample> {
                                       const SizedBox(
                                         width: 80,
                                       ),
-                                      swipeLeftButton(controller),
+                                      _selectedGender
+                                          ? selectFemaleButton(controller)
+                                          : swipeLeftButton(controller),
                                       const SizedBox(
                                         width: 20,
                                       ),
-                                      swipeRightButton(controller),
+                                      _selectedGender
+                                          ? selectMaleButton(controller)
+                                          : swipeRightButton(controller),
                                       const SizedBox(
                                         width: 20,
                                       ),
@@ -464,73 +485,165 @@ class _FormExampleState extends State<FormExample> {
                               ),
                             ),
                           if (_selectedField == "Prediction B")
-                            prediction_B_Form(),
+                            Container(
+                                child: Column(
+                              children: [
+                                inputAgeForm(),
+                                if (_submit == false)
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.5,
+                                    child: AppinioSwiper(
+                                      swipeOptions:
+                                          AppinioSwipeOptions.vertical,
+                                      unlimitedUnswipe: true,
+                                      controller: controller,
+                                      isDisabled: true,
+                                      onSwipe: ((index, direction) {
+                                        setState(() {
+                                          _selectedGender = false;
+                                        });
+                                        if (direction.name == "left") {
+                                          prediction_B[index] = "0";
+                                        } else if (direction.name == "right") {
+                                          prediction_B[index] = "1";
+                                        }
+                                      }),
+                                      padding: const EdgeInsets.only(
+                                        left: 25,
+                                        right: 25,
+                                        top: 50,
+                                        bottom: 40,
+                                      ),
+                                      onEnd: () {
+                                        setState(() {
+                                          print(prediction_B);
+                                          _submit = true;
+                                        });
+                                      },
+                                      cardsCount: options_B.length,
+                                      cardsBuilder:
+                                          (BuildContext context, int index) {
+                                        return ExampleCard(
+                                            candidate: options_B[index]);
+                                      },
+                                    ),
+                                  ),
+                                if (_submit == false)
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const SizedBox(
+                                        width: 80,
+                                      ),
+                                      _selectedGender
+                                          ? selectFemaleButton(controller)
+                                          : swipeLeftButton(controller),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      _selectedGender
+                                          ? selectMaleButton(controller)
+                                          : swipeRightButton(controller),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      unswipeButton(controller),
+                                    ],
+                                  )
+                              ],
+                            )),
                           if (_selectedField == "Prediction C")
                             prediction_C_Form(),
                           if (_selectedField == "Prediction D")
-                            prediction_D_Form(),
-                          if (_selectedField == "Initial Data")
-                            initialDataForm(),
-                          if (_selectedField == "BMI") bmiForm(),
-                          if (_selectedField == "Other Function")
                             Container(
-                              padding: EdgeInsets.all(16.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      SizedBox(
-                                        width: 150.0,
-                                        height: 60.0,
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              _selectedField = "BMI";
-                                            });
-                                          },
-                                          child: Text('BMI'),
-                                        ),
+                                child: Column(
+                              children: [
+                                inputAgeForm(),
+                                if (_submit == false)
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.5,
+                                    child: AppinioSwiper(
+                                      swipeOptions:
+                                          AppinioSwipeOptions.vertical,
+                                      unlimitedUnswipe: true,
+                                      controller: controller,
+                                      isDisabled: true,
+                                      onSwipe: ((index, direction) {
+                                        setState(() {
+                                          _selectedGender = false;
+                                        });
+                                        if (index == 1) {
+                                          if (direction.name == "left") {
+                                            prediction_D[index] = "0";
+                                          } else if (direction.name ==
+                                              "right") {
+                                            prediction_D[index] = "1";
+                                          }
+                                        } else if (direction.name == "left" &&
+                                            index > 1) {
+                                          prediction_D[index + 1] = "1";
+                                        } else if (direction.name == "right") {
+                                          prediction_D[index + 1] = "2";
+                                        }
+                                      }),
+                                      padding: const EdgeInsets.only(
+                                        left: 25,
+                                        right: 25,
+                                        top: 50,
+                                        bottom: 40,
                                       ),
-                                      SizedBox(
-                                        width: 150.0,
-                                        height: 60.0,
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              _selectedField = "Initial Data";
-                                            });
-                                          },
-                                          child: Text('Initial Your Data'),
-                                        ),
-                                      ),
-                                    ],
+                                      onEnd: () {
+                                        setState(() {
+                                          print(prediction_D);
+                                          _submit = true;
+                                        });
+                                      },
+                                      cardsCount: options_D.length,
+                                      cardsBuilder:
+                                          (BuildContext context, int index) {
+                                        return ExampleCard(
+                                            candidate: options_D[index]);
+                                      },
+                                    ),
                                   ),
-                                ],
-                              ),
-                            ),
+                                if (_submit == false)
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const SizedBox(
+                                        width: 80,
+                                      ),
+                                      _selectedGender
+                                          ? selectFemaleButton(controller)
+                                          : swipeLeftButton(controller),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      _selectedGender
+                                          ? selectMaleButton(controller)
+                                          : swipeRightButton(controller),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      unswipeButton(controller),
+                                    ],
+                                  )
+                              ],
+                            )),
                           SizedBox(height: 16.0),
                           if ((_selectedField == "Prediction A" ||
                                   _selectedField == "Prediction B" ||
                                   _selectedField == "Prediction C" ||
-                                  _selectedField == "Prediction D" ||
-                                  _selectedField == "BMI" ||
-                                  _selectedField == "Initial Data") &&
+                                  _selectedField == "Prediction D") &&
                               _submit == true)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 ElevatedButton(
                                   onPressed: () {
-                                    if (_selectedField == "BMI") {
-                                      _submitFormBMI();
-                                    } else if (_selectedField ==
-                                        "Initial Data") {
-                                      _initialData();
-                                    } else if (_selectedField ==
-                                        "Prediction A") {
+                                    if (_selectedField == "Prediction A") {
                                       if (_formKey.currentState?.validate() ??
                                           false) {
                                         _formKey.currentState!.save();
@@ -611,13 +724,7 @@ class _FormExampleState extends State<FormExample> {
                               children: [
                                 ElevatedButton(
                                   onPressed: () {
-                                    if (_selectedField == "BMI") {
-                                      _submitFormBMI();
-                                    } else if (_selectedField ==
-                                        "Initial Data") {
-                                      _initialData();
-                                    } else if (_selectedField ==
-                                            "Prediction A" ||
+                                    if (_selectedField == "Prediction A" ||
                                         _selectedField == "Prediction B" ||
                                         _selectedField == "Prediction C" ||
                                         _selectedField == "Prediction D") {
@@ -625,6 +732,7 @@ class _FormExampleState extends State<FormExample> {
                                         _selectedField = "Prediction";
                                         _submit = false;
                                         activeStep = 0;
+                                        _selectedGender = false;
                                       });
                                     }
                                   },
@@ -663,17 +771,8 @@ class _FormExampleState extends State<FormExample> {
   }
 
   Future<void> _submitPredictionA(String url) async {
-    List<String> _infos = [
-      cough,
-      fever,
-      sore_throat,
-      shortness_of_breath,
-      head_ache,
-      age_60_and_above,
-      gender,
-      test_indication
-    ];
     List<String> _titles = [
+      "undefined",
       "cough",
       "fever",
       "sore throat",
@@ -686,10 +785,11 @@ class _FormExampleState extends State<FormExample> {
     String _newRecord = "Covid19:";
     _newRecord +=
         "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}_";
-    debugPrint(_newRecord);
-    for (int i = 0; i < 8; i++) {
-      _newRecord += "${_titles[i]}:${_infos[i]}_";
+
+    for (int i = 1; i <= 8; i++) {
+      _newRecord += "${_titles[i]}:${prediction_A[i]}_";
     }
+    debugPrint(_newRecord);
     setState(() {
       _selectedField = "Result A";
       activeStep = 2;
@@ -708,9 +808,9 @@ class _FormExampleState extends State<FormExample> {
     url += '&age_60_and_above=';
     url += prediction_A[6];
     url += '&gender=';
-    url += gender;
-    url += '&test_indication=';
     url += prediction_A[7];
+    url += '&test_indication=';
+    url += prediction_A[8];
     var data = await fetchData(url);
     var decoded = await jsonDecode(data);
     print(url);
@@ -720,43 +820,43 @@ class _FormExampleState extends State<FormExample> {
     _newRecord = _newRecord.substring(0, _newRecord.length - 1);
     await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
         .updateRecords(_newRecord);
-    _showResult("Probability of Covid :", output);
+    //_showResult("Probability of Covid :", output);
   }
 
 //https://early-stage-diabetes-risk-prediction.onrender.com/api?Age=20&Gender=0&Polyuria=0&Polydipsia=0&sudden_weight_loss=0&weakness=0&Polyphagia=0&Genital_thrush=0&visual_blurring=0&Itching=0&Irritability=0&delayed_healing=0&partial_paresis=0&muscle_stiffness=0&Alopecia=0&Obesity=0
   Future<void> _submitPredictionB(String url) async {
     url += 'Age=';
-    url += _age.toString();
+    url += prediction_B[0];
     url += '&Gender=';
-    url += gender;
+    url += prediction_B[1];
     url += '&Polyuria=';
-    url += Polyuria;
+    url += prediction_B[2];
     url += '&Polydipsia=';
-    url += Polydipsia;
+    url += prediction_B[3];
     url += '&sudden_weight_loss=';
-    url += sudden_weight_loss;
+    url += prediction_B[4];
     url += '&weakness=';
-    url += weakness;
+    url += prediction_B[5];
     url += '&Polyphagia=';
-    url += Polyphagia;
+    url += prediction_B[6];
     url += '&Genital_thrush=';
-    url += Genital_thrush;
+    url += prediction_B[7];
     url += '&visual_blurring=';
-    url += visual_blurring;
+    url += prediction_B[8];
     url += '&Itching=';
-    url += Itching;
+    url += prediction_B[9];
     url += '&Irritability=';
-    url += Irritability;
+    url += prediction_B[10];
     url += '&delayed_healing=';
-    url += delayed_healing;
+    url += prediction_B[11];
     url += '&partial_paresis=';
-    url += partial_paresis;
+    url += prediction_B[12];
     url += '&muscle_stiffness=';
-    url += muscle_stiffness;
+    url += prediction_B[13];
     url += '&Alopecia=';
-    url += Alopecia;
+    url += prediction_B[14];
     url += '&Obesity=';
-    url += Obesity;
+    url += prediction_B[15];
     var data = await fetchData(url);
     var decoded = await jsonDecode(data);
     print(url);
@@ -802,10 +902,9 @@ class _FormExampleState extends State<FormExample> {
     url += KidneyDisease;
     url += '&SkinCancer=';
     url += SkinCancer;
-    print(url);
     var data = await fetchData(url);
     var decoded = await jsonDecode(data);
-    //print(url);
+    print(url);
     setState(() {
       output = decoded['output'];
     });
@@ -815,35 +914,35 @@ class _FormExampleState extends State<FormExample> {
   // https://lung-cancer-808h.onrender.com/api?GENDER=1&AGE=50&SMOKING=2&YELLOW_FINGERS=1&ANXIETY=1&PEER_PRESSURE=1&CHRONIC_DISEASE=1&FATIGUE=2&ALLERGY=2&WHEEZING=1&ALCOHOL_CONSUMING=2&COUGHING=2&SHORTNESS_OF_BREATH=1&SWALLOWING_DIFFICULTY=1&CHEST_PAIN=1
   Future<void> _submitPredictionD(String url) async {
     url += 'GENDER=';
-    url += gender;
+    url += prediction_D[1];
     url += '&AGE=';
-    url += _age.toString();
+    url += prediction_D[2];
     url += '&SMOKING=';
-    url += SMOKING;
+    url += prediction_D[3];
     url += '&YELLOW_FINGERS=';
-    url += YELLOW_FINGERS;
+    url += prediction_D[4];
     url += '&ANXIETY=';
-    url += ANXIETY;
+    url += prediction_D[5];
     url += '&PEER_PRESSURE=';
-    url += PEER_PRESSURE;
+    url += prediction_D[6];
     url += '&CHRONIC_DISEASE=';
-    url += CHRONIC_DISEASE;
+    url += prediction_D[7];
     url += '&FATIGUE=';
-    url += FATIGUE;
+    url += prediction_D[8];
     url += '&ALLERGY=';
-    url += ALLERGY;
+    url += prediction_D[9];
     url += '&WHEEZING=';
-    url += WHEEZING;
+    url += prediction_D[10];
     url += '&ALCOHOL_CONSUMING=';
-    url += ALCOHOL_CONSUMING;
+    url += prediction_C[11];
     url += '&COUGHING=';
-    url += COUGHING;
+    url += prediction_D[12];
     url += '&SHORTNESS_OF_BREATH=';
-    url += SHORTNESS_OF_BREATH;
+    url += prediction_D[13];
     url += '&SWALLOWING_DIFFICULTY=';
-    url += SWALLOWING_DIFFICULTY;
+    url += prediction_D[14];
     url += '&CHEST_PAIN=';
-    url += CHEST_PAIN;
+    url += prediction_D[15];
     print(url);
     var data = await fetchData(url);
     var decoded = await jsonDecode(data);
@@ -852,20 +951,6 @@ class _FormExampleState extends State<FormExample> {
       output = decoded['output'];
     });
     _showResult("Probability of Lung Cancer:", output);
-  }
-
-  void _initialData() {
-    if (_formKey.currentState?.validate() ?? false) {
-      _formKey.currentState!.save();
-      DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-          .initialUserData(
-        _height,
-        _weight,
-        _age,
-        //_genderList[gender],
-      );
-      _showMore("Your data has been record!");
-    }
   }
 
   void _submitFormBMI() {
@@ -994,135 +1079,6 @@ class _FormExampleState extends State<FormExample> {
     );
   }
 
-  Container prediction_A_Form() {
-    return Container(
-      padding: EdgeInsets.all(20),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            /*_buildRow('Cough:', (value) {
-              setState(() {
-                cough = value;
-              });
-            }),
-            _buildRow('Fever:', (value) {
-              setState(() {
-                fever = value;
-              });
-            }),
-            _buildRow('Sore Throat:', (value) {
-              setState(() {
-                sore_throat = value;
-              });
-            }),
-            _buildRow('Shortness of Breath:', (value) {
-              setState(() {
-                shortness_of_breath = value;
-              });
-            }),
-            _buildRow('Age is greater than 60:', (value) {
-              setState(() {
-                age_60_and_above = value;
-              });
-            }),
-            _buildRow('Gender:', (value) {
-              setState(() {
-                gender = value;
-              });
-            }),
-            _buildRow('Test Indication:', (value) {
-              setState(() {
-                test_indication = value;
-              });
-            }),
-            */
-          ]),
-    );
-  }
-
-  Container prediction_B_Form() {
-    return Container(
-      padding: EdgeInsets.all(20),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            inputAgeForm(),
-            _buildRow('Gender:', (value) {
-              setState(() {
-                gender = value;
-              });
-            }),
-            _buildRow('Polyuria:', (value) {
-              setState(() {
-                Polyuria = value;
-              });
-            }),
-            _buildRow('Polydipsia:', (value) {
-              setState(() {
-                Polydipsia = value;
-              });
-            }),
-            _buildRow('Sudden weight loss:', (value) {
-              setState(() {
-                sudden_weight_loss = value;
-              });
-            }),
-            _buildRow('Polyphagia:', (value) {
-              setState(() {
-                Polyphagia = value;
-              });
-            }),
-            _buildRow('Genital thrush:', (value) {
-              setState(() {
-                Genital_thrush = value;
-              });
-            }),
-            _buildRow('Visual blurring:', (value) {
-              setState(() {
-                visual_blurring = value;
-              });
-            }),
-            _buildRow('Itching:', (value) {
-              setState(() {
-                Itching = value;
-              });
-            }),
-            _buildRow('Irritability:', (value) {
-              setState(() {
-                Irritability = value;
-              });
-            }),
-            _buildRow('Delayed healing:', (value) {
-              setState(() {
-                delayed_healing = value;
-              });
-            }),
-            _buildRow('Partial paresis:', (value) {
-              setState(() {
-                partial_paresis = value;
-              });
-            }),
-            _buildRow('Muscle stiffness:', (value) {
-              setState(() {
-                muscle_stiffness = value;
-              });
-            }),
-            _buildRow('Alopecia:', (value) {
-              setState(() {
-                Alopecia = value;
-              });
-            }),
-            _buildRow('Obesity:', (value) {
-              setState(() {
-                Obesity = value;
-              });
-            }),
-          ]),
-    );
-  }
-
   // https://personal-key-indicators-of-heart-disease.onrender.com/api?BMI=16.6&Smoking=1&AlcoholDrinking=0&Stroke=0&PhysicalHealth=3&MentalHealth=30&DiffWalking=0&Sex=0&AgeCategory=7&Diabetic=1&PhysicalActivity=1&GenHealth=3&SleepTime=5&Asthma=1&KidneyDisease=0&SkinCancer=1
   Container prediction_C_Form() {
     return Container(
@@ -1191,101 +1147,11 @@ class _FormExampleState extends State<FormExample> {
     );
   }
 
-// https://lung-cancer-808h.onrender.com/api?GENDER=1&AGE=50&SMOKING=2&YELLOW_FINGERS=1&ANXIETY=1&PEER_PRESSURE=1&CHRONIC_DISEASE=1&FATIGUE=2&ALLERGY=2&WHEEZING=1&ALCOHOL_CONSUMING=2&COUGHING=2&SHORTNESS_OF_BREATH=1&SWALLOWING_DIFFICULTY=1&CHEST_PAIN=1
-  Container prediction_D_Form() {
-    return Container(
-      padding: EdgeInsets.all(20),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            inputAgeForm(),
-            _buildRow("Gender:", (value) {
-              setState(() {
-                gender = value;
-              });
-            }),
-            _buildRow('Smoking:', (value) {
-              setState(() {
-                SMOKING = value;
-              });
-            }),
-            _buildRow('Yellow Fingers:', (value) {
-              setState(() {
-                YELLOW_FINGERS = value;
-              });
-            }),
-            _buildRow('Anxiety:', (value) {
-              setState(() {
-                ANXIETY = value;
-              });
-            }),
-            _buildRow('Peer Pressure:', (value) {
-              setState(() {
-                PEER_PRESSURE = value;
-              });
-            }),
-            _buildRow('Chronic Disease:', (value) {
-              setState(() {
-                CHRONIC_DISEASE = value;
-              });
-            }),
-            _buildRow('Fatigue:', (value) {
-              setState(() {
-                FATIGUE = value;
-              });
-            }),
-            _buildRow('Allergy:', (value) {
-              setState(() {
-                ALLERGY = value;
-              });
-            }),
-            _buildRow('Wheezing:', (value) {
-              setState(() {
-                WHEEZING = value;
-              });
-            }),
-            _buildRow('Alcohol Consuming:', (value) {
-              setState(() {
-                ALCOHOL_CONSUMING = value;
-              });
-            }),
-            _buildRow('Coughing:', (value) {
-              setState(() {
-                COUGHING = value;
-              });
-            }),
-            _buildRow('Shortness of Breath:', (value) {
-              setState(() {
-                SHORTNESS_OF_BREATH = value;
-              });
-            }),
-            _buildRow('Swallowing Difficulty:', (value) {
-              setState(() {
-                SWALLOWING_DIFFICULTY = value;
-              });
-            }),
-            _buildRow('Chest Pain:', (value) {
-              setState(() {
-                CHEST_PAIN = value;
-              });
-            }),
-          ]),
-    );
-  }
-
   Container bmiForm() {
     return Container(
       child: Column(
         children: [inputHeightForm(), inputWeightForm()],
       ),
-    );
-  }
-
-  Container initialDataForm() {
-    return Container(
-      child: Column(
-          children: [inputAgeForm(), inputHeightForm(), inputWeightForm()]),
     );
   }
 
@@ -1316,6 +1182,8 @@ class _FormExampleState extends State<FormExample> {
         onChanged: (value) {
           setState(() {
             _age = int.parse(value);
+            prediction_B[0] = _age.toString();
+            prediction_D[2] = _age.toString();
           });
         },
       ),
@@ -1467,119 +1335,6 @@ class _FormExampleState extends State<FormExample> {
       ),
     );
   }
-
-  Container inputTrtbpsForm() {
-    return Container(
-      margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
-      child: TextFormField(
-        autofocus: true,
-        controller: trtbpsController,
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          prefixIcon: Icon(Icons.emoji_people_rounded),
-          labelText: 'resting blood pressure (in mm Hg)',
-          hintText: 'Enter your resting blood pressure',
-        ),
-        validator: (value) {
-          if (value?.isEmpty ?? true) {
-            return 'Please enter your resting blood pressure';
-          }
-          if (double.tryParse(value!) == null) {
-            return 'Please enter a valid resting blood pressure';
-          }
-          return null;
-        },
-        onSaved: (value) {
-          trtbps = double.parse(value!);
-        },
-      ),
-    );
-  }
-
-  Container inputCholForm() {
-    return Container(
-      margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
-      child: TextFormField(
-        autofocus: true,
-        controller: cholController,
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          prefixIcon: Icon(Icons.emoji_people_rounded),
-          labelText: 'cholesterol in mg/dl fetched via BMI sensor',
-          hintText: 'Enter your cholesterol',
-        ),
-        validator: (value) {
-          if (value?.isEmpty ?? true) {
-            return 'Please enter your cholesterol';
-          }
-          if (double.tryParse(value!) == null) {
-            return 'Please enter a valid cholesterol';
-          }
-          return null;
-        },
-        onSaved: (value) {
-          chol = double.parse(value!);
-        },
-      ),
-    );
-  }
-
-  Container inputThalachhForm() {
-    return Container(
-      margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
-      child: TextFormField(
-        autofocus: true,
-        controller: thalachhController,
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          prefixIcon: Icon(Icons.emoji_people_rounded),
-          labelText: 'maximum heart rate achieved',
-          hintText: 'Enter your maximum heart rate',
-        ),
-        validator: (value) {
-          if (value?.isEmpty ?? true) {
-            return 'Please enter your maximum heart rate';
-          }
-          if (double.tryParse(value!) == null) {
-            return 'Please enter a valid maximum heart rate';
-          }
-          return null;
-        },
-        onSaved: (value) {
-          thalachh = double.parse(value!);
-        },
-      ),
-    );
-  }
-
-  Container inputOldpeakForm() {
-    return Container(
-      margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
-      child: TextFormField(
-        autofocus: true,
-        controller: oldpeakController,
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          prefixIcon: Icon(Icons.emoji_people_rounded),
-          labelText:
-              'oldpeak = ST depression induced by exercise relative to rest',
-          hintText: 'Enter your oldpeak',
-        ),
-        validator: (value) {
-          if (value?.isEmpty ?? true) {
-            return 'Please enter your oldpeak';
-          }
-          if (double.tryParse(value!) == null) {
-            return 'Please enter a valid oldpeak';
-          }
-          return null;
-        },
-        onSaved: (value) {
-          oldpeak = double.parse(value!);
-        },
-      ),
-    );
-  }
 }
 
 Widget _buildRow(String label, Function onChanged) {
@@ -1645,23 +1400,4 @@ Widget _buildRow(String label, Function onChanged) {
       ),
     ],
   );
-}
-
-void _swipe(int index, AppinioSwiperDirection direction) {
-  print("the card was swiped to the: " + direction.name);
-  if (direction.name == "left") {
-    print("left" + index.toString());
-    prediction_A[index] = "0";
-  } else if (direction.name == "right") {
-    print("right" + index.toString());
-    prediction_A[index] = "1";
-  }
-}
-
-void _unswipe(bool unswiped) {
-  if (unswiped) {
-    print("SUCCESS: card was unswiped");
-  } else {
-    print("FAIL: no card left to unswipe");
-  }
 }

@@ -408,8 +408,8 @@ class _LoginScreenState extends State<LoginScreen> {
         nameHint: _username,
         login: _login,
         signUp: _signup,
-        welcome: "Disease Detection",
-        welcomeBack: "Disease Detection",
+        welcome: "Disease Prediction",
+        welcomeBack: "Disease Prediction",
         welcomeBackDescription: "Sign up for your health!",
         signUpFormTitle: "Sign Up",
       );

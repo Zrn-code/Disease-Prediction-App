@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'example_candidate_model.dart';
+import 'package:flutter_application/form/options.dart';
 
 class ExampleCard extends StatelessWidget {
-  final ExampleCandidateModel candidate;
+  final ExampleOption candidate;
 
   const ExampleCard({
     Key? key,
@@ -68,7 +67,7 @@ class ExampleCard extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      candidate.city!,
+                      candidate.desc!,
                       style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 15,

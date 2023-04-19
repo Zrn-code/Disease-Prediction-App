@@ -96,3 +96,60 @@ Widget unswipeButton(AppinioSwiperController controller) {
     ),
   );
 }
+
+Widget selectFemaleButton(AppinioSwiperController controller) {
+  return ExampleButton(
+    onTap: () => controller.swipeLeft(),
+    child: Container(
+      height: 60,
+      width: 60,
+      decoration: BoxDecoration(
+        color: CupertinoColors.systemPink,
+        borderRadius: BorderRadius.circular(50),
+        boxShadow: [
+          BoxShadow(
+            color: CupertinoColors.systemPink.withOpacity(0.9),
+            spreadRadius: -10,
+            blurRadius: 20,
+            offset: const Offset(0, 20), // changes position of shadow
+          ),
+        ],
+      ),
+      alignment: Alignment.center,
+      child: const Icon(
+        Icons.female,
+        color: CupertinoColors.white,
+        size: 40,
+      ),
+    ),
+  );
+}
+
+//swipe card to the left side
+Widget selectMaleButton(AppinioSwiperController controller) {
+  return ExampleButton(
+    onTap: () => controller.swipeRight(),
+    child: Container(
+      height: 60,
+      width: 60,
+      decoration: BoxDecoration(
+        color: CupertinoColors.activeBlue,
+        borderRadius: BorderRadius.circular(50),
+        boxShadow: [
+          BoxShadow(
+            color: CupertinoColors.activeBlue.withOpacity(0.9),
+            spreadRadius: -10,
+            blurRadius: 20,
+            offset: const Offset(0, 20), // changes position of shadow
+          ),
+        ],
+      ),
+      alignment: Alignment.center,
+      child: const Icon(
+        Icons.male,
+        color: CupertinoColors.white,
+        size: 40,
+      ),
+    ),
+  );
+}
