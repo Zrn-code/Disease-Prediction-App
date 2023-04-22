@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/form/options.dart';
 import 'package:flutter_application/pages/profile_page.dart';
@@ -16,6 +16,7 @@ import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import '../form/example_buttons.dart';
 import '../form/example_card.dart';
+import 'package:tap_to_expand/tap_to_expand.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -107,7 +108,7 @@ List<String> prediction_D = [
   "0", // Swallowing Difficulty
   "0", // Chest Pain
 ];
-
+bool _loading_output = false;
 bool _submit = false;
 String _selectedValue = "Prediction";
 String url_A = 'https://flask-app-test-yqkj.onrender.com/api?';
@@ -341,75 +342,139 @@ class _FormExampleState extends State<FormExample> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Row(
+                                  Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
-                                      SizedBox(
-                                        width: 150.0,
-                                        height: 60.0,
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              _selectedField = "Prediction A";
-                                              activeStep = 1;
-                                              _submit = false;
-                                              current_prediction = "A";
-                                            });
-                                          },
-                                          child: Text('Covid Prediction'),
+                                      TapToExpand(
+                                        content: Row(
+                                          children: <Widget>[
+                                            Text("hello"),
+                                            Expanded(child: Container()),
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.black,
+                                              ),
+                                              onPressed: () {
+                                                setState(() {
+                                                  _selectedField =
+                                                      "Prediction A";
+                                                  activeStep = 1;
+                                                  _submit = false;
+                                                  current_prediction = "A";
+                                                });
+                                              },
+                                              child: Text('Go to Prediction'),
+                                            ),
+                                          ],
                                         ),
+                                        title: const Text(
+                                          'Covid Prediction',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        onTapPadding: 10,
+                                        closedHeight: 70,
+                                        scrollable: true,
+                                        borderRadius: 10,
+                                        openedHeight: 200,
                                       ),
-                                      SizedBox(
-                                        width: 150.0,
-                                        height: 60.0,
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              _selectedField = "Prediction B";
-                                              activeStep = 1;
-                                              _selectedGender = true;
-                                              current_prediction = "B";
-                                            });
-                                          },
-                                          child: Text("Diabetes mellitus"),
+                                      TapToExpand(
+                                        content: Row(
+                                          children: <Widget>[
+                                            Text("hello"),
+                                            Expanded(child: Container()),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  _selectedField =
+                                                      "Prediction B";
+                                                  activeStep = 1;
+                                                  _selectedGender = true;
+                                                  current_prediction = "B";
+                                                });
+                                              },
+                                              child: Text('Go to Prediction'),
+                                            ),
+                                          ],
                                         ),
+                                        title: const Text(
+                                          'Diabetes mellitus',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        onTapPadding: 10,
+                                        closedHeight: 70,
+                                        scrollable: true,
+                                        borderRadius: 10,
+                                        openedHeight: 200,
                                       ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 16.0),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      SizedBox(
-                                        width: 150.0,
-                                        height: 60.0,
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              _selectedField = "Prediction C";
-                                              activeStep = 1;
-                                              current_prediction = "C";
-                                            });
-                                          },
-                                          child: Text('Heart Disease'),
+                                      TapToExpand(
+                                        content: Row(
+                                          children: <Widget>[
+                                            Text("hello"),
+                                            Expanded(child: Container()),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  _selectedField =
+                                                      "Prediction C";
+                                                  activeStep = 1;
+                                                  current_prediction = "C";
+                                                });
+                                              },
+                                              child: Text('Go to Prediction'),
+                                            ),
+                                          ],
                                         ),
+                                        title: const Text(
+                                          'Heart Disease',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        onTapPadding: 10,
+                                        closedHeight: 70,
+                                        scrollable: true,
+                                        borderRadius: 10,
+                                        openedHeight: 200,
                                       ),
-                                      SizedBox(
-                                        width: 150.0,
-                                        height: 60.0,
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              _selectedField = "Prediction D";
-                                              activeStep = 1;
-                                              current_prediction = "D";
-                                              _selectedGender = true;
-                                            });
-                                          },
-                                          child: Text('Lung Cancer'),
+                                      TapToExpand(
+                                        content: Row(
+                                          children: <Widget>[
+                                            Text("hello"),
+                                            Expanded(child: Container()),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  _selectedField =
+                                                      "Prediction D";
+                                                  activeStep = 1;
+                                                  current_prediction = "D";
+                                                  _selectedGender = true;
+                                                });
+                                              },
+                                              child: Text('Go to Prediction'),
+                                            ),
+                                          ],
                                         ),
+                                        title: const Text(
+                                          'Lung Cancer',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        onTapPadding: 10,
+                                        closedHeight: 70,
+                                        scrollable: true,
+                                        borderRadius: 10,
+                                        openedHeight: 200,
                                       ),
                                     ],
                                   ),
@@ -556,8 +621,7 @@ class _FormExampleState extends State<FormExample> {
                           if (_selectedField == "Prediction C")
                             prediction_C_Form(),
                           if (_selectedField == "Prediction D")
-                            Container(
-                                child: Column(
+                            Column(
                               children: [
                                 inputAgeForm(),
                                 if (_submit == false)
@@ -631,7 +695,7 @@ class _FormExampleState extends State<FormExample> {
                                     ],
                                   )
                               ],
-                            )),
+                            ),
                           SizedBox(height: 16.0),
                           if ((_selectedField == "Prediction A" ||
                                   _selectedField == "Prediction B" ||
@@ -655,6 +719,7 @@ class _FormExampleState extends State<FormExample> {
                                             duration: Duration(seconds: 1),
                                           ),
                                         );
+
                                         _submitPredictionA(url_A);
                                       }
                                     } else if (_selectedField ==
@@ -749,7 +814,8 @@ class _FormExampleState extends State<FormExample> {
                             Container(
                               child: Column(
                                 children: [
-                                  Text("Result: " + output),
+                                  if (_loading_output == false)
+                                    Text("Result: " + output),
                                   ElevatedButton(
                                     onPressed: () {
                                       setState(() {
@@ -771,6 +837,7 @@ class _FormExampleState extends State<FormExample> {
   }
 
   Future<void> _submitPredictionA(String url) async {
+    _loading_output = true;
     List<String> _titles = [
       "undefined",
       "cough",
@@ -821,6 +888,7 @@ class _FormExampleState extends State<FormExample> {
     await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
         .updateRecords(_newRecord);
     //_showResult("Probability of Covid :", output);
+    _loading_output = false;
   }
 
 //https://early-stage-diabetes-risk-prediction.onrender.com/api?Age=20&Gender=0&Polyuria=0&Polydipsia=0&sudden_weight_loss=0&weakness=0&Polyphagia=0&Genital_thrush=0&visual_blurring=0&Itching=0&Irritability=0&delayed_healing=0&partial_paresis=0&muscle_stiffness=0&Alopecia=0&Obesity=0
@@ -1023,56 +1091,6 @@ class _FormExampleState extends State<FormExample> {
                 ),
               ],
             ),
-          ),
-        );
-      },
-    );
-  }
-
-  void _showMore(String message) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        final double screenWidth = MediaQuery.of(context).size.width;
-        final double buttonWidth = (screenWidth - 64.0) / 3.0;
-        final List<String> buttonNames = [
-          "Prediction A",
-          "Prediction B",
-          "Prediction C",
-          "Prediction D"
-        ];
-
-        return Container(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const Text(
-                'Your data has been recorded!',
-                style: TextStyle(fontSize: 18.0),
-              ),
-              const SizedBox(height: 16.0),
-              Expanded(
-                child: GridView.count(
-                  crossAxisCount: (screenWidth / buttonWidth).ceil(),
-                  shrinkWrap: true,
-                  children: List.generate(buttonNames.length, (index) {
-                    return Container(
-                      margin: const EdgeInsets.all(8.0),
-                      child: ElevatedButton(
-                        child: Text(buttonNames[index]),
-                        onPressed: () {
-                          Navigator.pop(context);
-                          setState(() {
-                            _selectedField = buttonNames[index];
-                          });
-                        },
-                      ),
-                    );
-                  }),
-                ),
-              ),
-            ],
           ),
         );
       },

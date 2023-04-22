@@ -32,14 +32,6 @@ Widget swipeRightButton(AppinioSwiperController controller) {
       decoration: BoxDecoration(
         color: CupertinoColors.activeGreen,
         borderRadius: BorderRadius.circular(50),
-        boxShadow: [
-          BoxShadow(
-            color: CupertinoColors.activeGreen.withOpacity(0.9),
-            spreadRadius: -10,
-            blurRadius: 20,
-            offset: const Offset(0, 20), // changes position of shadow
-          ),
-        ],
       ),
       alignment: Alignment.center,
       child: const Icon(
@@ -61,14 +53,6 @@ Widget swipeLeftButton(AppinioSwiperController controller) {
       decoration: BoxDecoration(
         color: const Color(0xFFFF3868),
         borderRadius: BorderRadius.circular(50),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFFFF3868).withOpacity(0.9),
-            spreadRadius: -10,
-            blurRadius: 20,
-            offset: const Offset(0, 20), // changes position of shadow
-          ),
-        ],
       ),
       alignment: Alignment.center,
       child: const Icon(
@@ -106,14 +90,6 @@ Widget selectFemaleButton(AppinioSwiperController controller) {
       decoration: BoxDecoration(
         color: CupertinoColors.systemPink,
         borderRadius: BorderRadius.circular(50),
-        boxShadow: [
-          BoxShadow(
-            color: CupertinoColors.systemPink.withOpacity(0.9),
-            spreadRadius: -10,
-            blurRadius: 20,
-            offset: const Offset(0, 20), // changes position of shadow
-          ),
-        ],
       ),
       alignment: Alignment.center,
       child: const Icon(
@@ -135,14 +111,6 @@ Widget selectMaleButton(AppinioSwiperController controller) {
       decoration: BoxDecoration(
         color: CupertinoColors.activeBlue,
         borderRadius: BorderRadius.circular(50),
-        boxShadow: [
-          BoxShadow(
-            color: CupertinoColors.activeBlue.withOpacity(0.9),
-            spreadRadius: -10,
-            blurRadius: 20,
-            offset: const Offset(0, 20), // changes position of shadow
-          ),
-        ],
       ),
       alignment: Alignment.center,
       child: const Icon(

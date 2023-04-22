@@ -29,6 +29,9 @@ dependencies:
   im_stepper: ^1.0.1+1
   flutter_toggle_tab: ^1.2.0
   appinio_swiper: ^2.0.0
+  tap_to_expand: ^0.6.1
+  toggle_list: ^0.3.0
+  loading_animation_widget: ^1.2.0+4
   
 dev_dependencies:
 
