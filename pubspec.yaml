@@ -32,6 +32,9 @@ dependencies:
   tap_to_expand: ^0.6.1
   toggle_list: ^0.3.0
   loading_animation_widget: ^1.2.0+4
+  delayed_widget: ^1.1.2
+  material_text_fields: ^1.0.3
+  animation_list: ^2.2.1
   
 dev_dependencies:
 

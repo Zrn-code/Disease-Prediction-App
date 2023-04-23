@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:delayed_widget/delayed_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:animation_list/animation_list.dart';
 import 'package:flutter_application/form/options.dart';
 import 'package:flutter_application/pages/profile_page.dart';
 import '../helper/helper_functions.dart';
@@ -303,18 +305,21 @@ class _FormExampleState extends State<FormExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-            child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                child: Form(
-                    key: _formKey,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
+        body: Center(
+            child: SingleChildScrollView(
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 30),
+                    child: Form(
+                        key: _formKey,
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              /*
                           NumberStepper(
                             numbers: [1, 2, 3],
+                            lineLength: 20,
                             activeStep: activeStep,
                             activeStepColor: Colors.blue,
                             stepColor: Colors.grey,
@@ -335,526 +340,564 @@ class _FormExampleState extends State<FormExample> {
                                 }
                               });
                             },
-                          ),
-                          if (_selectedField == "Prediction")
-                            Container(
-                              padding: EdgeInsets.all(16.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      TapToExpand(
-                                        content: Row(
+                          ),*/
+                              if (_selectedField == "Prediction")
+                                DelayedWidget(
+                                  child: Container(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
                                           children: <Widget>[
-                                            Text("hello"),
-                                            Expanded(child: Container()),
-                                            ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor: Colors.black,
+                                            TapToExpand(
+                                              content: Row(
+                                                children: <Widget>[
+                                                  Text("hello"),
+                                                  Expanded(child: Container()),
+                                                  ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          Colors.black,
+                                                    ),
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        _selectedField =
+                                                            "Prediction A";
+                                                        activeStep = 1;
+                                                        _submit = false;
+                                                        current_prediction =
+                                                            "A";
+                                                      });
+                                                    },
+                                                    child: Text(
+                                                        'Go to Prediction'),
+                                                  ),
+                                                ],
                                               ),
-                                              onPressed: () {
-                                                setState(() {
-                                                  _selectedField =
-                                                      "Prediction A";
-                                                  activeStep = 1;
-                                                  _submit = false;
-                                                  current_prediction = "A";
-                                                });
-                                              },
-                                              child: Text('Go to Prediction'),
+                                              title: const Text(
+                                                'Covid Prediction',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                              onTapPadding: 10,
+                                              closedHeight: 70,
+                                              scrollable: true,
+                                              borderRadius: 10,
+                                              openedHeight: 200,
+                                            ),
+                                            TapToExpand(
+                                              content: Row(
+                                                children: <Widget>[
+                                                  Text("hello"),
+                                                  Expanded(child: Container()),
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        _selectedField =
+                                                            "Prediction B";
+                                                        activeStep = 1;
+                                                        _selectedGender = true;
+                                                        current_prediction =
+                                                            "B";
+                                                      });
+                                                    },
+                                                    child: Text(
+                                                        'Go to Prediction'),
+                                                  ),
+                                                ],
+                                              ),
+                                              title: const Text(
+                                                'Diabetes mellitus',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                              onTapPadding: 10,
+                                              closedHeight: 70,
+                                              scrollable: true,
+                                              borderRadius: 10,
+                                              openedHeight: 200,
+                                            ),
+                                            TapToExpand(
+                                              content: Row(
+                                                children: <Widget>[
+                                                  Text("hello"),
+                                                  Expanded(child: Container()),
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        _selectedField =
+                                                            "Prediction C";
+                                                        activeStep = 1;
+                                                        current_prediction =
+                                                            "C";
+                                                      });
+                                                    },
+                                                    child: Text(
+                                                        'Go to Prediction'),
+                                                  ),
+                                                ],
+                                              ),
+                                              title: const Text(
+                                                'Heart Disease',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                              onTapPadding: 10,
+                                              closedHeight: 70,
+                                              scrollable: true,
+                                              borderRadius: 10,
+                                              openedHeight: 200,
+                                            ),
+                                            TapToExpand(
+                                              content: Row(
+                                                children: <Widget>[
+                                                  Text("hello"),
+                                                  Expanded(child: Container()),
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        _selectedField =
+                                                            "Prediction D";
+                                                        activeStep = 1;
+                                                        current_prediction =
+                                                            "D";
+                                                        _selectedGender = true;
+                                                      });
+                                                    },
+                                                    child: Text(
+                                                        'Go to Prediction'),
+                                                  ),
+                                                ],
+                                              ),
+                                              title: const Text(
+                                                'Lung Cancer',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                              onTapPadding: 10,
+                                              closedHeight: 70,
+                                              scrollable: true,
+                                              borderRadius: 10,
+                                              openedHeight: 200,
                                             ),
                                           ],
                                         ),
-                                        title: const Text(
-                                          'Covid Prediction',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                        onTapPadding: 10,
-                                        closedHeight: 70,
-                                        scrollable: true,
-                                        borderRadius: 10,
-                                        openedHeight: 200,
-                                      ),
-                                      TapToExpand(
-                                        content: Row(
-                                          children: <Widget>[
-                                            Text("hello"),
-                                            Expanded(child: Container()),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  _selectedField =
-                                                      "Prediction B";
-                                                  activeStep = 1;
-                                                  _selectedGender = true;
-                                                  current_prediction = "B";
-                                                });
-                                              },
-                                              child: Text('Go to Prediction'),
-                                            ),
-                                          ],
-                                        ),
-                                        title: const Text(
-                                          'Diabetes mellitus',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                        onTapPadding: 10,
-                                        closedHeight: 70,
-                                        scrollable: true,
-                                        borderRadius: 10,
-                                        openedHeight: 200,
-                                      ),
-                                      TapToExpand(
-                                        content: Row(
-                                          children: <Widget>[
-                                            Text("hello"),
-                                            Expanded(child: Container()),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  _selectedField =
-                                                      "Prediction C";
-                                                  activeStep = 1;
-                                                  current_prediction = "C";
-                                                });
-                                              },
-                                              child: Text('Go to Prediction'),
-                                            ),
-                                          ],
-                                        ),
-                                        title: const Text(
-                                          'Heart Disease',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                        onTapPadding: 10,
-                                        closedHeight: 70,
-                                        scrollable: true,
-                                        borderRadius: 10,
-                                        openedHeight: 200,
-                                      ),
-                                      TapToExpand(
-                                        content: Row(
-                                          children: <Widget>[
-                                            Text("hello"),
-                                            Expanded(child: Container()),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  _selectedField =
-                                                      "Prediction D";
-                                                  activeStep = 1;
-                                                  current_prediction = "D";
-                                                  _selectedGender = true;
-                                                });
-                                              },
-                                              child: Text('Go to Prediction'),
-                                            ),
-                                          ],
-                                        ),
-                                        title: const Text(
-                                          'Lung Cancer',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                        onTapPadding: 10,
-                                        closedHeight: 70,
-                                        scrollable: true,
-                                        borderRadius: 10,
-                                        openedHeight: 200,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          if (_selectedField == "Prediction A" &&
-                              _submit == false)
-                            CupertinoPageScaffold(
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.5,
-                                    child: AppinioSwiper(
-                                      swipeOptions:
-                                          AppinioSwipeOptions.vertical,
-                                      unlimitedUnswipe: true,
-                                      controller: controller,
-                                      isDisabled: true,
-                                      onSwipe: ((index, direction) {
-                                        setState(() {
-                                          _selectedGender = (index == 6);
-                                        });
-                                        if (direction.name == "left") {
-                                          prediction_A[index] = "0";
-                                        } else if (direction.name == "right") {
-                                          prediction_A[index] = "1";
-                                        }
-                                      }),
-                                      padding: const EdgeInsets.only(
-                                        left: 25,
-                                        right: 25,
-                                        top: 50,
-                                        bottom: 40,
-                                      ),
-                                      onEnd: () {
-                                        setState(() {
-                                          print(prediction_A);
-                                          _submit = true;
-                                        });
-                                      },
-                                      cardsCount: options_A.length,
-                                      cardsBuilder:
-                                          (BuildContext context, int index) {
-                                        return ExampleCard(
-                                            candidate: options_A[index]);
-                                      },
+                                      ],
                                     ),
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const SizedBox(
-                                        width: 80,
-                                      ),
-                                      _selectedGender
-                                          ? selectFemaleButton(controller)
-                                          : swipeLeftButton(controller),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      _selectedGender
-                                          ? selectMaleButton(controller)
-                                          : swipeRightButton(controller),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      unswipeButton(controller),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          if (_selectedField == "Prediction B")
-                            Container(
-                                child: Column(
-                              children: [
-                                inputAgeForm(),
-                                if (_submit == false)
-                                  SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.5,
-                                    child: AppinioSwiper(
-                                      swipeOptions:
-                                          AppinioSwipeOptions.vertical,
-                                      unlimitedUnswipe: true,
-                                      controller: controller,
-                                      isDisabled: true,
-                                      onSwipe: ((index, direction) {
-                                        setState(() {
-                                          _selectedGender = false;
-                                        });
-                                        if (direction.name == "left") {
-                                          prediction_B[index] = "0";
-                                        } else if (direction.name == "right") {
-                                          prediction_B[index] = "1";
-                                        }
-                                      }),
-                                      padding: const EdgeInsets.only(
-                                        left: 25,
-                                        right: 25,
-                                        top: 50,
-                                        bottom: 40,
-                                      ),
-                                      onEnd: () {
-                                        setState(() {
-                                          print(prediction_B);
-                                          _submit = true;
-                                        });
-                                      },
-                                      cardsCount: options_B.length,
-                                      cardsBuilder:
-                                          (BuildContext context, int index) {
-                                        return ExampleCard(
-                                            candidate: options_B[index]);
-                                      },
+                                ),
+                              if (_selectedField == "Prediction A" &&
+                                  _submit == false)
+                                CupertinoPageScaffold(
+                                  child: DelayedWidget(
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.5,
+                                          child: AppinioSwiper(
+                                            swipeOptions:
+                                                AppinioSwipeOptions.vertical,
+                                            unlimitedUnswipe: true,
+                                            controller: controller,
+                                            isDisabled: true,
+                                            onSwipe: ((index, direction) {
+                                              setState(() {
+                                                _selectedGender = (index == 6);
+                                              });
+                                              if (direction.name == "left") {
+                                                prediction_A[index] = "0";
+                                              } else if (direction.name ==
+                                                  "right") {
+                                                prediction_A[index] = "1";
+                                              }
+                                            }),
+                                            padding: const EdgeInsets.only(
+                                              left: 25,
+                                              right: 25,
+                                              top: 50,
+                                              bottom: 40,
+                                            ),
+                                            onEnd: () {
+                                              setState(() {
+                                                print(prediction_A);
+                                                _submit = true;
+                                              });
+                                            },
+                                            cardsCount: options_A.length,
+                                            cardsBuilder: (BuildContext context,
+                                                int index) {
+                                              return ExampleCard(
+                                                  candidate: options_A[index]);
+                                            },
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            const SizedBox(
+                                              width: 80,
+                                            ),
+                                            _selectedGender
+                                                ? selectFemaleButton(controller)
+                                                : swipeLeftButton(controller),
+                                            const SizedBox(
+                                              width: 20,
+                                            ),
+                                            _selectedGender
+                                                ? selectMaleButton(controller)
+                                                : swipeRightButton(controller),
+                                            const SizedBox(
+                                              width: 20,
+                                            ),
+                                            unswipeButton(controller),
+                                          ],
+                                        )
+                                      ],
                                     ),
                                   ),
-                                if (_submit == false)
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const SizedBox(
-                                        width: 80,
+                                ),
+                              if (_selectedField == "Prediction A" &&
+                                  _submit == true)
+                                Container(
+                                  height: 500,
+                                  child: AnimationList(
+                                      children: prediction_A_data.map((item) {
+                                    return _buildTile(
+                                        item['title'], item['index']);
+                                  }).toList()),
+                                ),
+                              if (_selectedField == "Prediction B")
+                                Container(
+                                    child: Column(
+                                  children: [
+                                    inputAgeForm(),
+                                    if (_submit == false)
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.5,
+                                        child: AppinioSwiper(
+                                          swipeOptions:
+                                              AppinioSwipeOptions.vertical,
+                                          unlimitedUnswipe: true,
+                                          controller: controller,
+                                          isDisabled: true,
+                                          onSwipe: ((index, direction) {
+                                            setState(() {
+                                              _selectedGender = false;
+                                            });
+                                            if (direction.name == "left") {
+                                              prediction_B[index] = "0";
+                                            } else if (direction.name ==
+                                                "right") {
+                                              prediction_B[index] = "1";
+                                            }
+                                          }),
+                                          padding: const EdgeInsets.only(
+                                            left: 25,
+                                            right: 25,
+                                            top: 50,
+                                            bottom: 40,
+                                          ),
+                                          onEnd: () {
+                                            setState(() {
+                                              print(prediction_B);
+                                              _submit = true;
+                                            });
+                                          },
+                                          cardsCount: options_B.length,
+                                          cardsBuilder: (BuildContext context,
+                                              int index) {
+                                            return ExampleCard(
+                                                candidate: options_B[index]);
+                                          },
+                                        ),
                                       ),
-                                      _selectedGender
-                                          ? selectFemaleButton(controller)
-                                          : swipeLeftButton(controller),
-                                      const SizedBox(
-                                        width: 20,
+                                    if (_submit == false)
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 80,
+                                          ),
+                                          _selectedGender
+                                              ? selectFemaleButton(controller)
+                                              : swipeLeftButton(controller),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          _selectedGender
+                                              ? selectMaleButton(controller)
+                                              : swipeRightButton(controller),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          unswipeButton(controller),
+                                        ],
+                                      )
+                                  ],
+                                )),
+                              if (_selectedField == "Prediction C")
+                                prediction_C_Form(),
+                              if (_selectedField == "Prediction D")
+                                Column(
+                                  children: [
+                                    inputAgeForm(),
+                                    if (_submit == false)
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.5,
+                                        child: AppinioSwiper(
+                                          swipeOptions:
+                                              AppinioSwipeOptions.vertical,
+                                          unlimitedUnswipe: true,
+                                          controller: controller,
+                                          isDisabled: true,
+                                          onSwipe: ((index, direction) {
+                                            setState(() {
+                                              _selectedGender = false;
+                                            });
+                                            if (index == 1) {
+                                              if (direction.name == "left") {
+                                                prediction_D[index] = "0";
+                                              } else if (direction.name ==
+                                                  "right") {
+                                                prediction_D[index] = "1";
+                                              }
+                                            } else if (direction.name ==
+                                                    "left" &&
+                                                index > 1) {
+                                              prediction_D[index + 1] = "1";
+                                            } else if (direction.name ==
+                                                "right") {
+                                              prediction_D[index + 1] = "2";
+                                            }
+                                          }),
+                                          padding: const EdgeInsets.only(
+                                            left: 25,
+                                            right: 25,
+                                            top: 50,
+                                            bottom: 40,
+                                          ),
+                                          onEnd: () {
+                                            setState(() {
+                                              print(prediction_D);
+                                              _submit = true;
+                                            });
+                                          },
+                                          cardsCount: options_D.length,
+                                          cardsBuilder: (BuildContext context,
+                                              int index) {
+                                            return ExampleCard(
+                                                candidate: options_D[index]);
+                                          },
+                                        ),
                                       ),
-                                      _selectedGender
-                                          ? selectMaleButton(controller)
-                                          : swipeRightButton(controller),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      unswipeButton(controller),
-                                    ],
-                                  )
-                              ],
-                            )),
-                          if (_selectedField == "Prediction C")
-                            prediction_C_Form(),
-                          if (_selectedField == "Prediction D")
-                            Column(
-                              children: [
-                                inputAgeForm(),
-                                if (_submit == false)
-                                  SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.5,
-                                    child: AppinioSwiper(
-                                      swipeOptions:
-                                          AppinioSwipeOptions.vertical,
-                                      unlimitedUnswipe: true,
-                                      controller: controller,
-                                      isDisabled: true,
-                                      onSwipe: ((index, direction) {
-                                        setState(() {
-                                          _selectedGender = false;
-                                        });
-                                        if (index == 1) {
-                                          if (direction.name == "left") {
-                                            prediction_D[index] = "0";
-                                          } else if (direction.name ==
-                                              "right") {
-                                            prediction_D[index] = "1";
+                                    if (_submit == false)
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 80,
+                                          ),
+                                          _selectedGender
+                                              ? selectFemaleButton(controller)
+                                              : swipeLeftButton(controller),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          _selectedGender
+                                              ? selectMaleButton(controller)
+                                              : swipeRightButton(controller),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          unswipeButton(controller),
+                                        ],
+                                      )
+                                  ],
+                                ),
+                              SizedBox(height: 16.0),
+                              if ((_selectedField == "Prediction A" ||
+                                      _selectedField == "Prediction B" ||
+                                      _selectedField == "Prediction C" ||
+                                      _selectedField == "Prediction D") &&
+                                  _submit == true)
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        if (_selectedField == "Prediction A") {
+                                          if (_formKey.currentState
+                                                  ?.validate() ??
+                                              false) {
+                                            _formKey.currentState!.save();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                    "your data has been submitted."),
+                                                duration: Duration(seconds: 1),
+                                              ),
+                                            );
+
+                                            _submitPredictionA(url_A);
                                           }
-                                        } else if (direction.name == "left" &&
-                                            index > 1) {
-                                          prediction_D[index + 1] = "1";
-                                        } else if (direction.name == "right") {
-                                          prediction_D[index + 1] = "2";
+                                        } else if (_selectedField ==
+                                            "Prediction B") {
+                                          if (_formKey.currentState
+                                                  ?.validate() ??
+                                              false) {
+                                            _formKey.currentState!.save();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                    "your data has been submitted."),
+                                                duration: Duration(seconds: 1),
+                                              ),
+                                            );
+                                            _submitPredictionB(url_B);
+                                          }
+                                        } else if (_selectedField ==
+                                            "Prediction C") {
+                                          if (_formKey.currentState
+                                                  ?.validate() ??
+                                              false) {
+                                            _formKey.currentState!.save();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                    "your data has been submitted."),
+                                                duration: Duration(seconds: 1),
+                                              ),
+                                            );
+                                            _submitPredictionC(url_C);
+                                          }
+                                        } else if (_selectedField ==
+                                            "Prediction D") {
+                                          if (_formKey.currentState
+                                                  ?.validate() ??
+                                              false) {
+                                            _formKey.currentState!.save();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                    "your data has been submitted."),
+                                                duration: Duration(seconds: 1),
+                                              ),
+                                            );
+                                            _submitPredictionD(url_D);
+                                          }
                                         }
-                                      }),
-                                      padding: const EdgeInsets.only(
-                                        left: 25,
-                                        right: 25,
-                                        top: 50,
-                                        bottom: 40,
-                                      ),
-                                      onEnd: () {
-                                        setState(() {
-                                          print(prediction_D);
-                                          _submit = true;
-                                        });
                                       },
-                                      cardsCount: options_D.length,
-                                      cardsBuilder:
-                                          (BuildContext context, int index) {
-                                        return ExampleCard(
-                                            candidate: options_D[index]);
-                                      },
+                                      style: OutlinedButton.styleFrom(
+                                          minimumSize: const Size(200, 50)),
+                                      child: Text("Submit Form".toUpperCase(),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold)),
                                     ),
-                                  ),
-                                if (_submit == false)
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const SizedBox(
-                                        width: 80,
-                                      ),
-                                      _selectedGender
-                                          ? selectFemaleButton(controller)
-                                          : swipeLeftButton(controller),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      _selectedGender
-                                          ? selectMaleButton(controller)
-                                          : swipeRightButton(controller),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      unswipeButton(controller),
-                                    ],
-                                  )
-                              ],
-                            ),
-                          SizedBox(height: 16.0),
-                          if ((_selectedField == "Prediction A" ||
+                                  ],
+                                ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              if (_selectedField == "Prediction A" ||
                                   _selectedField == "Prediction B" ||
                                   _selectedField == "Prediction C" ||
-                                  _selectedField == "Prediction D") &&
-                              _submit == true)
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    if (_selectedField == "Prediction A") {
-                                      if (_formKey.currentState?.validate() ??
-                                          false) {
-                                        _formKey.currentState!.save();
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                                "your data has been submitted."),
-                                            duration: Duration(seconds: 1),
-                                          ),
-                                        );
-
-                                        _submitPredictionA(url_A);
-                                      }
-                                    } else if (_selectedField ==
-                                        "Prediction B") {
-                                      if (_formKey.currentState?.validate() ??
-                                          false) {
-                                        _formKey.currentState!.save();
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                                "your data has been submitted."),
-                                            duration: Duration(seconds: 1),
-                                          ),
-                                        );
-                                        _submitPredictionB(url_B);
-                                      }
-                                    } else if (_selectedField ==
-                                        "Prediction C") {
-                                      if (_formKey.currentState?.validate() ??
-                                          false) {
-                                        _formKey.currentState!.save();
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                                "your data has been submitted."),
-                                            duration: Duration(seconds: 1),
-                                          ),
-                                        );
-                                        _submitPredictionC(url_C);
-                                      }
-                                    } else if (_selectedField ==
-                                        "Prediction D") {
-                                      if (_formKey.currentState?.validate() ??
-                                          false) {
-                                        _formKey.currentState!.save();
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                                "your data has been submitted."),
-                                            duration: Duration(seconds: 1),
-                                          ),
-                                        );
-                                        _submitPredictionD(url_D);
-                                      }
-                                    }
-                                  },
-                                  style: OutlinedButton.styleFrom(
-                                      minimumSize: const Size(200, 50)),
-                                  child: Text("Submit Form".toUpperCase(),
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                              ],
-                            ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          if (_selectedField == "Prediction A" ||
-                              _selectedField == "Prediction B" ||
-                              _selectedField == "Prediction C" ||
-                              _selectedField == "Prediction D")
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    if (_selectedField == "Prediction A" ||
-                                        _selectedField == "Prediction B" ||
-                                        _selectedField == "Prediction C" ||
-                                        _selectedField == "Prediction D") {
-                                      setState(() {
-                                        _selectedField = "Prediction";
-                                        _submit = false;
-                                        activeStep = 0;
-                                        _selectedGender = false;
-                                      });
-                                    }
-                                  },
-                                  style: OutlinedButton.styleFrom(
-                                      minimumSize: const Size(150, 50),
-                                      backgroundColor: Colors.red),
-                                  child: Text("Return To Menu".toUpperCase(),
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                              ],
-                            ),
-                          if (activeStep == 2)
-                            Container(
-                              child: Column(
-                                children: [
-                                  if (_loading_output == false)
-                                    Text("Result: " + output),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        activeStep = 0;
-                                        _selectedField = "Prediction";
-                                        output = "Prediction";
-                                      });
-                                    },
-                                    child: Text(
-                                      "Return To Menu".toUpperCase(),
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                  _selectedField == "Prediction D")
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        if (_selectedField == "Prediction A" ||
+                                            _selectedField == "Prediction B" ||
+                                            _selectedField == "Prediction C" ||
+                                            _selectedField == "Prediction D") {
+                                          setState(() {
+                                            _selectedField = "Prediction";
+                                            _submit = false;
+                                            activeStep = 0;
+                                            _selectedGender = false;
+                                          });
+                                        }
+                                      },
+                                      style: OutlinedButton.styleFrom(
+                                          minimumSize: const Size(150, 50),
+                                          backgroundColor: Colors.red),
+                                      child: Text(
+                                          "Return To Menu".toUpperCase(),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold)),
                                     ),
-                                  )
-                                ],
-                              ),
-                            )
-                        ])))));
+                                  ],
+                                ),
+                              if (activeStep == 2)
+                                Container(
+                                  child: Column(
+                                    children: [
+                                      _loading_output
+                                          ? LoadingAnimationWidget
+                                              .staggeredDotsWave(
+                                              color: Colors.white,
+                                              size: 200,
+                                            )
+                                          : Text("output: $output"),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            activeStep = 0;
+                                            _selectedField = "Prediction";
+                                            output = "Prediction";
+                                          });
+                                        },
+                                        child: Text(
+                                          "Return To Menu".toUpperCase(),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                            ]))))));
   }
 
   Future<void> _submitPredictionA(String url) async {
     _loading_output = true;
-    List<String> _titles = [
-      "undefined",
-      "cough",
-      "fever",
-      "sore throat",
-      "shortness of breath",
-      "head ache",
-      "age 60 and above",
-      "gender",
-      "test indication"
-    ];
+
     String _newRecord = "Covid19:";
     _newRecord +=
         "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}_";
 
     for (int i = 1; i <= 8; i++) {
-      _newRecord += "${_titles[i]}:${prediction_A[i]}_";
+      _newRecord += "${_titles_A[i]}:${prediction_A[i]}_";
     }
     debugPrint(_newRecord);
     setState(() {
@@ -883,12 +926,12 @@ class _FormExampleState extends State<FormExample> {
     print(url);
     setState(() {
       output = decoded['output'];
+      _loading_output = false;
     });
     _newRecord = _newRecord.substring(0, _newRecord.length - 1);
     await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
         .updateRecords(_newRecord);
     //_showResult("Probability of Covid :", output);
-    _loading_output = false;
   }
 
 //https://early-stage-diabetes-risk-prediction.onrender.com/api?Age=20&Gender=0&Polyuria=0&Polydipsia=0&sudden_weight_loss=0&weakness=0&Polyphagia=0&Genital_thrush=0&visual_blurring=0&Itching=0&Irritability=0&delayed_healing=0&partial_paresis=0&muscle_stiffness=0&Alopecia=0&Obesity=0
@@ -1165,14 +1208,6 @@ class _FormExampleState extends State<FormExample> {
     );
   }
 
-  Container bmiForm() {
-    return Container(
-      child: Column(
-        children: [inputHeightForm(), inputWeightForm()],
-      ),
-    );
-  }
-
   Container inputAgeForm() {
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -1418,4 +1453,67 @@ Widget _buildRow(String label, Function onChanged) {
       ),
     ],
   );
+}
+
+List<String> _titles_A = [
+  "undefined",
+  "cough",
+  "fever",
+  "sore throat",
+  "shortness of breath",
+  "head ache",
+  "age 60 and above",
+  "gender",
+  "test indication"
+];
+
+final List<Map<String, dynamic>> prediction_A_data = [
+  {
+    'title': 'cough',
+    'index': 1,
+  },
+  {
+    'title': 'fever',
+    'index': 2,
+  },
+  {
+    'title': 'sore throat',
+    'index': 3,
+  },
+  {
+    'title': 'shortness of breath',
+    'index': 4,
+  },
+  {
+    'title': 'head ache',
+    'index': 5,
+  },
+  {
+    'title': 'age 60 and above',
+    'index': 6,
+  },
+  {
+    'title': 'gender',
+    'index': 7,
+  },
+  {
+    'title': 'test indication',
+    'index': 8,
+  }
+];
+
+Widget _buildTile(String title, int index) {
+  return Container(
+      height: 50,
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      alignment: Alignment.center,
+      child: Text(
+        title,
+        style: TextStyle(
+            color: prediction_A[index] == "1" ? Colors.white : Colors.black),
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(25)),
+        color: prediction_A[index] == "1" ? Colors.green : Colors.red,
+      ));
 }
