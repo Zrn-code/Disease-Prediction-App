@@ -264,6 +264,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  glassmorphism:
+    dependency: "direct main"
+    description:
+      name: glassmorphism
+      sha256: c0f65ea2681d4ee6d4125b947946d983335cd44765e835cdc039894b076a6e31
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   http:
     dependency: "direct main"
     description:
@@ -509,6 +517,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.0"
+  star_menu:
+    dependency: "direct main"
+    description:
+      name: star_menu
+      sha256: "8c5de0b5002dd09bee51bc4456c3424ba81e127a2b0a2a6e7b775fdacaed2a61"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.4"
   stream_channel:
     dependency: transitive
     description:

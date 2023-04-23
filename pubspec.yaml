@@ -35,6 +35,8 @@ dependencies:
   delayed_widget: ^1.1.2
   material_text_fields: ^1.0.3
   animation_list: ^2.2.1
+  glassmorphism: ^3.0.0
+  star_menu: ^3.1.4
   
 dev_dependencies:
 

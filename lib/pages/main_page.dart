@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:delayed_widget/delayed_widget.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ import 'package:flutter/cupertino.dart';
 import '../form/example_buttons.dart';
 import '../form/example_card.dart';
 import 'package:tap_to_expand/tap_to_expand.dart';
+import 'package:star_menu/star_menu.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -55,6 +57,41 @@ List<String> prediction_A = [
   "0", // Gender
   "0" // Test Indication
 ];
+final List<Map<String, dynamic>> prediction_A_data = [
+  {
+    'title': 'cough',
+    'index': 1,
+  },
+  {
+    'title': 'fever',
+    'index': 2,
+  },
+  {
+    'title': 'sore throat',
+    'index': 3,
+  },
+  {
+    'title': 'shortness of breath',
+    'index': 4,
+  },
+  {
+    'title': 'head ache',
+    'index': 5,
+  },
+  {
+    'title': 'age 60 and above',
+    'index': 6,
+  },
+  {
+    'title': 'gender',
+    'index': 7,
+  },
+  {
+    'title': 'test indication',
+    'index': 8,
+  }
+];
+
 List<String> prediction_B = [
   "20", // Age
   "0", // Gender
@@ -72,6 +109,69 @@ List<String> prediction_B = [
   "0", // Muscle Stiffness
   "0", // Alopecia
   "0", // Obesity
+];
+
+final List<Map<String, dynamic>> prediction_B_data = [
+  {
+    "title": "Gender",
+    "index": 1,
+  },
+  {
+    "title": "Polyuria",
+    "index": 2,
+  },
+  {
+    "title": "Polydipsia",
+    "index": 3,
+  },
+  {
+    "title": "Sudden Weight Loss",
+    "index": 4,
+  },
+  {
+    "title": "Weakness",
+    "index": 5,
+  },
+  {
+    "title": "Polyphagia",
+    "index": 6,
+  },
+  {
+    "title": "Genital Thrush",
+    "index": 7,
+  },
+  {
+    "title": "Visual Blurring",
+    "index": 8,
+  },
+  {
+    "title": "Itching",
+    "index": 9,
+  },
+  {
+    "title": "Irritability",
+    "index": 10,
+  },
+  {
+    "title": "Delayed Healing",
+    "index": 11,
+  },
+  {
+    "title": "Partial Paresis",
+    "index": 12,
+  },
+  {
+    "title": "Muscle Stiffness",
+    "index": 13,
+  },
+  {
+    "title": "Alopecia",
+    "index": 14,
+  },
+  {
+    "title": "Obesity",
+    "index": 15,
+  },
 ];
 
 List<String> prediction_C = [
@@ -287,6 +387,7 @@ class _FormExampleState extends State<FormExample> {
   String output = 'Prediction';
   int activeStep = 0;
   String _selectedField = "Prediction";
+  String _title = "Choose a disease";
   String current_prediction = "X";
   bool _selectedGender = false;
   final AppinioSwiperController controller = AppinioSwiperController();
@@ -307,7 +408,7 @@ class _FormExampleState extends State<FormExample> {
     return Scaffold(
         body: Center(
             child: SingleChildScrollView(
-                child: Padding(
+                child: Container(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 30),
                     child: Form(
@@ -370,8 +471,8 @@ class _FormExampleState extends State<FormExample> {
                                                             "Prediction A";
                                                         activeStep = 1;
                                                         _submit = false;
-                                                        current_prediction =
-                                                            "A";
+                                                        _title = "Answer the "
+                                                            "questions";
                                                       });
                                                     },
                                                     child: Text(
@@ -398,6 +499,11 @@ class _FormExampleState extends State<FormExample> {
                                                   Text("hello"),
                                                   Expanded(child: Container()),
                                                   ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          Colors.black,
+                                                    ),
                                                     onPressed: () {
                                                       setState(() {
                                                         _selectedField =
@@ -432,6 +538,11 @@ class _FormExampleState extends State<FormExample> {
                                                   Text("hello"),
                                                   Expanded(child: Container()),
                                                   ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          Colors.black,
+                                                    ),
                                                     onPressed: () {
                                                       setState(() {
                                                         _selectedField =
@@ -465,6 +576,11 @@ class _FormExampleState extends State<FormExample> {
                                                   Text("hello"),
                                                   Expanded(child: Container()),
                                                   ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          Colors.black,
+                                                    ),
                                                     onPressed: () {
                                                       setState(() {
                                                         _selectedField =
@@ -579,7 +695,7 @@ class _FormExampleState extends State<FormExample> {
                                   height: 500,
                                   child: AnimationList(
                                       children: prediction_A_data.map((item) {
-                                    return _buildTile(
+                                    return _buildTile_A(
                                         item['title'], item['index']);
                                   }).toList()),
                                 ),
@@ -618,7 +734,6 @@ class _FormExampleState extends State<FormExample> {
                                           ),
                                           onEnd: () {
                                             setState(() {
-                                              print(prediction_B);
                                               _submit = true;
                                             });
                                           },
@@ -655,6 +770,16 @@ class _FormExampleState extends State<FormExample> {
                                       )
                                   ],
                                 )),
+                              if (_selectedField == "Prediction B" &&
+                                  _submit == true)
+                                Container(
+                                  height: 500,
+                                  child: AnimationList(
+                                      children: prediction_B_data.map((item) {
+                                    return _buildTile_B(
+                                        item['title'], item['index']);
+                                  }).toList()),
+                                ),
                               if (_selectedField == "Prediction C")
                                 prediction_C_Form(),
                               if (_selectedField == "Prediction D")
@@ -762,7 +887,6 @@ class _FormExampleState extends State<FormExample> {
                                                 duration: Duration(seconds: 1),
                                               ),
                                             );
-
                                             _submitPredictionA(url_A);
                                           }
                                         } else if (_selectedField ==
@@ -865,7 +989,7 @@ class _FormExampleState extends State<FormExample> {
                                       _loading_output
                                           ? LoadingAnimationWidget
                                               .staggeredDotsWave(
-                                              color: Colors.white,
+                                              color: Colors.black,
                                               size: 200,
                                             )
                                           : Text("output: $output"),
@@ -875,6 +999,7 @@ class _FormExampleState extends State<FormExample> {
                                             activeStep = 0;
                                             _selectedField = "Prediction";
                                             output = "Prediction";
+                                            _submit = false;
                                           });
                                         },
                                         child: Text(
@@ -891,7 +1016,17 @@ class _FormExampleState extends State<FormExample> {
 
   Future<void> _submitPredictionA(String url) async {
     _loading_output = true;
-
+    List<String> _titles_A = [
+      "undefined",
+      "cough",
+      "fever",
+      "sore throat",
+      "shortness of breath",
+      "head ache",
+      "age 60 and above",
+      "gender",
+      "test indication"
+    ];
     String _newRecord = "Covid19:";
     _newRecord +=
         "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}_";
@@ -936,6 +1071,12 @@ class _FormExampleState extends State<FormExample> {
 
 //https://early-stage-diabetes-risk-prediction.onrender.com/api?Age=20&Gender=0&Polyuria=0&Polydipsia=0&sudden_weight_loss=0&weakness=0&Polyphagia=0&Genital_thrush=0&visual_blurring=0&Itching=0&Irritability=0&delayed_healing=0&partial_paresis=0&muscle_stiffness=0&Alopecia=0&Obesity=0
   Future<void> _submitPredictionB(String url) async {
+    _loading_output = true;
+    setState(() {
+      _selectedField = "Result B";
+      activeStep = 2;
+    });
+
     url += 'Age=';
     url += prediction_B[0];
     url += '&Gender=';
@@ -973,8 +1114,8 @@ class _FormExampleState extends State<FormExample> {
     print(url);
     setState(() {
       output = decoded['output'];
+      _loading_output = false;
     });
-    _showResult("Probability of Diabetes mellitus:", output);
   }
 
   // https://personal-key-indicators-of-heart-disease.onrender.com/api?BMI=16.6&Smoking=1&AlcoholDrinking=0&Stroke=0&PhysicalHealth=3&MentalHealth=30&DiffWalking=0&Sex=0&AgeCategory=7&Diabetic=1&PhysicalActivity=1&GenHealth=3&SleepTime=5&Asthma=1&KidneyDisease=0&SkinCancer=1
@@ -1455,65 +1596,38 @@ Widget _buildRow(String label, Function onChanged) {
   );
 }
 
-List<String> _titles_A = [
-  "undefined",
-  "cough",
-  "fever",
-  "sore throat",
-  "shortness of breath",
-  "head ache",
-  "age 60 and above",
-  "gender",
-  "test indication"
-];
-
-final List<Map<String, dynamic>> prediction_A_data = [
-  {
-    'title': 'cough',
-    'index': 1,
-  },
-  {
-    'title': 'fever',
-    'index': 2,
-  },
-  {
-    'title': 'sore throat',
-    'index': 3,
-  },
-  {
-    'title': 'shortness of breath',
-    'index': 4,
-  },
-  {
-    'title': 'head ache',
-    'index': 5,
-  },
-  {
-    'title': 'age 60 and above',
-    'index': 6,
-  },
-  {
-    'title': 'gender',
-    'index': 7,
-  },
-  {
-    'title': 'test indication',
-    'index': 8,
-  }
-];
-
-Widget _buildTile(String title, int index) {
+Widget _buildTile_A(String title, int index) {
   return Container(
       height: 50,
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       alignment: Alignment.center,
       child: Text(
-        title,
+        title != "gender"
+            ? title
+            : title + ": " + (prediction_A[index] == "1" ? "Male" : "Female"),
         style: TextStyle(
-            color: prediction_A[index] == "1" ? Colors.white : Colors.black),
+            fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(25)),
         color: prediction_A[index] == "1" ? Colors.green : Colors.red,
+      ));
+}
+
+Widget _buildTile_B(String title, int index) {
+  return Container(
+      height: 50,
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      alignment: Alignment.center,
+      child: Text(
+        title != "gender"
+            ? title
+            : title + ": " + (prediction_B[index] == "1" ? "Male" : "Female"),
+        style: TextStyle(
+            fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(25)),
+        color: prediction_B[index] == "1" ? Colors.green : Colors.red,
       ));
 }
