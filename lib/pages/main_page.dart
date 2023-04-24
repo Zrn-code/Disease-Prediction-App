@@ -21,6 +21,7 @@ import '../form/example_buttons.dart';
 import '../form/example_card.dart';
 import 'package:tap_to_expand/tap_to_expand.dart';
 import 'package:star_menu/star_menu.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -388,6 +389,7 @@ class _FormExampleState extends State<FormExample> {
   int activeStep = 0;
   String _selectedField = "Prediction";
   String _title = "Choose a disease";
+  int _subStep = 0;
   String current_prediction = "X";
   bool _selectedGender = false;
   final AppinioSwiperController controller = AppinioSwiperController();
@@ -444,6 +446,9 @@ class _FormExampleState extends State<FormExample> {
                           ),*/
                               if (_selectedField == "Prediction")
                                 DelayedWidget(
+                                  animationDuration:
+                                      Duration(microseconds: 500),
+                                  delayDuration: Duration(microseconds: 300),
                                   child: Container(
                                     padding: EdgeInsets.all(16.0),
                                     child: Column(
@@ -509,6 +514,7 @@ class _FormExampleState extends State<FormExample> {
                                                         _selectedField =
                                                             "Prediction B";
                                                         activeStep = 1;
+                                                        _subStep = 1;
                                                         _selectedGender = true;
                                                         current_prediction =
                                                             "B";
@@ -699,11 +705,29 @@ class _FormExampleState extends State<FormExample> {
                                         item['title'], item['index']);
                                   }).toList()),
                                 ),
-                              if (_selectedField == "Prediction B")
+                              if (_selectedField == "Prediction B" &&
+                                  _subStep == 1)
+                                Column(children: [
+                                  inputAgeForm(),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      if (_formKey.currentState?.validate() ??
+                                          false) {
+                                        _formKey.currentState!.save();
+                                        setState(() {
+                                          _subStep = 2;
+                                        });
+                                      }
+                                    },
+                                    child: Text("Next Step"),
+                                  )
+                                ]),
+                              if (_selectedField == "Prediction B" &&
+                                  _subStep == 2)
                                 Container(
                                     child: Column(
                                   children: [
-                                    inputAgeForm(),
+                                    //inputAgeForm(),
                                     if (_submit == false)
                                       SizedBox(
                                         height:
@@ -992,7 +1016,20 @@ class _FormExampleState extends State<FormExample> {
                                               color: Colors.black,
                                               size: 200,
                                             )
-                                          : Text("output: $output"),
+                                          : CircularPercentIndicator(
+                                              radius: 160.0,
+                                              lineWidth: 25.0,
+                                              animationDuration: 10000,
+                                              linearGradient: gradientRed,
+                                              percent:
+                                                  double.parse(output) * 0.01,
+                                              center:
+                                                  Text("Prediction $output %"),
+                                              //progressColor: Colors.green,
+                                            ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
                                       ElevatedButton(
                                         onPressed: () {
                                           setState(() {
@@ -1406,7 +1443,7 @@ class _FormExampleState extends State<FormExample> {
           return null;
         },
         onSaved: (value) {
-          _weight = double.parse(value!); // 使用 '!' 運算符號
+          _weight = double.parse(value!);
         },
       ),
     );
@@ -1601,17 +1638,24 @@ Widget _buildTile_A(String title, int index) {
       height: 50,
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       alignment: Alignment.center,
-      child: Text(
-        title != "gender"
-            ? title
-            : title + ": " + (prediction_A[index] == "1" ? "Male" : "Female"),
-        style: TextStyle(
-            fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),
-      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(25)),
-        color: prediction_A[index] == "1" ? Colors.green : Colors.red,
-      ));
+        //color: prediction_A[index] == "1" ? Colors.green : Colors.red,
+        gradient: prediction_A[index] == "1" ? gradientBlue : gradientRed,
+      ),
+      child: Row(children: [
+        Icon(
+          prediction_A[index] == "1" ? Icons.check : Icons.close,
+          color: Colors.white,
+        ),
+        Text(
+          title != "gender"
+              ? title
+              : title + ": " + (prediction_A[index] == "1" ? "Male" : "Female"),
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),
+        ),
+      ]));
 }
 
 Widget _buildTile_B(String title, int index) {
@@ -1629,5 +1673,12 @@ Widget _buildTile_B(String title, int index) {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(25)),
         color: prediction_B[index] == "1" ? Colors.green : Colors.red,
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              prediction_B[index] == "1" ? Colors.green : Colors.red,
+              prediction_B[index] == "1" ? Colors.green : Colors.red,
+            ]),
       ));
 }
