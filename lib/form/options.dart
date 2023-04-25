@@ -134,6 +134,7 @@ List<ExampleOption> options_B = [
 ];
 
 List<ExampleOption> options_C = [
+  ExampleOption(name: "Gender", desc: "undefined", color: gradientPurple),
   ExampleOption(
     name: "Smoking",
     desc: "undefined",

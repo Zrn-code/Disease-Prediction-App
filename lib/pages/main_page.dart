@@ -30,23 +30,6 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-String gender = "1";
-String BMI = "1";
-String Smoking = "1";
-String AlcoholDrinking = "1";
-String Stroke = "1";
-String PhysicalHealth = "1";
-String MentalHealth = "1";
-String DiffWalking = "1";
-String AgeCategory = "1";
-String Diabetic = "1";
-String PhysicalActivity = "1";
-String GenHealth = "1";
-String SleepTime = "1";
-String Asthma = "1";
-String KidneyDisease = "1";
-String SkinCancer = "1";
-
 List<String> prediction_A = [
   "undefined",
   "0", // Cough
@@ -174,6 +157,7 @@ final List<Map<String, dynamic>> prediction_B_data = [
     "index": 15,
   },
 ];
+// https://personal-key-indicators-of-heart-disease.onrender.com/api?BMI=16.6&Smoking=1&AlcoholDrinking=0&Stroke=0&PhysicalHealth=3&MentalHealth=30&DiffWalking=0&Sex=0&AgeCategory=7&Diabetic=1&PhysicalActivity=1&GenHealth=3&SleepTime=5&Asthma=1&KidneyDisease=0&SkinCancer=1
 
 List<String> prediction_C = [
   "undefined",
@@ -184,6 +168,7 @@ List<String> prediction_C = [
   "0", // Physical Health
   "0", // Mental Health
   "0", // Difficult Walking
+  "0", // Sex
   "0", // Age Category
   "0", // Diabetic
   "0", // Physical Activity
@@ -554,8 +539,10 @@ class _FormExampleState extends State<FormExample> {
                                                         _selectedField =
                                                             "Prediction C";
                                                         activeStep = 1;
+                                                        _subStep = 1;
                                                         current_prediction =
                                                             "C";
+                                                        _selectedGender = true;
                                                       });
                                                     },
                                                     child: Text(
@@ -804,12 +791,155 @@ class _FormExampleState extends State<FormExample> {
                                         item['title'], item['index']);
                                   }).toList()),
                                 ),
-                              if (_selectedField == "Prediction C")
-                                prediction_C_Form(),
-                              if (_selectedField == "Prediction D")
+                              if (_selectedField == "Prediction C" &&
+                                  _subStep == 1)
+                                Column(children: [
+                                  inputAgeForm(),
+                                  inputHeightForm(),
+                                  inputWeightForm(),
+                                  inputSleepTimeForm(),
+                                  inputPhysicalHealthForm(),
+                                  inputMentalHealthForm(),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      if (_formKey.currentState?.validate() ??
+                                          false) {
+                                        _formKey.currentState!.save();
+                                        setState(() {
+                                          _subStep = 2;
+                                        });
+                                      }
+                                    },
+                                    child: Text("Next Step"),
+                                  )
+                                ]),
+                              if (_selectedField == "Prediction C" &&
+                                  _subStep == 2)
+                                Container(
+                                    child: Column(
+                                  children: [
+                                    if (_submit == false)
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.5,
+                                        child: AppinioSwiper(
+                                          swipeOptions:
+                                              AppinioSwipeOptions.vertical,
+                                          unlimitedUnswipe: true,
+                                          controller: controller,
+                                          isDisabled: true,
+                                          onSwipe: ((index, direction) {
+                                            setState(() {
+                                              _selectedGender = false;
+                                            });
+
+                                            if (index == 1)
+                                              prediction_C[8] =
+                                                  direction.name == "left"
+                                                      ? "0"
+                                                      : "1";
+                                            else if (index == 2)
+                                              prediction_C[2] =
+                                                  direction.name == "left"
+                                                      ? "0"
+                                                      : "1";
+                                            else if (index == 3)
+                                              prediction_C[3] =
+                                                  direction.name == "left"
+                                                      ? "0"
+                                                      : "1";
+                                            else if (index == 4)
+                                              prediction_C[4] =
+                                                  direction.name == "left"
+                                                      ? "0"
+                                                      : "1";
+                                            else if (index == 5)
+                                              prediction_C[7] =
+                                                  direction.name == "left"
+                                                      ? "0"
+                                                      : "1";
+                                            else if (index == 6)
+                                              prediction_C[14] =
+                                                  direction.name == "left"
+                                                      ? "0"
+                                                      : "1";
+                                            else if (index == 7)
+                                              prediction_C[15] =
+                                                  direction.name == "left"
+                                                      ? "0"
+                                                      : "1";
+                                            else if (index == 8)
+                                              prediction_C[16] =
+                                                  direction.name == "left"
+                                                      ? "0"
+                                                      : "1";
+                                          }),
+                                          padding: const EdgeInsets.only(
+                                            left: 25,
+                                            right: 25,
+                                            top: 50,
+                                            bottom: 40,
+                                          ),
+                                          onEnd: () {
+                                            setState(() {
+                                              _submit = true;
+                                            });
+                                          },
+                                          cardsCount: options_C.length,
+                                          cardsBuilder: (BuildContext context,
+                                              int index) {
+                                            return ExampleCard(
+                                                candidate: options_C[index]);
+                                          },
+                                        ),
+                                      ),
+                                    if (_submit == false)
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 80,
+                                          ),
+                                          _selectedGender
+                                              ? selectFemaleButton(controller)
+                                              : swipeLeftButton(controller),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          _selectedGender
+                                              ? selectMaleButton(controller)
+                                              : swipeRightButton(controller),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          unswipeButton(controller),
+                                        ],
+                                      )
+                                  ],
+                                )),
+                              if (_selectedField == "Prediction D" &&
+                                  _subStep == 1)
+                                Column(children: [
+                                  inputAgeForm(),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      if (_formKey.currentState?.validate() ??
+                                          false) {
+                                        _formKey.currentState!.save();
+                                        setState(() {
+                                          _subStep = 2;
+                                        });
+                                      }
+                                    },
+                                    child: Text("Next Step"),
+                                  )
+                                ]),
+                              if (_selectedField == "Prediction D" &&
+                                  _subStep == 2)
                                 Column(
                                   children: [
-                                    inputAgeForm(),
                                     if (_submit == false)
                                       SizedBox(
                                         height:
@@ -943,7 +1073,9 @@ class _FormExampleState extends State<FormExample> {
                                                 duration: Duration(seconds: 1),
                                               ),
                                             );
+
                                             _submitPredictionC(url_C);
+                                            print(prediction_C);
                                           }
                                         } else if (_selectedField ==
                                             "Prediction D") {
@@ -1158,44 +1290,44 @@ class _FormExampleState extends State<FormExample> {
   // https://personal-key-indicators-of-heart-disease.onrender.com/api?BMI=16.6&Smoking=1&AlcoholDrinking=0&Stroke=0&PhysicalHealth=3&MentalHealth=30&DiffWalking=0&Sex=0&AgeCategory=7&Diabetic=1&PhysicalActivity=1&GenHealth=3&SleepTime=5&Asthma=1&KidneyDisease=0&SkinCancer=1
   Future<void> _submitPredictionC(String url) async {
     _calculateBMI();
-    _calculateAgeCategory();
     url += 'BMI=';
-    url += _bmi.toString();
+    url += prediction_C[1];
     url += '&Smoking=';
-    url += Smoking;
+    url += prediction_C[2];
     url += '&AlcoholDrinking=';
-    url += AlcoholDrinking;
+    url += prediction_C[3];
     url += '&Stroke=';
-    url += Stroke;
+    url += prediction_C[4];
     url += '&PhysicalHealth=';
-    url += PhysicalHealth;
+    url += prediction_C[5];
     url += '&MentalHealth=';
-    url += MentalHealth;
+    url += prediction_C[6];
     url += '&DiffWalking=';
-    url += DiffWalking;
+    url += prediction_C[7];
     url += '&Sex=';
-    url += gender;
+    url += prediction_C[8];
     url += '&AgeCategory=';
-    url += AgeCategory;
+    url += prediction_C[9];
     url += '&Diabetic=';
-    url += Diabetic;
+    url += prediction_C[10];
     url += '&PhysicalActivity=';
-    url += PhysicalActivity;
+    url += prediction_C[11];
     url += '&GenHealth=';
-    url += GenHealth;
+    url += prediction_C[12];
     url += '&SleepTime=';
-    url += SleepTime;
+    url += prediction_C[13];
     url += '&Asthma=';
-    url += Asthma;
+    url += prediction_C[14];
     url += '&KidneyDisease=';
-    url += KidneyDisease;
+    url += prediction_C[15];
     url += '&SkinCancer=';
-    url += SkinCancer;
+    url += prediction_C[16];
     var data = await fetchData(url);
     var decoded = await jsonDecode(data);
     print(url);
     setState(() {
       output = decoded['output'];
+      _loading_output = false;
     });
     _showResult("Probability of Heart Disease:", output);
   }
@@ -1238,50 +1370,43 @@ class _FormExampleState extends State<FormExample> {
     //print(url);
     setState(() {
       output = decoded['output'];
+      _loading_output = false;
     });
     _showResult("Probability of Lung Cancer:", output);
   }
 
-  void _submitFormBMI() {
-    if (_formKey.currentState?.validate() ?? false) {
-      _formKey.currentState!.save();
-      _calculateBMI();
-      _showResult("Your BMI is:", _bmi.toStringAsFixed(1));
-    }
-  }
-
-  void _calculateAgeCategory() {
-    if (_age < 25)
-      AgeCategory = "0";
-    else if (_age < 30)
-      AgeCategory = "1";
+  String _calculateAgeCategory(int age) {
+    if (age < 25) return "0";
+    if (_age < 30)
+      return "1";
     else if (_age < 35)
-      AgeCategory = "2";
+      return "2";
     else if (_age < 40)
-      AgeCategory = "3";
+      return "3";
     else if (_age < 45)
-      AgeCategory = "4";
+      return "4";
     else if (_age < 50)
-      AgeCategory = "5";
+      return "5";
     else if (_age < 55)
-      AgeCategory = "6";
+      return "6";
     else if (_age < 60)
-      AgeCategory = "7";
+      return "7";
     else if (_age < 65)
-      AgeCategory = "8";
+      return "8";
     else if (_age < 70)
-      AgeCategory = "9";
+      return "9";
     else if (_age < 75)
-      AgeCategory = "10";
+      return "10";
     else if (_age < 80)
-      AgeCategory = "11";
+      return "11";
     else
-      AgeCategory = "12";
+      return "12";
   }
 
   void _calculateBMI() {
     double heightInMeters = _height / 100;
     _bmi = _weight / (heightInMeters * heightInMeters);
+    prediction_C[1] = _bmi.toStringAsFixed(1);
   }
 
   void _showResult(String message, String result) {
@@ -1318,74 +1443,6 @@ class _FormExampleState extends State<FormExample> {
     );
   }
 
-  // https://personal-key-indicators-of-heart-disease.onrender.com/api?BMI=16.6&Smoking=1&AlcoholDrinking=0&Stroke=0&PhysicalHealth=3&MentalHealth=30&DiffWalking=0&Sex=0&AgeCategory=7&Diabetic=1&PhysicalActivity=1&GenHealth=3&SleepTime=5&Asthma=1&KidneyDisease=0&SkinCancer=1
-  Container prediction_C_Form() {
-    return Container(
-      padding: EdgeInsets.all(20),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            inputAgeForm(),
-            inputHeightForm(),
-            inputWeightForm(),
-            inputSleepTimeForm(),
-            inputPhysicalHealthForm(),
-            inputMentalHealthForm(),
-            _buildRow('smoking:', (value) {
-              setState(() {
-                Smoking = value;
-              });
-            }),
-            _buildRow('Alcohol Drinking:', (value) {
-              setState(() {
-                AlcoholDrinking = value;
-              });
-            }),
-            _buildRow('Stroke:', (value) {
-              setState(() {
-                Stroke = value;
-              });
-            }),
-            _buildRow('Difficulty Walking:', (value) {
-              setState(() {
-                DiffWalking = value;
-              });
-            }),
-            _buildRow('Diabetic:', (value) {
-              setState(() {
-                Diabetic = value;
-              });
-            }),
-            _buildRow('Physical Activity during past 30 days:', (value) {
-              setState(() {
-                PhysicalActivity = value;
-              });
-            }),
-            _buildRow('General Health:', (value) {
-              setState(() {
-                GenHealth = value;
-              });
-            }),
-            _buildRow('Asthma:', (value) {
-              setState(() {
-                Asthma = value;
-              });
-            }),
-            _buildRow('Kidney Disease:', (value) {
-              setState(() {
-                KidneyDisease = value;
-              });
-            }),
-            _buildRow('Skin Cancer:', (value) {
-              setState(() {
-                SkinCancer = value;
-              });
-            }),
-          ]),
-    );
-  }
-
   Container inputAgeForm() {
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -1414,6 +1471,7 @@ class _FormExampleState extends State<FormExample> {
           setState(() {
             _age = int.parse(value);
             prediction_B[0] = _age.toString();
+            prediction_C[8] = _calculateAgeCategory(int.parse(value));
             prediction_D[2] = _age.toString();
           });
         },
@@ -1496,14 +1554,14 @@ class _FormExampleState extends State<FormExample> {
             return 'Please enter your mental health';
           }
           if (double.tryParse(value!) == null ||
-              int.parse(value) > 30 ||
+              int.parse(value) > 31 ||
               int.parse(value) < 0) {
-            return 'Please enter in range 0 to 30';
+            return 'Please enter in range 0 to 31';
           }
           return null;
         },
         onSaved: (value) {
-          MentalHealth = int.parse(value!).toString();
+          prediction_C[6] = int.parse(value!).toString();
         },
       ),
     );
@@ -1518,22 +1576,22 @@ class _FormExampleState extends State<FormExample> {
         decoration: const InputDecoration(
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.mood_bad_rounded),
-          labelText: 'mental health',
-          hintText: 'Illness or injury in 30 days.',
+          labelText: 'physical health',
+          hintText: 'Illness or injury last month.',
         ),
         validator: (value) {
           if (value?.isEmpty ?? true) {
             return 'Please enter your physical health';
           }
           if (int.tryParse(value!) == null ||
-              int.parse(value) > 30 ||
+              int.parse(value) > 31 ||
               int.parse(value) < 0) {
-            return 'Please enter in range 0 to 30';
+            return 'Please enter in range 0 to 31';
           }
           return null;
         },
         onSaved: (value) {
-          PhysicalHealth = int.parse(value!).toString();
+          prediction_C[5] = int.parse(value!).toString();
         },
       ),
     );
@@ -1561,7 +1619,7 @@ class _FormExampleState extends State<FormExample> {
           return null;
         },
         onSaved: (value) {
-          SleepTime = value!;
+          prediction_C[13] = value!;
         },
       ),
     );
