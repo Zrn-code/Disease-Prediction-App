@@ -201,6 +201,14 @@ final List<Map<String, dynamic>> prediction_C_data = [
     "index": 7,
   },
   {
+    "title": "Diabetic",
+    "index": 10,
+  },
+  {
+    "title": "Physical Activity",
+    "index": 11,
+  },
+  {
     "title": "Asthma",
     "index": 14,
   },
@@ -614,6 +622,7 @@ class _FormExampleState extends State<FormExample> {
                                                         _selectedField =
                                                             "Prediction D";
                                                         activeStep = 1;
+                                                        _subStep = 1;
                                                         current_prediction =
                                                             "D";
                                                         _selectedGender = true;
@@ -679,7 +688,7 @@ class _FormExampleState extends State<FormExample> {
                                             ),
                                             onEnd: () {
                                               setState(() {
-                                                print(prediction_A);
+                                                //print(prediction_A);
                                                 _submit = true;
                                               });
                                             },
@@ -835,6 +844,11 @@ class _FormExampleState extends State<FormExample> {
                                   inputSleepTimeForm(),
                                   inputPhysicalHealthForm(),
                                   inputMentalHealthForm(),
+                                  _buildRow("General Health:", (val) {
+                                    setState(() {
+                                      prediction_C[12] = val;
+                                    });
+                                  }),
                                   ElevatedButton(
                                     onPressed: () {
                                       if (_formKey.currentState?.validate() ??
@@ -895,16 +909,26 @@ class _FormExampleState extends State<FormExample> {
                                                       ? "0"
                                                       : "1";
                                             else if (index == 6)
-                                              prediction_C[14] =
+                                              prediction_C[10] =
                                                   direction.name == "left"
                                                       ? "0"
                                                       : "1";
                                             else if (index == 7)
-                                              prediction_C[15] =
+                                              prediction_C[11] =
                                                   direction.name == "left"
                                                       ? "0"
                                                       : "1";
                                             else if (index == 8)
+                                              prediction_C[14] =
+                                                  direction.name == "left"
+                                                      ? "0"
+                                                      : "1";
+                                            else if (index == 9)
+                                              prediction_C[15] =
+                                                  direction.name == "left"
+                                                      ? "0"
+                                                      : "1";
+                                            else if (index == 10)
                                               prediction_C[16] =
                                                   direction.name == "left"
                                                       ? "0"
@@ -1024,7 +1048,7 @@ class _FormExampleState extends State<FormExample> {
                                           ),
                                           onEnd: () {
                                             setState(() {
-                                              print(prediction_D);
+                                              //print(prediction_D);
                                               _submit = true;
                                             });
                                           },
@@ -1120,7 +1144,7 @@ class _FormExampleState extends State<FormExample> {
                                             );
 
                                             _submitPredictionC(url_C);
-                                            print(prediction_C);
+                                            //print(prediction_C);
                                           }
                                         } else if (_selectedField ==
                                             "Prediction D") {
@@ -1169,6 +1193,7 @@ class _FormExampleState extends State<FormExample> {
                                             _selectedField = "Prediction";
                                             _submit = false;
                                             activeStep = 0;
+                                            _subStep = 0;
                                             _selectedGender = false;
                                           });
                                         }
@@ -1272,7 +1297,7 @@ class _FormExampleState extends State<FormExample> {
     url += prediction_A[8];
     var data = await fetchData(url);
     var decoded = await jsonDecode(data);
-    print(url);
+    debugPrint(url);
     setState(() {
       output = decoded['output'];
       _loading_output = false;
@@ -1325,7 +1350,7 @@ class _FormExampleState extends State<FormExample> {
     url += prediction_B[15];
     var data = await fetchData(url);
     var decoded = await jsonDecode(data);
-    print(url);
+    debugPrint(url);
     setState(() {
       output = decoded['output'];
       _loading_output = false;
@@ -1374,7 +1399,7 @@ class _FormExampleState extends State<FormExample> {
     url += prediction_C[16];
     var data = await fetchData(url);
     var decoded = await jsonDecode(data);
-    print(url);
+    debugPrint(url);
     setState(() {
       output = decoded['output'];
       _loading_output = false;
@@ -1413,7 +1438,7 @@ class _FormExampleState extends State<FormExample> {
     url += prediction_D[14];
     url += '&CHEST_PAIN=';
     url += prediction_D[15];
-    print(url);
+    debugPrint(url);
     var data = await fetchData(url);
     var decoded = await jsonDecode(data);
     //print(url);
@@ -1421,75 +1446,21 @@ class _FormExampleState extends State<FormExample> {
       output = decoded['output'];
       _loading_output = false;
     });
-    _showResult("Probability of Lung Cancer:", output);
+    //_showResult("Probability of Lung Cancer:", output);
   }
 
   String _calculateAgeCategory(int age) {
-    if (age < 25) return "0";
-    if (_age < 30)
-      return "1";
-    else if (_age < 35)
-      return "2";
-    else if (_age < 40)
-      return "3";
-    else if (_age < 45)
-      return "4";
-    else if (_age < 50)
-      return "5";
-    else if (_age < 55)
-      return "6";
-    else if (_age < 60)
-      return "7";
-    else if (_age < 65)
-      return "8";
-    else if (_age < 70)
-      return "9";
-    else if (_age < 75)
-      return "10";
-    else if (_age < 80)
-      return "11";
-    else
-      return "12";
+    age -= 25;
+    age = age ~/ 5;
+    if (age < 0) age = 0;
+    if (age > 12) age = 12;
+    return age.toString();
   }
 
   void _calculateBMI() {
     double heightInMeters = _height / 100;
     _bmi = _weight / (heightInMeters * heightInMeters);
     prediction_C[1] = _bmi.toStringAsFixed(1);
-  }
-
-  void _showResult(String message, String result) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext context) {
-        return Container(
-          height: 300.0,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10.0),
-              topRight: Radius.circular(10.0),
-            ),
-          ),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  message,
-                  style: const TextStyle(fontSize: 24.0),
-                ),
-                Text(
-                  result,
-                  style: TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
   }
 
   Container inputAgeForm() {
@@ -1520,7 +1491,7 @@ class _FormExampleState extends State<FormExample> {
           setState(() {
             _age = int.parse(value);
             prediction_B[0] = _age.toString();
-            prediction_C[8] = _calculateAgeCategory(int.parse(value));
+            prediction_C[9] = _calculateAgeCategory(int.parse(value));
             prediction_D[2] = _age.toString();
           });
         },
@@ -1570,11 +1541,9 @@ class _FormExampleState extends State<FormExample> {
         ),
         validator: (value) {
           if (value?.isEmpty ?? true) {
-            // 使用空值判斷符號
             return 'Please enter your height';
           }
           if (double.tryParse(value!) == null) {
-            // 使用 '!' 運算符號
             return 'Please enter a valid height';
           }
           return null;
@@ -1665,6 +1634,9 @@ class _FormExampleState extends State<FormExample> {
           if (double.tryParse(value!) == null) {
             return 'Please enter a valid sleep time';
           }
+          if (double.parse(value) > 24 || double.parse(value) < 0) {
+            return 'Please enter 0 to 24';
+          }
           return null;
         },
         onSaved: (value) {
@@ -1677,20 +1649,6 @@ class _FormExampleState extends State<FormExample> {
 
 Widget _buildRow(String label, Function onChanged) {
   var list = ['Yes', 'No'];
-  if (label == 'Gender:') list = ['Female', "Male"];
-  if (label == 'Smoking:' ||
-      label == 'Yellow Fingers:' ||
-      label == 'Anxiety:' ||
-      label == 'Peer Pressure:' ||
-      label == 'Chronic Disease:' ||
-      label == 'Fatigue:' ||
-      label == 'Allergy:' ||
-      label == 'Wheezing:' ||
-      label == 'Alcohol Consuming:' ||
-      label == 'Coughing:' ||
-      label == 'Shortness of Breath:' ||
-      label == 'Swallowing Difficulty:' ||
-      label == 'Chest Pain:') list = ['YES', 'NO'];
   if (label == 'General Health:')
     list = [
       'Excellent',
@@ -1699,32 +1657,6 @@ Widget _buildRow(String label, Function onChanged) {
       'Poor',
       'Fair',
     ];
-  if (label == 'Chest Pain type chest pain type:')
-    list = [
-      'typical angina',
-      'atypical angina',
-      'non-anginal pain',
-      'asymptomatic'
-    ];
-  if (label == "Slope:")
-    list = [
-      'upsloping',
-      'flat',
-      'downsloping',
-    ];
-  if (label == "Fasting blood sugar:")
-    list = [
-      'greater than 120mg/ml',
-      'less than 120mg/ml',
-    ];
-  if (label == "Resting electrocardiographic results:")
-    list = [
-      'normal',
-      'ST-T wave abnormality',
-      'left ventricular hypertrophy',
-    ];
-  if (label == "Number of major vessels:" || label == "Thal rate:")
-    list = ['0', '1', '2', '3'];
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [

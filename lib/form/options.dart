@@ -155,6 +155,16 @@ List<ExampleOption> options_C = [
     desc: "undefined",
     color: gradientPurple,
   ),
+  ExampleOption(
+    name: "Diabetic",
+    desc: "undefined",
+    color: gradientPink,
+  ),
+  ExampleOption(
+    name: "Physical Activity",
+    desc: "undefined",
+    color: gradientPink,
+  ),
   ExampleOption(name: "Asthma", desc: "undefined", color: gradientPink),
   ExampleOption(
     name: "Kidney Disease",
