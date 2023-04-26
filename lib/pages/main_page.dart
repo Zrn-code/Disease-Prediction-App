@@ -178,6 +178,41 @@ List<String> prediction_C = [
   "0", // Kidney Disease
   "0", // Skin Cancer
 ];
+
+final List<Map<String, dynamic>> prediction_C_data = [
+  {
+    "title": "Gender",
+    "index": 8,
+  },
+  {
+    "title": "Smoking",
+    "index": 2,
+  },
+  {
+    "title": "Alcohol Drinking",
+    "index": 3,
+  },
+  {
+    "title": "Stroke",
+    "index": 4,
+  },
+  {
+    "title": "Difficult Walking",
+    "index": 7,
+  },
+  {
+    "title": "Asthma",
+    "index": 14,
+  },
+  {
+    "title": "Kidney Disease",
+    "index": 15,
+  },
+  {
+    "title": "Skin Cancer",
+    "index": 16,
+  }
+];
 List<String> prediction_D = [
   "undefiend",
   "0", // Gender
@@ -919,6 +954,16 @@ class _FormExampleState extends State<FormExample> {
                                       )
                                   ],
                                 )),
+                              if (_selectedField == "Prediction C" &&
+                                  _submit == true)
+                                Container(
+                                  height: 500,
+                                  child: AnimationList(
+                                      children: prediction_C_data.map((item) {
+                                    return _buildTile_C(
+                                        item['title'], item['index']);
+                                  }).toList()),
+                                ),
                               if (_selectedField == "Prediction D" &&
                                   _subStep == 1)
                                 Column(children: [
@@ -1289,6 +1334,11 @@ class _FormExampleState extends State<FormExample> {
 
   // https://personal-key-indicators-of-heart-disease.onrender.com/api?BMI=16.6&Smoking=1&AlcoholDrinking=0&Stroke=0&PhysicalHealth=3&MentalHealth=30&DiffWalking=0&Sex=0&AgeCategory=7&Diabetic=1&PhysicalActivity=1&GenHealth=3&SleepTime=5&Asthma=1&KidneyDisease=0&SkinCancer=1
   Future<void> _submitPredictionC(String url) async {
+    _loading_output = true;
+    setState(() {
+      _selectedField = "Result C";
+      activeStep = 2;
+    });
     _calculateBMI();
     url += 'BMI=';
     url += prediction_C[1];
@@ -1329,7 +1379,6 @@ class _FormExampleState extends State<FormExample> {
       output = decoded['output'];
       _loading_output = false;
     });
-    _showResult("Probability of Heart Disease:", output);
   }
 
   // https://lung-cancer-808h.onrender.com/api?GENDER=1&AGE=50&SMOKING=2&YELLOW_FINGERS=1&ANXIETY=1&PEER_PRESSURE=1&CHRONIC_DISEASE=1&FATIGUE=2&ALLERGY=2&WHEEZING=1&ALCOHOL_CONSUMING=2&COUGHING=2&SHORTNESS_OF_BREATH=1&SWALLOWING_DIFFICULTY=1&CHEST_PAIN=1
@@ -1737,6 +1786,31 @@ Widget _buildTile_B(String title, int index) {
             colors: [
               prediction_B[index] == "1" ? Colors.green : Colors.red,
               prediction_B[index] == "1" ? Colors.green : Colors.red,
+            ]),
+      ));
+}
+
+Widget _buildTile_C(String title, int index) {
+  return Container(
+      height: 50,
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      alignment: Alignment.center,
+      child: Text(
+        title != "gender"
+            ? title
+            : title + ": " + (prediction_C[index] == "1" ? "Male" : "Female"),
+        style: TextStyle(
+            fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(25)),
+        color: prediction_C[index] == "1" ? Colors.green : Colors.red,
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              prediction_C[index] == "1" ? Colors.green : Colors.red,
+              prediction_C[index] == "1" ? Colors.green : Colors.red,
             ]),
       ));
 }
