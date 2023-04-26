@@ -1,14 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter_application/pages/register_page.dart';
 import '../helper/helper_functions.dart';
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import '../services/database_service.dart';
 import '../widgets/widgets.dart';
 import 'main_page.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:animated_login/animated_login.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -17,6 +14,8 @@ class LoginScreen extends StatefulWidget {
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
+
+String _language = "EN";
 
 class _LoginScreenState extends State<LoginScreen> {
   LanguageOption language = _languageOptions[0];
@@ -30,8 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
       formKey: GlobalKey<FormState>(),
       onLogin: LoginFunctions(context).onLogin,
       onSignup: LoginFunctions(context).onSignup,
-      onForgotPassword: LoginFunctions(context).onForgotPassword,
-      // logo: Image.asset('assets/images/logo.gif'),
+      //onForgotPassword: LoginFunctions(context).onForgotPassword,
+      //logo: Image.asset('assets/images/logo.gif'),
       //backgroundImage: "./images/background.jpg",
       signUpMode: SignUpModes.both,
       loginDesktopTheme: _desktopTheme,
@@ -47,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
           if (mounted) setState(() => language = _language);
 
           DialogBuilder(context).showResultDialog(language.code == "ZH"
-              ? '成功將語言調整為: ${_language.value}.'
+              ? '成功將語言調整為: ${_language.value}。'
               : 'Successfully changed the language to: ${_language.value}.');
         }
       },
@@ -84,6 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
   /// You can also set some additional display options such as [showLabelTexts].
   LoginViewTheme get _mobileTheme => LoginViewTheme(
         // showLabelTexts: false,
+        // animatedComponentOrder: <AnimatedComponent>[],
         backgroundColor: Colors.blueGrey, // const Color(0xFF6666FF),
         formFieldBackgroundColor: Colors.white,
         formWidthRatio: 60,

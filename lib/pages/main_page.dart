@@ -1,3 +1,5 @@
+import 'package:language_builder/language_builder.dart';
+
 import '../helper/helper_functions.dart';
 import '../services/database_service.dart';
 import '../widgets/widgets.dart';
@@ -11,6 +13,7 @@ import '../data/url.dart';
 import '../widgets/colors.dart';
 import 'login_page.dart';
 
+import '../languages/zh_TW.dart';
 import 'dart:ui';
 import 'dart:convert';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -39,6 +42,7 @@ int _age = 0;
 double _bmi = 0;
 double _height = 0;
 double _weight = 0;
+var zh_TW = json.decode(data);
 
 class _MainPageState extends State<MainPage> {
   String userName = "";
@@ -79,7 +83,7 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Disease Prediction'),
+          title: Text("hi"),
           backgroundColor: Colors.blue,
         ),
         drawer: Drawer(
@@ -106,7 +110,6 @@ class _MainPageState extends State<MainPage> {
                 height: 2,
               ),
               ListTile(
-                  onTap: () {},
                   contentPadding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   leading: const Icon(Icons.local_hospital),
@@ -285,8 +288,8 @@ class _FormExampleState extends State<FormExample> {
                                                             "Prediction A";
                                                         activeStep = 1;
                                                         _submit = false;
-                                                        _title = "Answer the "
-                                                            "questions";
+                                                        _title =
+                                                            "Answer the questions";
                                                       });
                                                     },
                                                     child: Text(
@@ -532,7 +535,6 @@ class _FormExampleState extends State<FormExample> {
                                 Container(
                                     child: Column(
                                   children: [
-                                    //inputAgeForm(),
                                     if (_submit == false)
                                       SizedBox(
                                         height:
@@ -938,8 +940,6 @@ class _FormExampleState extends State<FormExample> {
                                           }
                                         }
                                       },
-                                      style: OutlinedButton.styleFrom(
-                                          minimumSize: const Size(200, 50)),
                                       child: Text("Submit Form".toUpperCase(),
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold)),
@@ -972,9 +972,6 @@ class _FormExampleState extends State<FormExample> {
                                           });
                                         }
                                       },
-                                      style: OutlinedButton.styleFrom(
-                                          minimumSize: const Size(150, 50),
-                                          backgroundColor: Colors.red),
                                       child: Text(
                                           "Return To Menu".toUpperCase(),
                                           style: const TextStyle(
