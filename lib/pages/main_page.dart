@@ -1,255 +1,40 @@
+import '../helper/helper_functions.dart';
+import '../services/database_service.dart';
+import '../widgets/widgets.dart';
+import '../services/auth_service.dart';
+import '../helper/function.dart';
+import '../form/dropdown.dart';
+import '../form/example_buttons.dart';
+import '../form/example_card.dart';
+import '../data/restore_data.dart';
+import '../data/url.dart';
+import '../widgets/colors.dart';
+import 'login_page.dart';
+
+import 'dart:ui';
 import 'dart:convert';
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:delayed_widget/delayed_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:animation_list/animation_list.dart';
 import 'package:flutter_application/form/options.dart';
 import 'package:flutter_application/pages/profile_page.dart';
-import '../helper/helper_functions.dart';
-import '../services/database_service.dart';
-import '../widgets/widgets.dart';
-import '../services/auth_service.dart';
-import 'login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../helper/function.dart';
-import '../form/dropdown.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/cupertino.dart';
-import '../form/example_buttons.dart';
-import '../form/example_card.dart';
 import 'package:tap_to_expand/tap_to_expand.dart';
 import 'package:star_menu/star_menu.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
-
   @override
   State<MainPage> createState() => _MainPageState();
 }
 
-List<String> prediction_A = [
-  "undefined",
-  "0", // Cough
-  "0", // Fever
-  "0", // Sore Throat
-  "0", // Shortness of Breath
-  "0", // Headache
-  "0", // Age 60 and Above
-  "0", // Gender
-  "0" // Test Indication
-];
-final List<Map<String, dynamic>> prediction_A_data = [
-  {
-    'title': 'cough',
-    'index': 1,
-  },
-  {
-    'title': 'fever',
-    'index': 2,
-  },
-  {
-    'title': 'sore throat',
-    'index': 3,
-  },
-  {
-    'title': 'shortness of breath',
-    'index': 4,
-  },
-  {
-    'title': 'head ache',
-    'index': 5,
-  },
-  {
-    'title': 'age 60 and above',
-    'index': 6,
-  },
-  {
-    'title': 'gender',
-    'index': 7,
-  },
-  {
-    'title': 'test indication',
-    'index': 8,
-  }
-];
-
-List<String> prediction_B = [
-  "20", // Age
-  "0", // Gender
-  "0", // Polyuria
-  "0", // Polydipsia
-  "0", // Sudden Weight Loss
-  "0", // Weakness
-  "0", // Polyphagia
-  "0", // Genital Thrush
-  "0", // Visual Blurring
-  "0", // Itching
-  "0", // Irritability
-  "0", // Delayed Healing
-  "0", // Partial Paresis
-  "0", // Muscle Stiffness
-  "0", // Alopecia
-  "0", // Obesity
-];
-
-final List<Map<String, dynamic>> prediction_B_data = [
-  {
-    "title": "Gender",
-    "index": 1,
-  },
-  {
-    "title": "Polyuria",
-    "index": 2,
-  },
-  {
-    "title": "Polydipsia",
-    "index": 3,
-  },
-  {
-    "title": "Sudden Weight Loss",
-    "index": 4,
-  },
-  {
-    "title": "Weakness",
-    "index": 5,
-  },
-  {
-    "title": "Polyphagia",
-    "index": 6,
-  },
-  {
-    "title": "Genital Thrush",
-    "index": 7,
-  },
-  {
-    "title": "Visual Blurring",
-    "index": 8,
-  },
-  {
-    "title": "Itching",
-    "index": 9,
-  },
-  {
-    "title": "Irritability",
-    "index": 10,
-  },
-  {
-    "title": "Delayed Healing",
-    "index": 11,
-  },
-  {
-    "title": "Partial Paresis",
-    "index": 12,
-  },
-  {
-    "title": "Muscle Stiffness",
-    "index": 13,
-  },
-  {
-    "title": "Alopecia",
-    "index": 14,
-  },
-  {
-    "title": "Obesity",
-    "index": 15,
-  },
-];
-// https://personal-key-indicators-of-heart-disease.onrender.com/api?BMI=16.6&Smoking=1&AlcoholDrinking=0&Stroke=0&PhysicalHealth=3&MentalHealth=30&DiffWalking=0&Sex=0&AgeCategory=7&Diabetic=1&PhysicalActivity=1&GenHealth=3&SleepTime=5&Asthma=1&KidneyDisease=0&SkinCancer=1
-
-List<String> prediction_C = [
-  "undefined",
-  "0", // BMI
-  "0", // Smoking
-  "0", // Alcohol Drinking
-  "0", // Stroke
-  "0", // Physical Health
-  "0", // Mental Health
-  "0", // Difficult Walking
-  "0", // Sex
-  "0", // Age Category
-  "0", // Diabetic
-  "0", // Physical Activity
-  "0", // General Health
-  "0", // Sleep Time
-  "0", // Asthma
-  "0", // Kidney Disease
-  "0", // Skin Cancer
-];
-
-final List<Map<String, dynamic>> prediction_C_data = [
-  {
-    "title": "Gender",
-    "index": 8,
-  },
-  {
-    "title": "Smoking",
-    "index": 2,
-  },
-  {
-    "title": "Alcohol Drinking",
-    "index": 3,
-  },
-  {
-    "title": "Stroke",
-    "index": 4,
-  },
-  {
-    "title": "Difficult Walking",
-    "index": 7,
-  },
-  {
-    "title": "Diabetic",
-    "index": 10,
-  },
-  {
-    "title": "Physical Activity",
-    "index": 11,
-  },
-  {
-    "title": "Asthma",
-    "index": 14,
-  },
-  {
-    "title": "Kidney Disease",
-    "index": 15,
-  },
-  {
-    "title": "Skin Cancer",
-    "index": 16,
-  }
-];
-List<String> prediction_D = [
-  "undefiend",
-  "0", // Gender
-  "30", // Age
-  "0", // Smoking
-  "0", // Yellow Fingers
-  "0", // Anxiety
-  "0", // Peer Pressure
-  "0", // Chronic Disease
-  "0", // Fatigue
-  "0", // Allergy
-  "0", // Wheezing
-  "0", // Alcohol Consuming
-  "0", // Coughing
-  "0", // Shortness of Breath
-  "0", // Swallowing Difficulty
-  "0", // Chest Pain
-];
 bool _loading_output = false;
 bool _submit = false;
-String _selectedValue = "Prediction";
-String url_A = 'https://flask-app-test-yqkj.onrender.com/api?';
-String url_B = 'https://early-stage-diabetes-risk-prediction.onrender.com/api?';
-// https://personal-key-indicators-of-heart-disease.onrender.com/api?BMI=16.6&Smoking=1&AlcoholDrinking=0&Stroke=0&PhysicalHealth=3&MentalHealth=30&DiffWalking=0&Sex=0&AgeCategory=7&Diabetic=1&PhysicalActivity=1&GenHealth=3&SleepTime=5&Asthma=1&KidneyDisease=0&SkinCancer=1
-String url_C =
-    'https://personal-key-indicators-of-heart-disease.onrender.com/api?';
-// https://lung-cancer-808h.onrender.com/api?GENDER=1&AGE=50&SMOKING=2&YELLOW_FINGERS=1&ANXIETY=1&PEER_PRESSURE=1&CHRONIC_DISEASE=1&FATIGUE=2&ALLERGY=2&WHEEZING=1&ALCOHOL_CONSUMING=2&COUGHING=2&SHORTNESS_OF_BREATH=1&SWALLOWING_DIFFICULTY=1&CHEST_PAIN=1
-String url_D = 'https://lung-cancer-808h.onrender.com/api?';
-
 int _age = 0;
 double _bmi = 0;
 double _height = 0;
@@ -258,9 +43,6 @@ double _weight = 0;
 class _MainPageState extends State<MainPage> {
   String userName = "";
   String email = "";
-  int age = 0;
-  double height = 0;
-  double weight = 0;
   final uid = "";
 
   AuthService authService = AuthService();
@@ -297,8 +79,8 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Disease Prediction Form'),
-          centerTitle: true,
+          title: Text('Disease Prediction'),
+          backgroundColor: Colors.blue,
         ),
         drawer: Drawer(
           child: ListView(
@@ -413,12 +195,11 @@ class FormExample extends StatefulWidget {
 
 class _FormExampleState extends State<FormExample> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String output = 'Prediction';
+  String output = '0';
   int activeStep = 0;
   String _selectedField = "Prediction";
   String _title = "Choose a disease";
   int _subStep = 0;
-  String current_prediction = "X";
   bool _selectedGender = false;
   final AppinioSwiperController controller = AppinioSwiperController();
   AuthService authService = AuthService();
@@ -544,8 +325,6 @@ class _FormExampleState extends State<FormExample> {
                                                         activeStep = 1;
                                                         _subStep = 1;
                                                         _selectedGender = true;
-                                                        current_prediction =
-                                                            "B";
                                                       });
                                                     },
                                                     child: Text(
@@ -583,8 +362,6 @@ class _FormExampleState extends State<FormExample> {
                                                             "Prediction C";
                                                         activeStep = 1;
                                                         _subStep = 1;
-                                                        current_prediction =
-                                                            "C";
                                                         _selectedGender = true;
                                                       });
                                                     },
@@ -623,8 +400,6 @@ class _FormExampleState extends State<FormExample> {
                                                             "Prediction D";
                                                         activeStep = 1;
                                                         _subStep = 1;
-                                                        current_prediction =
-                                                            "D";
                                                         _selectedGender = true;
                                                       });
                                                     },
@@ -688,7 +463,6 @@ class _FormExampleState extends State<FormExample> {
                                             ),
                                             onEnd: () {
                                               setState(() {
-                                                //print(prediction_A);
                                                 _submit = true;
                                               });
                                             },
@@ -1237,7 +1011,7 @@ class _FormExampleState extends State<FormExample> {
                                           setState(() {
                                             activeStep = 0;
                                             _selectedField = "Prediction";
-                                            output = "Prediction";
+                                            output = "0";
                                             _submit = false;
                                           });
                                         },

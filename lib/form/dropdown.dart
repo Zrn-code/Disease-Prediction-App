@@ -115,3 +115,28 @@ class CustomDropdownButtonExampleState
     );
   }
 }
+
+Widget _buildRow(String label, Function onChanged) {
+  var list = ['Yes', 'No'];
+  if (label == 'General Health:')
+    list = [
+      'Excellent',
+      'Very Good',
+      'Good',
+      'Poor',
+      'Fair',
+    ];
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      SizedBox(
+        height: 20,
+      ),
+      CustomDropdownButtonExample(
+        labelText: label,
+        list: list,
+        onChanged: onChanged,
+      ),
+    ],
+  );
+}
