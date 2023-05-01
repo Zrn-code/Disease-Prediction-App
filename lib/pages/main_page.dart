@@ -1,5 +1,3 @@
-import 'package:language_builder/language_builder.dart';
-
 import '../helper/helper_functions.dart';
 import '../services/database_service.dart';
 import '../widgets/widgets.dart';
@@ -13,6 +11,7 @@ import '../data/url.dart';
 import '../widgets/colors.dart';
 import 'login_page.dart';
 
+import '../languages/en_US.dart';
 import '../languages/zh_TW.dart';
 import 'dart:ui';
 import 'dart:convert';
@@ -42,7 +41,11 @@ int _age = 0;
 double _bmi = 0;
 double _height = 0;
 double _weight = 0;
-var zh_TW = json.decode(data);
+
+Map<String, Map<String, dynamic>> _lang = {
+  "ZH": jsonDecode(data_ZH),
+  "EN": jsonDecode(data_US)
+};
 
 class _MainPageState extends State<MainPage> {
   String userName = "";
@@ -83,7 +86,7 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("hi"),
+          title: Text(_lang[lang]!["title"]),
           backgroundColor: Colors.blue,
         ),
         drawer: Drawer(
@@ -115,9 +118,9 @@ class _MainPageState extends State<MainPage> {
                   leading: const Icon(Icons.local_hospital),
                   selectedColor: Theme.of(context).primaryColor,
                   selected: true,
-                  title: const Text(
-                    "Disease Prediction",
-                    style: TextStyle(color: Colors.black),
+                  title: Text(
+                    _lang[lang]!["Disease Prediction"],
+                    style: const TextStyle(color: Colors.black),
                   )),
               ListTile(
                   onTap: () async {
@@ -131,8 +134,8 @@ class _MainPageState extends State<MainPage> {
                   contentPadding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   leading: const Icon(Icons.person),
-                  title: const Text(
-                    "Profile",
+                  title: Text(
+                    _lang[lang]!["Profile"],
                     style: TextStyle(color: Colors.black),
                   )),
               ListTile(
@@ -142,9 +145,8 @@ class _MainPageState extends State<MainPage> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: const Text("Logout"),
-                            content:
-                                const Text("Are you sure you want to logout?"),
+                            title: Text(_lang[lang]!["Log Out"]),
+                            content: Text(_lang[lang]!["Check for Logout"]),
                             actions: [
                               IconButton(
                                   onPressed: () {
@@ -174,8 +176,8 @@ class _MainPageState extends State<MainPage> {
                   contentPadding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   leading: const Icon(Icons.exit_to_app),
-                  title: const Text(
-                    "Logout",
+                  title: Text(
+                    _lang[lang]!["Log Out"],
                     style: TextStyle(color: Colors.black),
                   )),
             ],
@@ -272,10 +274,19 @@ class _FormExampleState extends State<FormExample> {
                                               MainAxisAlignment.spaceEvenly,
                                           children: <Widget>[
                                             TapToExpand(
-                                              content: Row(
+                                              content: Column(
                                                 children: <Widget>[
-                                                  Text("hello"),
-                                                  Expanded(child: Container()),
+                                                  Text(
+                                                    _lang[lang]![
+                                                        "Description A"],
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 18,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
                                                   ElevatedButton(
                                                     style: ElevatedButton
                                                         .styleFrom(
@@ -288,17 +299,15 @@ class _FormExampleState extends State<FormExample> {
                                                             "Prediction A";
                                                         activeStep = 1;
                                                         _submit = false;
-                                                        _title =
-                                                            "Answer the questions";
                                                       });
                                                     },
-                                                    child: Text(
-                                                        'Go to Prediction'),
+                                                    child: Text(_lang[lang]![
+                                                        "Go to Prediction"]),
                                                   ),
                                                 ],
                                               ),
-                                              title: const Text(
-                                                'Covid Prediction',
+                                              title: Text(
+                                                _lang[lang]!["Prediction A"],
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 20,
@@ -311,10 +320,19 @@ class _FormExampleState extends State<FormExample> {
                                               openedHeight: 200,
                                             ),
                                             TapToExpand(
-                                              content: Row(
+                                              content: Column(
                                                 children: <Widget>[
-                                                  Text("hello"),
-                                                  Expanded(child: Container()),
+                                                  Text(
+                                                    _lang[lang]![
+                                                        "Description B"],
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 18,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
                                                   ElevatedButton(
                                                     style: ElevatedButton
                                                         .styleFrom(
@@ -330,13 +348,13 @@ class _FormExampleState extends State<FormExample> {
                                                         _selectedGender = true;
                                                       });
                                                     },
-                                                    child: Text(
-                                                        'Go to Prediction'),
+                                                    child: Text(_lang[lang]![
+                                                        "Go to Prediction"]),
                                                   ),
                                                 ],
                                               ),
-                                              title: const Text(
-                                                'Diabetes mellitus',
+                                              title: Text(
+                                                _lang[lang]!["Prediction B"],
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 20,
@@ -349,10 +367,19 @@ class _FormExampleState extends State<FormExample> {
                                               openedHeight: 200,
                                             ),
                                             TapToExpand(
-                                              content: Row(
+                                              content: Column(
                                                 children: <Widget>[
-                                                  Text("hello"),
-                                                  Expanded(child: Container()),
+                                                  Text(
+                                                    _lang[lang]![
+                                                        "Description C"],
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 18,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
                                                   ElevatedButton(
                                                     style: ElevatedButton
                                                         .styleFrom(
@@ -368,13 +395,13 @@ class _FormExampleState extends State<FormExample> {
                                                         _selectedGender = true;
                                                       });
                                                     },
-                                                    child: Text(
-                                                        'Go to Prediction'),
+                                                    child: Text(_lang[lang]![
+                                                        "Go to Prediction"]),
                                                   ),
                                                 ],
                                               ),
-                                              title: const Text(
-                                                'Heart Disease',
+                                              title: Text(
+                                                _lang[lang]!["Prediction C"],
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 20,
@@ -387,10 +414,19 @@ class _FormExampleState extends State<FormExample> {
                                               openedHeight: 200,
                                             ),
                                             TapToExpand(
-                                              content: Row(
+                                              content: Column(
                                                 children: <Widget>[
-                                                  Text("hello"),
-                                                  Expanded(child: Container()),
+                                                  Text(
+                                                    _lang[lang]![
+                                                        "Description D"],
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 18,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
                                                   ElevatedButton(
                                                     style: ElevatedButton
                                                         .styleFrom(
@@ -406,13 +442,13 @@ class _FormExampleState extends State<FormExample> {
                                                         _selectedGender = true;
                                                       });
                                                     },
-                                                    child: Text(
-                                                        'Go to Prediction'),
+                                                    child: Text(_lang[lang]![
+                                                        "Go to Prediction"]),
                                                   ),
                                                 ],
                                               ),
-                                              title: const Text(
-                                                'Lung Cancer',
+                                              title: Text(
+                                                _lang[lang]!["Prediction D"],
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 20,
@@ -659,56 +695,57 @@ class _FormExampleState extends State<FormExample> {
                                               _selectedGender = false;
                                             });
 
-                                            if (index == 1)
+                                            if (index == 1) {
                                               prediction_C[8] =
                                                   direction.name == "left"
                                                       ? "0"
                                                       : "1";
-                                            else if (index == 2)
+                                            } else if (index == 2) {
                                               prediction_C[2] =
                                                   direction.name == "left"
                                                       ? "0"
                                                       : "1";
-                                            else if (index == 3)
+                                            } else if (index == 3) {
                                               prediction_C[3] =
                                                   direction.name == "left"
                                                       ? "0"
                                                       : "1";
-                                            else if (index == 4)
+                                            } else if (index == 4) {
                                               prediction_C[4] =
                                                   direction.name == "left"
                                                       ? "0"
                                                       : "1";
-                                            else if (index == 5)
+                                            } else if (index == 5) {
                                               prediction_C[7] =
                                                   direction.name == "left"
                                                       ? "0"
                                                       : "1";
-                                            else if (index == 6)
+                                            } else if (index == 6) {
                                               prediction_C[10] =
                                                   direction.name == "left"
                                                       ? "0"
                                                       : "1";
-                                            else if (index == 7)
+                                            } else if (index == 7) {
                                               prediction_C[11] =
                                                   direction.name == "left"
                                                       ? "0"
                                                       : "1";
-                                            else if (index == 8)
+                                            } else if (index == 8) {
                                               prediction_C[14] =
                                                   direction.name == "left"
                                                       ? "0"
                                                       : "1";
-                                            else if (index == 9)
+                                            } else if (index == 9) {
                                               prediction_C[15] =
                                                   direction.name == "left"
                                                       ? "0"
                                                       : "1";
-                                            else if (index == 10)
+                                            } else if (index == 10) {
                                               prediction_C[16] =
                                                   direction.name == "left"
                                                       ? "0"
                                                       : "1";
+                                            }
                                           }),
                                           padding: const EdgeInsets.only(
                                             left: 25,
@@ -778,7 +815,7 @@ class _FormExampleState extends State<FormExample> {
                                         });
                                       }
                                     },
-                                    child: Text("Next Step"),
+                                    child: const Text("Next Step"),
                                   )
                                 ]),
                               if (_selectedField == "Prediction D" &&
@@ -824,7 +861,6 @@ class _FormExampleState extends State<FormExample> {
                                           ),
                                           onEnd: () {
                                             setState(() {
-                                              //print(prediction_D);
                                               _submit = true;
                                             });
                                           },
@@ -930,7 +966,7 @@ class _FormExampleState extends State<FormExample> {
                                             _formKey.currentState!.save();
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
-                                              SnackBar(
+                                              const SnackBar(
                                                 content: Text(
                                                     "your data has been submitted."),
                                                 duration: Duration(seconds: 1),
@@ -946,38 +982,20 @@ class _FormExampleState extends State<FormExample> {
                                     ),
                                   ],
                                 ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               if (_selectedField == "Prediction A" ||
                                   _selectedField == "Prediction B" ||
                                   _selectedField == "Prediction C" ||
                                   _selectedField == "Prediction D")
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        if (_selectedField == "Prediction A" ||
-                                            _selectedField == "Prediction B" ||
-                                            _selectedField == "Prediction C" ||
-                                            _selectedField == "Prediction D") {
-                                          setState(() {
-                                            _selectedField = "Prediction";
-                                            _submit = false;
-                                            activeStep = 0;
-                                            _subStep = 0;
-                                            _selectedGender = false;
-                                          });
-                                        }
-                                      },
-                                      child: Text(
-                                          "Return To Menu".toUpperCase(),
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                    ),
-                                  ],
+                                ElevatedButton(
+                                  onPressed: () {
+                                    initial_state();
+                                  },
+                                  child: Text("Return To Menu".toUpperCase(),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold)),
                                 ),
                               if (activeStep == 2)
                                 Container(
@@ -992,25 +1010,19 @@ class _FormExampleState extends State<FormExample> {
                                           : CircularPercentIndicator(
                                               radius: 160.0,
                                               lineWidth: 25.0,
-                                              animationDuration: 10000,
+                                              animationDuration: 1000,
                                               linearGradient: gradientRed,
                                               percent:
                                                   double.parse(output) * 0.01,
                                               center:
                                                   Text("Prediction $output %"),
-                                              //progressColor: Colors.green,
                                             ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 20,
                                       ),
                                       ElevatedButton(
                                         onPressed: () {
-                                          setState(() {
-                                            activeStep = 0;
-                                            _selectedField = "Prediction";
-                                            output = "0";
-                                            _submit = false;
-                                          });
+                                          initial_state();
                                         },
                                         child: Text(
                                           "Return To Menu".toUpperCase(),
@@ -1416,11 +1428,21 @@ class _FormExampleState extends State<FormExample> {
       ),
     );
   }
+
+  void initial_state() {
+    setState(() {
+      _selectedField = "Prediction";
+      _submit = false;
+      activeStep = 0;
+      _subStep = 0;
+      _selectedGender = false;
+    });
+  }
 }
 
 Widget _buildRow(String label, Function onChanged) {
   var list = ['Yes', 'No'];
-  if (label == 'General Health:')
+  if (label == 'General Health:') {
     list = [
       'Excellent',
       'Very Good',
@@ -1428,6 +1450,7 @@ Widget _buildRow(String label, Function onChanged) {
       'Poor',
       'Fair',
     ];
+  }
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [

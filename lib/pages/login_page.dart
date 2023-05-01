@@ -15,7 +15,7 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-String _language = "EN";
+String lang = "EN";
 
 class _LoginScreenState extends State<LoginScreen> {
   LanguageOption language = _languageOptions[0];
@@ -43,7 +43,11 @@ class _LoginScreenState extends State<LoginScreen> {
       selectedLanguage: language,
       changeLanguageCallback: (LanguageOption? _language) {
         if (_language != null) {
-          if (mounted) setState(() => language = _language);
+          if (mounted)
+            setState(() {
+              language = _language;
+              lang = _language.code;
+            });
 
           DialogBuilder(context).showResultDialog(language.code == "ZH"
               ? '成功將語言調整為: ${_language.value}。'
@@ -149,7 +153,7 @@ class LoginFunctions {
         await HelperFunctions.saveUserLoggedInStatus(true);
         await HelperFunctions.saveUserEmailSF(loginData.email);
         await HelperFunctions.saveUserNameSF(snapshot.docs[0]['fullName']);
-        nextScreenReplace(context, const MainPage());
+        nextScreenReplace(context, MainPage());
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -186,7 +190,7 @@ class LoginFunctions {
 
   Future<String?> onForgotPassword(String email) async {
     DialogBuilder(context).showLoadingDialog();
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
     Navigator.of(context).pop();
     // You should determine this path and create the screen.
     // Navigator.of(context).pushNamed('/forgotPass');
