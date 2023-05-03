@@ -42,7 +42,7 @@ double _bmi = 0;
 double _height = 0;
 double _weight = 0;
 
-Map<String, Map<String, dynamic>> _lang = {
+Map<String, Map<String, dynamic>> lang_map = {
   "ZH": jsonDecode(data_ZH),
   "EN": jsonDecode(data_US)
 };
@@ -86,7 +86,7 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text(_lang[lang]!["title"]),
+          title: Text(lang_map[lang]!["title"]),
           backgroundColor: Colors.blue,
         ),
         drawer: Drawer(
@@ -119,7 +119,7 @@ class _MainPageState extends State<MainPage> {
                   selectedColor: Theme.of(context).primaryColor,
                   selected: true,
                   title: Text(
-                    _lang[lang]!["Disease Prediction"],
+                    lang_map[lang]!["Disease Prediction"],
                     style: const TextStyle(color: Colors.black),
                   )),
               ListTile(
@@ -135,7 +135,7 @@ class _MainPageState extends State<MainPage> {
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   leading: const Icon(Icons.person),
                   title: Text(
-                    _lang[lang]!["Profile"],
+                    lang_map[lang]!["Profile"],
                     style: TextStyle(color: Colors.black),
                   )),
               ListTile(
@@ -145,8 +145,8 @@ class _MainPageState extends State<MainPage> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: Text(_lang[lang]!["Log Out"]),
-                            content: Text(_lang[lang]!["Check for Logout"]),
+                            title: Text(lang_map[lang]!["Log Out"]),
+                            content: Text(lang_map[lang]!["Check for Logout"]),
                             actions: [
                               IconButton(
                                   onPressed: () {
@@ -177,7 +177,7 @@ class _MainPageState extends State<MainPage> {
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   leading: const Icon(Icons.exit_to_app),
                   title: Text(
-                    _lang[lang]!["Log Out"],
+                    lang_map[lang]!["Log Out"],
                     style: TextStyle(color: Colors.black),
                   )),
             ],
@@ -277,7 +277,7 @@ class _FormExampleState extends State<FormExample> {
                                               content: Column(
                                                 children: <Widget>[
                                                   Text(
-                                                    _lang[lang]![
+                                                    lang_map[lang]![
                                                         "Description A"],
                                                     style: TextStyle(
                                                       color: Colors.white,
@@ -301,13 +301,13 @@ class _FormExampleState extends State<FormExample> {
                                                         _submit = false;
                                                       });
                                                     },
-                                                    child: Text(_lang[lang]![
+                                                    child: Text(lang_map[lang]![
                                                         "Go to Prediction"]),
                                                   ),
                                                 ],
                                               ),
                                               title: Text(
-                                                _lang[lang]!["Prediction A"],
+                                                lang_map[lang]!["Prediction A"],
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 20,
@@ -317,13 +317,13 @@ class _FormExampleState extends State<FormExample> {
                                               closedHeight: 70,
                                               scrollable: true,
                                               borderRadius: 10,
-                                              openedHeight: 200,
+                                              openedHeight: 250,
                                             ),
                                             TapToExpand(
                                               content: Column(
                                                 children: <Widget>[
                                                   Text(
-                                                    _lang[lang]![
+                                                    lang_map[lang]![
                                                         "Description B"],
                                                     style: TextStyle(
                                                       color: Colors.white,
@@ -348,13 +348,13 @@ class _FormExampleState extends State<FormExample> {
                                                         _selectedGender = true;
                                                       });
                                                     },
-                                                    child: Text(_lang[lang]![
+                                                    child: Text(lang_map[lang]![
                                                         "Go to Prediction"]),
                                                   ),
                                                 ],
                                               ),
                                               title: Text(
-                                                _lang[lang]!["Prediction B"],
+                                                lang_map[lang]!["Prediction B"],
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 20,
@@ -364,13 +364,13 @@ class _FormExampleState extends State<FormExample> {
                                               closedHeight: 70,
                                               scrollable: true,
                                               borderRadius: 10,
-                                              openedHeight: 200,
+                                              openedHeight: 300,
                                             ),
                                             TapToExpand(
                                               content: Column(
                                                 children: <Widget>[
                                                   Text(
-                                                    _lang[lang]![
+                                                    lang_map[lang]![
                                                         "Description C"],
                                                     style: TextStyle(
                                                       color: Colors.white,
@@ -395,13 +395,13 @@ class _FormExampleState extends State<FormExample> {
                                                         _selectedGender = true;
                                                       });
                                                     },
-                                                    child: Text(_lang[lang]![
+                                                    child: Text(lang_map[lang]![
                                                         "Go to Prediction"]),
                                                   ),
                                                 ],
                                               ),
                                               title: Text(
-                                                _lang[lang]!["Prediction C"],
+                                                lang_map[lang]!["Prediction C"],
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 20,
@@ -411,13 +411,13 @@ class _FormExampleState extends State<FormExample> {
                                               closedHeight: 70,
                                               scrollable: true,
                                               borderRadius: 10,
-                                              openedHeight: 200,
+                                              openedHeight: 280,
                                             ),
                                             TapToExpand(
                                               content: Column(
                                                 children: <Widget>[
                                                   Text(
-                                                    _lang[lang]![
+                                                    lang_map[lang]![
                                                         "Description D"],
                                                     style: TextStyle(
                                                       color: Colors.white,
@@ -442,13 +442,13 @@ class _FormExampleState extends State<FormExample> {
                                                         _selectedGender = true;
                                                       });
                                                     },
-                                                    child: Text(_lang[lang]![
+                                                    child: Text(lang_map[lang]![
                                                         "Go to Prediction"]),
                                                   ),
                                                 ],
                                               ),
                                               title: Text(
-                                                _lang[lang]!["Prediction D"],
+                                                lang_map[lang]!["Prediction D"],
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 20,

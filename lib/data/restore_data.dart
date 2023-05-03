@@ -1,3 +1,6 @@
+import 'package:flutter_application/pages/main_page.dart';
+import '../pages/login_page.dart';
+
 List<String> prediction_A = [
   "undefined",
   "0", // Cough
@@ -69,35 +72,35 @@ List<String> prediction_D = [
 
 final List<Map<String, dynamic>> prediction_A_data = [
   {
-    'title': 'cough',
+    'title': lang_map[lang]!['Cough'],
     'index': 1,
   },
   {
-    'title': 'fever',
+    'title': lang_map[lang]!['Fever'],
     'index': 2,
   },
   {
-    'title': 'sore throat',
+    'title': lang_map[lang]!['Sore Throat'],
     'index': 3,
   },
   {
-    'title': 'shortness of breath',
+    'title': lang_map[lang]!['Shortness of Breath'],
     'index': 4,
   },
   {
-    'title': 'head ache',
+    'title': lang_map[lang]!['Headache'],
     'index': 5,
   },
   {
-    'title': 'age 60 and above',
+    'title': lang_map[lang]!['Age 60 and Above'],
     'index': 6,
   },
   {
-    'title': 'gender',
+    'title': lang_map[lang]!['Gender'],
     'index': 7,
   },
   {
-    'title': 'test indication',
+    'title': lang_map[lang]!['Test Indication'],
     'index': 8,
   }
 ];

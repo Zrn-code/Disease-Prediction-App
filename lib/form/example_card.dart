@@ -13,6 +13,10 @@ class ExampleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      constraints: BoxConstraints(
+        maxWidth: 800,
+      ),
+      width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: CupertinoColors.white,
@@ -66,11 +70,19 @@ class ExampleCard extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-                    Text(
-                      candidate.desc!,
-                      style: const TextStyle(
-                        color: Colors.grey,
-                        fontSize: 15,
+                    Container(
+                      constraints: BoxConstraints(
+                        maxWidth: 780,
+                      ),
+                      width: MediaQuery.of(context).size.width * 0.75,
+                      child: Text(
+                        candidate.desc!,
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 15,
+                        ),
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],

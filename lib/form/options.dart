@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application/pages/main_page.dart';
 import '../widgets/colors.dart';
+import '../pages/login_page.dart';
 
 class ExampleOption {
   String? name;
@@ -15,43 +17,43 @@ class ExampleOption {
 
 List<ExampleOption> options_A = [
   ExampleOption(
-    name: 'Cough',
-    desc: 'd',
+    name: lang_map[lang]!['Cough'],
+    desc: lang_map[lang]!['Cough desc'],
     color: gradientPink,
   ),
   ExampleOption(
-    name: 'Fever',
-    desc: 'd',
+    name: lang_map[lang]!['Fever'],
+    desc: lang_map[lang]!['Fever desc'],
     color: gradientBlue,
   ),
   ExampleOption(
-    name: 'Sore Throat',
-    desc: 'd',
+    name: lang_map[lang]!['Sore Throat'],
+    desc: lang_map[lang]!['Sore Throat desc'],
     color: gradientPurple,
   ),
   ExampleOption(
-    name: 'Shortness of Breath',
-    desc: 'Not getting enough.',
+    name: lang_map[lang]!['Shortness of Breath'],
+    desc: lang_map[lang]!['Shortness of Breath desc'],
     color: gradientRed,
   ),
   ExampleOption(
-    name: 'Headache',
-    desc: 'd',
+    name: lang_map[lang]!['Headache'],
+    desc: lang_map[lang]!['Headache desc'],
     color: gradientBlue,
   ),
   ExampleOption(
-    name: 'Old Age',
-    desc: 'Age is greater than 60',
+    name: lang_map[lang]!['Age 60 and Above'],
+    desc: lang_map[lang]!['Age 60 and Above desc'],
     color: gradientPink,
   ),
   ExampleOption(
-    name: 'Gender',
-    desc: 'Male or Female',
+    name: lang_map[lang]!['Gender'],
+    desc: lang_map[lang]!['Gender desc'],
     color: gradientPurple,
   ),
   ExampleOption(
-    name: 'Test Indication',
-    desc: 'd',
+    name: lang_map[lang]!['Test Indication'],
+    desc: lang_map[lang]!['Test Indication desc'],
     color: gradientBlue,
   ),
 ];
