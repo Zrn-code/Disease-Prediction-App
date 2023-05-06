@@ -107,106 +107,106 @@ final List<Map<String, dynamic>> prediction_A_data = [
 
 final List<Map<String, dynamic>> prediction_B_data = [
   {
-    "title": "Gender",
+    "title": lang_map[lang]!['Gender'],
     "index": 1,
   },
   {
-    "title": "Polyuria",
+    "title": lang_map[lang]!["Polyuria"],
     "index": 2,
   },
   {
-    "title": "Polydipsia",
+    "title": lang_map[lang]!["Polydipsia"],
     "index": 3,
   },
   {
-    "title": "Sudden Weight Loss",
+    "title": lang_map[lang]!["Sudden Weight Loss"],
     "index": 4,
   },
   {
-    "title": "Weakness",
+    "title": lang_map[lang]!["Weakness"],
     "index": 5,
   },
   {
-    "title": "Polyphagia",
+    "title": lang_map[lang]!["Polyphagia"],
     "index": 6,
   },
   {
-    "title": "Genital Thrush",
+    "title": lang_map[lang]!["Genital Thrush"],
     "index": 7,
   },
   {
-    "title": "Visual Blurring",
+    "title": lang_map[lang]!["Visual Blurring"],
     "index": 8,
   },
   {
-    "title": "Itching",
+    "title": lang_map[lang]!["Itching"],
     "index": 9,
   },
   {
-    "title": "Irritability",
+    "title": lang_map[lang]!["Irritability"],
     "index": 10,
   },
   {
-    "title": "Delayed Healing",
+    "title": lang_map[lang]!["Delayed Healing"],
     "index": 11,
   },
   {
-    "title": "Partial Paresis",
+    "title": lang_map[lang]!["Partial Paresis"],
     "index": 12,
   },
   {
-    "title": "Muscle Stiffness",
+    "title": lang_map[lang]!["Muscle Stiffness"],
     "index": 13,
   },
   {
-    "title": "Alopecia",
+    "title": lang_map[lang]!["Alopecia"],
     "index": 14,
   },
   {
-    "title": "Obesity",
+    "title": lang_map[lang]!["Obesity"],
     "index": 15,
   },
 ];
 
 final List<Map<String, dynamic>> prediction_C_data = [
   {
-    "title": "Gender",
+    "title": lang_map[lang]!["Gender"],
     "index": 8,
   },
   {
-    "title": "Smoking",
+    "title": lang_map[lang]!["Smoking"],
     "index": 2,
   },
   {
-    "title": "Alcohol Drinking",
+    "title": lang_map[lang]!["Alcohol Drinking"],
     "index": 3,
   },
   {
-    "title": "Stroke",
+    "title": lang_map[lang]!["Stroke"],
     "index": 4,
   },
   {
-    "title": "Difficult Walking",
+    "title": lang_map[lang]!["Walking Difficulty"],
     "index": 7,
   },
   {
-    "title": "Diabetic",
+    "title": lang_map[lang]!["Diabetic"],
     "index": 10,
   },
   {
-    "title": "Physical Activity",
+    "title": lang_map[lang]!["Physical Activity"],
     "index": 11,
   },
   {
-    "title": "Asthma",
+    "title": lang_map[lang]!["Asthma"],
     "index": 14,
   },
   {
-    "title": "Kidney Disease",
+    "title": lang_map[lang]!["Kidney Disease"],
     "index": 15,
   },
   {
-    "title": "Skin Cancer",
+    "title": lang_map[lang]!["Skin Cancer"],
     "index": 16,
   }
 ];

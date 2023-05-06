@@ -10,6 +10,7 @@ import '../data/restore_data.dart';
 import '../data/url.dart';
 import '../widgets/colors.dart';
 import 'login_page.dart';
+import '../widgets/animatedList.dart';
 
 import '../languages/en_US.dart';
 import '../languages/zh_TW.dart';
@@ -545,7 +546,7 @@ class _FormExampleState extends State<FormExample> {
                                   height: 500,
                                   child: AnimationList(
                                       children: prediction_A_data.map((item) {
-                                    return _buildTile_A(
+                                    return buildTile_A(
                                         item['title'], item['index']);
                                   }).toList()),
                                 ),
@@ -643,7 +644,7 @@ class _FormExampleState extends State<FormExample> {
                                   height: 500,
                                   child: AnimationList(
                                       children: prediction_B_data.map((item) {
-                                    return _buildTile_B(
+                                    return buildTile_B(
                                         item['title'], item['index']);
                                   }).toList()),
                                 ),
@@ -797,7 +798,7 @@ class _FormExampleState extends State<FormExample> {
                                   height: 500,
                                   child: AnimationList(
                                       children: prediction_C_data.map((item) {
-                                    return _buildTile_C(
+                                    return buildTile_C(
                                         item['title'], item['index']);
                                   }).toList()),
                                 ),
@@ -1464,79 +1465,4 @@ Widget _buildRow(String label, Function onChanged) {
       ),
     ],
   );
-}
-
-Widget _buildTile_A(String title, int index) {
-  return Container(
-      height: 50,
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(25)),
-        //color: prediction_A[index] == "1" ? Colors.green : Colors.red,
-        gradient: prediction_A[index] == "1" ? gradientBlue : gradientRed,
-      ),
-      child: Row(children: [
-        Icon(
-          prediction_A[index] == "1" ? Icons.check : Icons.close,
-          color: Colors.white,
-        ),
-        Text(
-          title != "gender"
-              ? title
-              : title + ": " + (prediction_A[index] == "1" ? "Male" : "Female"),
-          style: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),
-        ),
-      ]));
-}
-
-Widget _buildTile_B(String title, int index) {
-  return Container(
-      height: 50,
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      alignment: Alignment.center,
-      child: Text(
-        title != "gender"
-            ? title
-            : title + ": " + (prediction_B[index] == "1" ? "Male" : "Female"),
-        style: TextStyle(
-            fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(25)),
-        color: prediction_B[index] == "1" ? Colors.green : Colors.red,
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              prediction_B[index] == "1" ? Colors.green : Colors.red,
-              prediction_B[index] == "1" ? Colors.green : Colors.red,
-            ]),
-      ));
-}
-
-Widget _buildTile_C(String title, int index) {
-  return Container(
-      height: 50,
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      alignment: Alignment.center,
-      child: Text(
-        title != "gender"
-            ? title
-            : title + ": " + (prediction_C[index] == "1" ? "Male" : "Female"),
-        style: TextStyle(
-            fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(25)),
-        color: prediction_C[index] == "1" ? Colors.green : Colors.red,
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              prediction_C[index] == "1" ? Colors.green : Colors.red,
-              prediction_C[index] == "1" ? Colors.green : Colors.red,
-            ]),
-      ));
 }

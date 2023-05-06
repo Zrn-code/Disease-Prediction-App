@@ -13,9 +13,6 @@ class ExampleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(
-        maxWidth: 800,
-      ),
       width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -52,40 +49,36 @@ class ExampleCard extends StatelessWidget {
                 bottomRight: Radius.circular(10),
               ),
             ),
-            child: Row(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      candidate.name!,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
+                Text(
+                  candidate.name!,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Container(
+                  constraints: BoxConstraints(
+                    maxWidth: 760,
+                  ),
+                  width: MediaQuery.of(context).size.width * 0.75,
+                  child: Text(
+                    candidate.desc!,
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15,
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      constraints: BoxConstraints(
-                        maxWidth: 780,
-                      ),
-                      width: MediaQuery.of(context).size.width * 0.75,
-                      child: Text(
-                        candidate.desc!,
-                        style: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 15,
-                        ),
-                        maxLines: 4,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ],
             ),

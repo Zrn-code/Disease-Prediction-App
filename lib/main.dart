@@ -48,6 +48,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Disease Prediction App',
       home: _isSignedIn ? const MainPage() : const LoginScreen(),
     );
