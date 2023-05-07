@@ -75,7 +75,6 @@ const String data_US = '''
   "Chest Pain desc": "Chest Pain",
   "Walking Difficulty": "Walking Difficulty",
   "Walking Difficulty desc": "Walking Difficulty",
-  "Sex": "Sex",
   "Age Category": "Age Category",
   "Diabetic": "Diabetic",
   "Diabetic desc": "Diabetic",
@@ -92,13 +91,20 @@ const String data_US = '''
   "Skin Cancer": "Skin Cancer",
   "Skin Cancer desc": "Skin Cancer",
   "Yellow Fingers": "Yellow Fingers",
+  "Yellow Fingers desc": "Yellow Fingers",
   "Anxiety": "Anxiety",
+  "Anxiety desc": "Anxiety",
   "Peer Pressure": "Peer Pressure",
+  "Peer Pressure desc": "Peer Pressure",
   "Chronic Disease": "Chronic Disease",
+  "Chronic Disease desc": "Chronic Disease",
   "Fatigue": "Fatigue",
+  "Fatigue desc": "Fatigue",
   "Allergy": "Allergy",
+  "Allergy desc": "Allergy",
   "Wheezing": "Wheezing",
-  "Alcohol Consuming": "Alcohol Consuming",
-  "Swallowing Difficulty": "Swallowing Difficulty"
+  "Wheezing desc": "Wheezing",
+  "Swallowing Difficulty": "Swallowing Difficulty",
+  "Swallowing Difficulty desc": "Swallowing Difficulty"
 }
 ''';

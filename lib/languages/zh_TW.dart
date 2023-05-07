@@ -79,8 +79,6 @@ const String data_ZH = '''
   "Mental Health desc": "心理健康是指心理的健康狀況。",
   "Chest Pain": "胸痛",
   "Chest Pain desc": "胸痛是指胸部的疼痛。",
-  "Sex": "性別",
-  "Sex desc": "性別是指男性或女性。",
   "Age Category": "年齡類別",
   "Physical Activity": "體能活動",
   "Physical Activity desc": "體能活動是指體能活動。",
@@ -99,11 +97,16 @@ const String data_ZH = '''
   "Anxiety": "焦慮",
   "Anxiety desc": "焦慮是指焦慮。",
   "Peer Pressure": "同儕壓力",
+  "Peer Pressure desc": "來自於同儕的壓力",
   "Chronic Disease": "慢性疾病",
+  "Chronic Disease desc": "是否已經具有慢性疾病。",
   "Fatigue": "疲勞",
+  "Fatigue desc": "你最近特別的疲勞嗎?",
   "Allergy": "過敏",
+  "Allergy desc": "你是否有過敏的症狀",
   "Wheezing": "喘鳴",
-  "Alcohol Consuming": "飲酒",
-  "Swallowing Difficulty": "吞嚥困難"
+  "Wheezing desc": "你是否有喘鳴的症狀",
+  "Swallowing Difficulty": "吞嚥困難",
+  "Swallowing Difficulty desc": "你是否有吞嚥困難的症狀"
 }
 ''';

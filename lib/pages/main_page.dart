@@ -204,7 +204,6 @@ class _FormExampleState extends State<FormExample> {
   String output = '0';
   int activeStep = 0;
   String _selectedField = "Prediction";
-  String _title = "Choose a disease";
   int _subStep = 0;
   bool _selectedGender = false;
   final AppinioSwiperController controller = AppinioSwiperController();
@@ -234,31 +233,6 @@ class _FormExampleState extends State<FormExample> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              /*
-                          NumberStepper(
-                            numbers: [1, 2, 3],
-                            lineLength: 20,
-                            activeStep: activeStep,
-                            activeStepColor: Colors.blue,
-                            stepColor: Colors.grey,
-                            numberStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                            onStepReached: (index) {
-                              setState(() {
-                                if (index == 0) {
-                                  activeStep = 0;
-                                  _selectedField = "Prediction";
-                                  _selectedGender = false;
-                                } else if (index == 1 && activeStep == 0) {
-                                  activeStep = 0;
-                                  _selectedField = "Prediction";
-                                  _selectedGender = false;
-                                }
-                              });
-                            },
-                          ),*/
                               if (_selectedField == "Prediction")
                                 DelayedWidget(
                                   animationDuration:
@@ -544,6 +518,8 @@ class _FormExampleState extends State<FormExample> {
                                   _submit == true)
                                 Container(
                                   height: 500,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
                                   child: AnimationList(
                                       children: prediction_A_data.map((item) {
                                     return buildTile_A(
@@ -642,6 +618,8 @@ class _FormExampleState extends State<FormExample> {
                                   _submit == true)
                                 Container(
                                   height: 500,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
                                   child: AnimationList(
                                       children: prediction_B_data.map((item) {
                                     return buildTile_B(
@@ -795,6 +773,8 @@ class _FormExampleState extends State<FormExample> {
                               if (_selectedField == "Prediction C" &&
                                   _submit == true)
                                 Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
                                   height: 500,
                                   child: AnimationList(
                                       children: prediction_C_data.map((item) {
@@ -897,6 +877,18 @@ class _FormExampleState extends State<FormExample> {
                                         ],
                                       )
                                   ],
+                                ),
+                              if (_selectedField == "Prediction D" &&
+                                  _submit == true)
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                  height: 500,
+                                  child: AnimationList(
+                                      children: prediction_D_data.map((item) {
+                                    return buildTile_D(
+                                        item['title'], item['index']);
+                                  }).toList()),
                                 ),
                               SizedBox(height: 16.0),
                               if ((_selectedField == "Prediction A" ||
@@ -1008,15 +1000,17 @@ class _FormExampleState extends State<FormExample> {
                                               color: Colors.black,
                                               size: 200,
                                             )
-                                          : CircularPercentIndicator(
-                                              radius: 160.0,
-                                              lineWidth: 25.0,
-                                              animationDuration: 1000,
-                                              linearGradient: gradientRed,
-                                              percent:
-                                                  double.parse(output) * 0.01,
-                                              center:
-                                                  Text("Prediction $output %"),
+                                          : DelayedWidget(
+                                              child: CircularPercentIndicator(
+                                                radius: 160.0,
+                                                lineWidth: 30.0,
+                                                animationDuration: 100,
+                                                linearGradient: gradientRed,
+                                                percent:
+                                                    double.parse(output) * 0.01,
+                                                center: Text(
+                                                    "Prediction $output %"),
+                                              ),
                                             ),
                                       const SizedBox(
                                         height: 20,
@@ -1161,7 +1155,7 @@ class _FormExampleState extends State<FormExample> {
     url += prediction_C[5];
     url += '&MentalHealth=';
     url += prediction_C[6];
-    url += '&DiffWalking=';
+    url += '&Diff =';
     url += prediction_C[7];
     url += '&Sex=';
     url += prediction_C[8];
@@ -1192,6 +1186,11 @@ class _FormExampleState extends State<FormExample> {
 
   // https://lung-cancer-808h.onrender.com/api?GENDER=1&AGE=50&SMOKING=2&YELLOW_FINGERS=1&ANXIETY=1&PEER_PRESSURE=1&CHRONIC_DISEASE=1&FATIGUE=2&ALLERGY=2&WHEEZING=1&ALCOHOL_CONSUMING=2&COUGHING=2&SHORTNESS_OF_BREATH=1&SWALLOWING_DIFFICULTY=1&CHEST_PAIN=1
   Future<void> _submitPredictionD(String url) async {
+    _loading_output = true;
+    setState(() {
+      _selectedField = "Result D";
+      activeStep = 2;
+    });
     url += 'GENDER=';
     url += prediction_D[1];
     url += '&AGE=';

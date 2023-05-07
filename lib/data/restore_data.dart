@@ -210,3 +210,62 @@ final List<Map<String, dynamic>> prediction_C_data = [
     "index": 16,
   }
 ];
+
+final List<Map<String, dynamic>> prediction_D_data = [
+  {
+    "title": lang_map[lang]!["Gender"],
+    "index": 1,
+  },
+  {
+    "title": lang_map[lang]!["Smoking"],
+    "index": 3,
+  },
+  {
+    "title": lang_map[lang]!["Yellow Fingers"],
+    "index": 4,
+  },
+  {
+    "title": lang_map[lang]!["Anxiety"],
+    "index": 5,
+  },
+  {
+    "title": lang_map[lang]!["Peer Pressure"],
+    "index": 6,
+  },
+  {
+    "title": lang_map[lang]!["Chronic Disease"],
+    "index": 7,
+  },
+  {
+    "title": lang_map[lang]!["Fatigue"],
+    "index": 8,
+  },
+  {
+    "title": lang_map[lang]!["Allergy"],
+    "index": 9,
+  },
+  {
+    "title": lang_map[lang]!["Wheezing"],
+    "index": 10,
+  },
+  {
+    "title": lang_map[lang]!["Alcohol Drinking"],
+    "index": 11,
+  },
+  {
+    "title": lang_map[lang]!["Cough"],
+    "index": 12,
+  },
+  {
+    "title": lang_map[lang]!["Shortness of Breath"],
+    "index": 13,
+  },
+  {
+    "title": lang_map[lang]!["Swallowing Difficulty"],
+    "index": 14,
+  },
+  {
+    "title": lang_map[lang]!["Chest Pain"],
+    "index": 15,
+  }
+];

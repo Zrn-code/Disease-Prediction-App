@@ -188,51 +188,67 @@ List<ExampleOption> options_C = [
 
 List<ExampleOption> options_D = [
   ExampleOption(
-    name: "Gender",
-    desc: "undefined",
+    name: lang_map[lang]!["Gender"],
+    desc: lang_map[lang]!["Gender desc"],
     color: gradientPurple,
   ),
   ExampleOption(
-    name: "Smoking",
-    desc: "undefined",
+    name: lang_map[lang]!["Smoking"],
+    desc: lang_map[lang]!["Smoking desc"],
     color: gradientBlue,
   ),
   ExampleOption(
-    name: "Yellow Fingers",
-    desc: "undefined",
+    name: lang_map[lang]!["Yellow Fingers"],
+    desc: lang_map[lang]!["Yellow Fingers desc"],
     color: gradientPurple,
   ),
-  ExampleOption(name: "Anxiety", desc: "undefined", color: gradientPink),
   ExampleOption(
-    name: "Peer Pressure",
-    desc: "undefined",
+      name: lang_map[lang]!["Anxiety"],
+      desc: lang_map[lang]!["Anxiety desc"],
+      color: gradientPink),
+  ExampleOption(
+    name: lang_map[lang]!["Peer Pressure"],
+    desc: lang_map[lang]!["Peer Pressure desc"],
     color: gradientBlue,
   ),
   ExampleOption(
-      name: "Chronic disease", desc: "undefined", color: gradientPurple),
-  ExampleOption(name: "Fatigue", desc: "undefined", color: gradientPink),
-  ExampleOption(name: "Allergy", desc: "undefined", color: gradientBlue),
+      name: lang_map[lang]!["Chronic Disease"],
+      desc: lang_map[lang]!["Chronic Disease desc"],
+      color: gradientPurple),
   ExampleOption(
-    name: "Wheezing",
-    desc: "undefined",
+      name: lang_map[lang]!["Fatigue"],
+      desc: lang_map[lang]!["Fatigue desc"],
+      color: gradientPink),
+  ExampleOption(
+      name: lang_map[lang]!["Allergy"],
+      desc: lang_map[lang]!["Allergy desc"],
+      color: gradientBlue),
+  ExampleOption(
+    name: lang_map[lang]!["Wheezing"],
+    desc: lang_map[lang]!["Wheezing desc"],
     color: gradientPurple,
   ),
   ExampleOption(
-      name: "Alcohol Consuming", desc: "undefined", color: gradientPink),
+      name: lang_map[lang]!["Alcohol Drinking"],
+      desc: lang_map[lang]!["Alcohol Drinking desc"],
+      color: gradientPink),
   ExampleOption(
-    name: "Coughing",
-    desc: "undefined",
+    name: lang_map[lang]!["Cough"],
+    desc: lang_map[lang]!["Cough desc"],
     color: gradientPink,
   ),
   ExampleOption(
-    name: "Shortness of Breath",
-    desc: "undefined",
+    name: lang_map[lang]!["Shortness of Breath"],
+    desc: lang_map[lang]!["Shortness of Breath desc"],
     color: gradientBlue,
   ),
   ExampleOption(
-    name: "Swallowing Difficulty",
-    desc: "undefined",
+    name: lang_map[lang]!["Swallowing Difficulty"],
+    desc: lang_map[lang]!["Swallowing Difficulty desc"],
     color: gradientPurple,
   ),
-  ExampleOption(name: "Chest Pain", desc: "undefined", color: gradientPurple),
+  ExampleOption(
+      name: lang_map[lang]!["Chest Pain"],
+      desc: lang_map[lang]!["Chest Pain desc"],
+      color: gradientPurple),
 ];

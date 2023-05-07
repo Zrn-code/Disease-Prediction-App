@@ -118,19 +118,19 @@ Widget buildTile_C(String title, int index) {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(25)),
               color: prediction_C[index] == "1"
-                  ? title == lang_map[lang]!["Sex"]
+                  ? title == lang_map[lang]!["Gender"]
                       ? Colors.blue
                       : Colors.green
-                  : title == lang_map[lang]!["Sex"]
+                  : title == lang_map[lang]!["Gender"]
                       ? Colors.pink
                       : Colors.red),
           margin: EdgeInsets.symmetric(horizontal: 10),
           child: Icon(
             prediction_C[index] == "1"
-                ? title == lang_map[lang]!["Sex"]
+                ? title == lang_map[lang]!["Gender"]
                     ? Icons.male_rounded
                     : Icons.check_rounded
-                : title == lang_map[lang]!["Sex"]
+                : title == lang_map[lang]!["Gender"]
                     ? Icons.female_rounded
                     : Icons.close_rounded,
             color: Colors.white,
