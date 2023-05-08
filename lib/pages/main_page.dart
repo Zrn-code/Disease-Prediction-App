@@ -87,7 +87,9 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text(lang_map[lang]!["title"]),
+          title: Text(
+            lang_map[lang]!["title"],
+          ),
           backgroundColor: Colors.blue,
         ),
         drawer: Drawer(
@@ -572,6 +574,9 @@ class _FormExampleState extends State<FormExample> {
                                   _subStep == 1)
                                 Column(children: [
                                   inputAgeForm(),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
                                   ElevatedButton(
                                     onPressed: () {
                                       if (_formKey.currentState?.validate() ??
@@ -582,7 +587,7 @@ class _FormExampleState extends State<FormExample> {
                                         });
                                       }
                                     },
-                                    child: Text("Next Step"),
+                                    child: Text(lang_map[lang]!["Next Step"]),
                                   )
                                 ]),
                               if (_selectedField == "Prediction B" &&
@@ -677,11 +682,17 @@ class _FormExampleState extends State<FormExample> {
                                   inputSleepTimeForm(),
                                   inputPhysicalHealthForm(),
                                   inputMentalHealthForm(),
-                                  _buildRow("General Health:", (val) {
-                                    setState(() {
-                                      prediction_C[12] = val;
-                                    });
-                                  }),
+                                  buildRow(
+                                    "General Health:",
+                                    (val) {
+                                      setState(() {
+                                        prediction_C[12] = val;
+                                      });
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
                                   ElevatedButton(
                                     onPressed: () {
                                       if (_formKey.currentState?.validate() ??
@@ -692,7 +703,7 @@ class _FormExampleState extends State<FormExample> {
                                         });
                                       }
                                     },
-                                    child: Text("Next Step"),
+                                    child: Text(lang_map[lang]!["Next Step"]),
                                   )
                                 ]),
                               if (_selectedField == "Prediction C" &&
@@ -828,6 +839,9 @@ class _FormExampleState extends State<FormExample> {
                                   _subStep == 1)
                                 Column(children: [
                                   inputAgeForm(),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
                                   ElevatedButton(
                                     onPressed: () {
                                       if (_formKey.currentState?.validate() ??
@@ -838,7 +852,7 @@ class _FormExampleState extends State<FormExample> {
                                         });
                                       }
                                     },
-                                    child: const Text("Next Step"),
+                                    child: Text(lang_map[lang]!["Next Step"]),
                                   )
                                 ]),
                               if (_selectedField == "Prediction D" &&
@@ -952,8 +966,8 @@ class _FormExampleState extends State<FormExample> {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
                                               SnackBar(
-                                                content: Text(
-                                                    "your data has been submitted."),
+                                                content: Text(lang_map[lang]![
+                                                    "Data Submitted"]),
                                                 duration: Duration(seconds: 1),
                                               ),
                                             );
@@ -968,8 +982,8 @@ class _FormExampleState extends State<FormExample> {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
                                               SnackBar(
-                                                content: Text(
-                                                    "your data has been submitted."),
+                                                content: Text(lang_map[lang]![
+                                                    "Data Submitted"]),
                                                 duration: Duration(seconds: 1),
                                               ),
                                             );
@@ -984,8 +998,8 @@ class _FormExampleState extends State<FormExample> {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
                                               SnackBar(
-                                                content: Text(
-                                                    "your data has been submitted."),
+                                                content: Text(lang_map[lang]![
+                                                    "Data Submitted"]),
                                                 duration: Duration(seconds: 1),
                                               ),
                                             );
@@ -1001,9 +1015,9 @@ class _FormExampleState extends State<FormExample> {
                                             _formKey.currentState!.save();
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
-                                              const SnackBar(
-                                                content: Text(
-                                                    "your data has been submitted."),
+                                              SnackBar(
+                                                content: Text(lang_map[lang]![
+                                                    "Data Submitted"]),
                                                 duration: Duration(seconds: 1),
                                               ),
                                             );
@@ -1011,7 +1025,8 @@ class _FormExampleState extends State<FormExample> {
                                           }
                                         }
                                       },
-                                      child: Text("Submit Form".toUpperCase(),
+                                      child: Text(
+                                          lang_map[lang]!["Submit Form"],
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold)),
                                     ),
@@ -1028,7 +1043,7 @@ class _FormExampleState extends State<FormExample> {
                                   onPressed: () {
                                     initial_state();
                                   },
-                                  child: Text("Return To Menu".toUpperCase(),
+                                  child: Text(lang_map[lang]!["Return to Menu"],
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold)),
                                 ),
@@ -1062,7 +1077,7 @@ class _FormExampleState extends State<FormExample> {
                                           initial_state();
                                         },
                                         child: Text(
-                                          "Return To Menu".toUpperCase(),
+                                          lang_map[lang]!["Return to Menu"],
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -1294,18 +1309,18 @@ class _FormExampleState extends State<FormExample> {
       child: TextFormField(
         autofocus: true,
         controller: ageController,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.cake_rounded),
-          labelText: 'Age',
-          hintText: 'Enter your age',
+          labelText: lang_map[lang]!["Age"],
+          hintText: lang_map[lang]!["Enter your Age"],
         ),
         validator: (value) {
           if (value?.isEmpty ?? true) {
-            return 'Please enter your age';
+            return lang_map[lang]!["Enter your Age"];
           }
           if (int.tryParse(value!) == null) {
-            return 'Please enter a valid age';
+            return lang_map[lang]!["Enter a valid Age"];
           }
           return null;
         },
@@ -1480,30 +1495,4 @@ class _FormExampleState extends State<FormExample> {
       _selectedGender = false;
     });
   }
-}
-
-Widget _buildRow(String label, Function onChanged) {
-  var list = ['Yes', 'No'];
-  if (label == 'General Health:') {
-    list = [
-      'Excellent',
-      'Very Good',
-      'Good',
-      'Poor',
-      'Fair',
-    ];
-  }
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      SizedBox(
-        height: 20,
-      ),
-      CustomDropdownButtonExample(
-        labelText: label,
-        list: list,
-        onChanged: onChanged,
-      ),
-    ],
-  );
 }

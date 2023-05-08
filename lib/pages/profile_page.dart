@@ -62,11 +62,8 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
-        centerTitle: true,
-        title: const Text(
-          "Profile",
-          style: TextStyle(
-              color: Colors.white, fontSize: 27, fontWeight: FontWeight.bold),
+        title: Text(
+          lang_map[lang]!["Profile Page"],
         ),
       ),
       drawer: Drawer(
@@ -99,8 +96,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 leading: const Icon(Icons.local_hospital),
-                title: const Text(
-                  "Disease Prediction",
+                title: Text(
+                  lang_map[lang]!["Disease Prediction"],
                   style: TextStyle(color: Colors.black),
                 )),
             ListTile(
@@ -110,10 +107,52 @@ class _ProfilePageState extends State<ProfilePage> {
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 leading: const Icon(Icons.person),
-                title: const Text(
-                  "Profile",
+                title: Text(
+                  lang_map[lang]!["Profile"],
                   style: TextStyle(color: Colors.black),
                 )),
+            ListTile(
+              leading: const Icon(Icons.language),
+              title: Text(
+                lang_map[lang]!["Language"],
+                style: TextStyle(color: Colors.black),
+              ),
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: ((context) {
+                      return AlertDialog(
+                          title: Text(lang_map[lang]!["Language"]),
+                          content: Container(
+                            height: 100,
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  onTap: () {
+                                    setState(() {
+                                      lang = "EN";
+                                    });
+                                    Navigator.pop(context);
+                                  },
+                                  leading: const Icon(Icons.language),
+                                  title: Text(lang_map[lang]!["EN"]),
+                                ),
+                                ListTile(
+                                  onTap: () {
+                                    setState(() {
+                                      lang = "ZH";
+                                    });
+                                    Navigator.pop(context);
+                                  },
+                                  leading: const Icon(Icons.language),
+                                  title: Text(lang_map[lang]!["ZH"]),
+                                ),
+                              ],
+                            ),
+                          ));
+                    }));
+              },
+            ),
             ListTile(
                 onTap: () async {
                   showDialog(
@@ -121,9 +160,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: const Text("Logout"),
-                          content:
-                              const Text("Are you sure you want to logout?"),
+                          title: Text(lang_map[lang]!["Log Out"]),
+                          content: Text(lang_map[lang]!["Check for Logout"]),
                           actions: [
                             IconButton(
                                 onPressed: () {
@@ -153,8 +191,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 leading: const Icon(Icons.exit_to_app),
-                title: const Text(
-                  "Logout",
+                title: Text(
+                  lang_map[lang]!["Log Out"],
                   style: TextStyle(color: Colors.black),
                 )),
           ],
@@ -177,8 +215,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "Full Name",
+                    Text(
+                      lang_map[lang]!["Full Name"],
                       style: TextStyle(fontSize: 17),
                     ),
                     Text(
@@ -193,8 +231,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "Email",
+                    Text(
+                      lang_map[lang]!["Email"],
                       style: TextStyle(fontSize: 17),
                     ),
                     Text(
@@ -206,8 +244,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 const Divider(
                   height: 20,
                 ),
-                const Text(
-                  "Prediction Records",
+                Text(
+                  lang_map[lang]!["Prediction Records"],
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 17),
                 ),
@@ -260,9 +298,9 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: const [
+        children: [
           Text(
-            "You've not conducted any prediction.",
+            lang_map[lang]!["No Record Found"],
             textAlign: TextAlign.center,
           ),
         ],

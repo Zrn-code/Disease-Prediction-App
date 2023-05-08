@@ -19,15 +19,11 @@ class _RecordTileState extends State<RecordTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-          "${widget.titles[0]}: ${widget.infos[0]}",
-          style: const TextStyle(fontWeight: FontWeight.bold)),
-          ElevatedButton(onPressed: () {}, child: const Text("Check"))
-        ]
-      ),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Text("${widget.titles[0]}: ${widget.infos[0]}",
+            style: const TextStyle(fontWeight: FontWeight.bold)),
+        ElevatedButton(onPressed: () {}, child: const Text("Check"))
+      ]),
     );
   }
 }

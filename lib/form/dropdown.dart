@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-
-const List<Widget> fruits = <Widget>[Text('Apple'), Text('Banana')];
+import 'package:flutter_application/pages/main_page.dart';
+import 'package:flutter_application/pages/login_page.dart';
 
 class CustomDropdownButtonExample extends StatefulWidget {
   final String labelText;
@@ -50,7 +50,7 @@ class CustomDropdownButtonExampleState
           isExpanded: true,
           barrierColor: Colors.black.withOpacity(0.5),
           hint: Text(
-            "Select " + widget.labelText,
+            lang_map[lang]!["Select your answer"],
             style: TextStyle(
                 fontSize: 14,
                 color: Colors.black45,
@@ -75,20 +75,16 @@ class CustomDropdownButtonExampleState
             return null;
           },
           onChanged: (String? value) {
-            if (value == 'Yes' || value == 'Male') {
-              widget.onChanged('1');
-            } else {
-              widget.onChanged('0');
-            }
-            if (value == 'Excellent')
+            if (value == lang_map[lang]!['Excellent'])
               widget.onChanged('4');
-            else if (value == 'Very Good')
+            else if (value == lang_map[lang]!['Very Good'])
               widget.onChanged('3');
-            else if (value == 'Good')
+            else if (value == lang_map[lang]!['Good'])
               widget.onChanged('2');
-            else if (value == 'Poor')
+            else if (value == lang_map[lang]!['Poor'])
               widget.onChanged('1');
-            else if (value == 'Fair') widget.onChanged('0');
+            else
+              widget.onChanged('0');
 
             setState(() {
               dropdownValue = value!;
@@ -116,16 +112,14 @@ class CustomDropdownButtonExampleState
   }
 }
 
-Widget _buildRow(String label, Function onChanged) {
-  var list = ['Yes', 'No'];
-  if (label == 'General Health:')
-    list = [
-      'Excellent',
-      'Very Good',
-      'Good',
-      'Poor',
-      'Fair',
-    ];
+Widget buildRow(String label, Function onChanged) {
+  List<String> list = [
+    lang_map[lang]!['Excellent'],
+    lang_map[lang]!['Very Good'],
+    lang_map[lang]!['Good'],
+    lang_map[lang]!['Fair'],
+    lang_map[lang]!['Poor'],
+  ];
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [

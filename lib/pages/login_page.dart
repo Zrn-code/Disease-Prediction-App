@@ -15,10 +15,10 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-String lang = "EN";
+String lang = "ZH";
 
 class _LoginScreenState extends State<LoginScreen> {
-  LanguageOption language = _languageOptions[0];
+  LanguageOption language = _languageOptions[1];
   AuthMode currentMode = AuthMode.login;
   AuthService authService = AuthService();
 
@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
             });
 
           DialogBuilder(context).showResultDialog(language.code == "ZH"
-              ? '成功將語言調整為: ${_language.value}。'
+              ? '成功將語言調整為: ${_language.value}'
               : 'Successfully changed the language to: ${_language.value}.');
         }
       },
