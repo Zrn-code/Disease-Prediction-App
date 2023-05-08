@@ -194,7 +194,8 @@ class LoginFunctions {
     Navigator.of(context).pop();
     // You should determine this path and create the screen.
     // Navigator.of(context).pushNamed('/forgotPass');
-    DialogBuilder(context).showResultDialog('I am handling forgot password');
+    DialogBuilder(context)
+        .showResultDialog(lang_map[lang]!["Handling forgotten password"]);
     return null;
   }
 }

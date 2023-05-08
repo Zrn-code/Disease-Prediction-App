@@ -1,6 +1,10 @@
 const String data_ZH = '''
 {
   "title": "首頁",
+  "Language": "語言切換",
+  "EN": "英文",
+  "ZH": "中文",
+  "Handling forgotten password": "我正在處理忘記密碼的問題",
   "Prediction A": "COVID-19 預測",
   "Description A": "COVID-19是由SARS-CoV-2病毒引起的高度傳染性呼吸系統疾病。",
   "Prediction B": "糖尿病預測",

@@ -140,6 +140,48 @@ class _MainPageState extends State<MainPage> {
                     style: TextStyle(color: Colors.black),
                   )),
               ListTile(
+                leading: const Icon(Icons.language),
+                title: Text(
+                  lang_map[lang]!["Language"],
+                  style: TextStyle(color: Colors.black),
+                ),
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: ((context) {
+                        return AlertDialog(
+                            title: Text(lang_map[lang]!["Language"]),
+                            content: Container(
+                              height: 100,
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    onTap: () {
+                                      setState(() {
+                                        lang = "EN";
+                                      });
+                                      Navigator.pop(context);
+                                    },
+                                    leading: const Icon(Icons.language),
+                                    title: Text(lang_map[lang]!["EN"]),
+                                  ),
+                                  ListTile(
+                                    onTap: () {
+                                      setState(() {
+                                        lang = "ZH";
+                                      });
+                                      Navigator.pop(context);
+                                    },
+                                    leading: const Icon(Icons.language),
+                                    title: Text(lang_map[lang]!["ZH"]),
+                                  ),
+                                ],
+                              ),
+                            ));
+                      }));
+                },
+              ),
+              ListTile(
                   onTap: () async {
                     showDialog(
                         barrierDismissible: false,

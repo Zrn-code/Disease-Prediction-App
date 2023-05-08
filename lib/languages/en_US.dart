@@ -1,6 +1,10 @@
 const String data_US = '''
 {
   "title" : "Home Page",
+  "Language" : "Language",
+  "EN": "English",
+  "ZH": "Chinese",
+  "Handling forgotten password": "I am handling forgot password",
   "Prediction A" : "COVID-19 Prediction",
   "Description A" : "COVID-19 is a highly contagious respiratory disease caused by the SARS-CoV-2 virus.",
   "Prediction B" : "Diabetes Prediction",
