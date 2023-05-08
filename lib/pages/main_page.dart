@@ -43,6 +43,7 @@ int _age = 0;
 double _bmi = 0;
 double _height = 0;
 double _weight = 0;
+bool first_loading = true;
 
 Map<String, Map<String, dynamic>> lang_map = {
   "ZH": jsonDecode(data_ZH),
@@ -60,8 +61,11 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     gettingUserData();
-    WidgetsBinding.instance
-        ?.addPostFrameCallback((_) => showDisclaimerDialog(context));
+    if (first_loading) {
+      WidgetsBinding.instance
+          ?.addPostFrameCallback((_) => showDisclaimerDialog(context));
+      first_loading = false;
+    }
   }
 
   String getId(String res) {
