@@ -37,6 +37,7 @@ class MainPage extends StatefulWidget {
 }
 
 bool _loading_output = false;
+bool _isFirstPage = true;
 bool _submit = false;
 int _age = 0;
 double _bmi = 0;
@@ -59,6 +60,8 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     gettingUserData();
+    WidgetsBinding.instance
+        ?.addPostFrameCallback((_) => showDisclaimerDialog(context));
   }
 
   String getId(String res) {
@@ -223,6 +226,17 @@ class _MainPageState extends State<MainPage> {
                   leading: const Icon(Icons.exit_to_app),
                   title: Text(
                     lang_map[lang]!["Log Out"],
+                    style: TextStyle(color: Colors.black),
+                  )),
+              ListTile(
+                  onTap: () async {
+                    showDisclaimerDialog(context);
+                  },
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  leading: Icon(Icons.warning, color: Colors.red),
+                  title: Text(
+                    "Test",
                     style: TextStyle(color: Colors.black),
                   )),
             ],
@@ -1495,4 +1509,67 @@ class _FormExampleState extends State<FormExample> {
       _selectedGender = false;
     });
   }
+}
+
+void showDisclaimerDialog(BuildContext context) {
+  // 第一頁
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('"個人資料蒐集告知聲明暨同意書'),
+        content: SingleChildScrollView(
+          child: Text(
+              "依據個人資料保護法第八條第一項規定，e-health 向臺端告知下列事項，請臺端詳閱：\n\n一、本服務蒐集個人資料之目的：僅作為預測疾病所用。\n\n二、本服務蒐集臺端提供以下個人資料：年齡、性別、E-mail、身心狀況(如：症狀)。\n\n三、本服務利用臺端個人資料期間及對象：\n (一)期間：本服務存續期間。\n (二)對象：僅本服務，且僅有您本人得以存取。\n\n四、臺端可依據個資法第三條規定，就臺端的個人資料行使下列權利：\n (一)查詢或請求閱覽。\n (二)請求製給複製本。\n (三)請求補充或更正。\n (四)請求停止蒐集、處理或利用。\n (五)請求刪除，若請求刪除則帳號也將被刪除。\n\n五、臺端可自由選擇是否提供相關個人資料，惟如臺端拒絕提供個人相關資料，本服務將無法進行如上開蒐集目的之作業，致無法提供臺端各項服務。\n\n六、臺端了解此一同意符合個資法及相關法規之要求，具有書面同意本服務蒐集、處理及利用臺端的個人資料之效果。\n\n七、如需要修改或要求停止運用您的個人資料，可聯絡changcw.ee10@nycu.edu.tw，本服務將為您處理。"),
+        ),
+        actions: <Widget>[
+          ElevatedButton(
+            child: Text('不同意'),
+            onPressed: () {
+              //TODO: 實作不同意功能
+            },
+          ),
+          ElevatedButton(
+            child: Text('同意'),
+            onPressed: () {
+              //TODO: 實作同意功能
+              Navigator.of(context).pop();
+              showDisclaimerPage(context);
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+void showDisclaimerPage(BuildContext context) {
+  // 第二頁
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('免責聲明'),
+        content: SingleChildScrollView(
+          child: Text(
+              '當您成為(https://e-health.page）網站（以下簡稱本服務）的用戶後，您已詳細閱讀及明確瞭解本『免責聲明』並同意，屬下列情況發生時本網站無需負擔任何責任：\n\n一、您使用本站服務之風險會由您個人承擔。用戶同意使用本服務各項服務系基於用戶的個人意願，並同意自負任何風險。 本服務之預測結果僅為參考，若有任何疑問請詢問專業醫師。\n\n二、「本網站」就各項服務，不負任何明示或默示之擔保責任。本服務不保證各項服務之稳定、安全、無誤、及不中斷；用戶明示承擔使用本服務之所有風險及可能發生之任何損害。 \n\n三、任何由於電腦病毒侵入或發作、因政府管制而造成的暫時性關開等影響網路正常經營之不可抗力而造成的資料毀損、丟失被盗用或被竄改等與本服務無關。特此聲明！'),
+        ),
+        actions: <Widget>[
+          ElevatedButton(
+            child: Text('不同意'),
+            onPressed: () {
+              //TODO: 實作不同意功能
+            },
+          ),
+          ElevatedButton(
+            child: Text('同意'),
+            onPressed: () {
+              //TODO: 實作同意功能
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
