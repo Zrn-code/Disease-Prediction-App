@@ -1122,6 +1122,9 @@ class _FormExampleState extends State<FormExample> {
     String _newRecord = "Covid19:";
     _newRecord +=
         "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}_";
+    String _Records = "";
+    _Records +=
+        "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}_";
 
     for (int i = 1; i <= 8; i++) {
       _newRecord += "${_titles_A[i]}:${prediction_A[i]}_";
@@ -1156,9 +1159,12 @@ class _FormExampleState extends State<FormExample> {
       _loading_output = false;
     });
     _newRecord = _newRecord.substring(0, _newRecord.length - 1);
+
     await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
         .updateRecords(_newRecord);
-    //_showResult("Probability of Covid :", output);
+    //debugPrint(_Records + output);
+    await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+        .resultRecords(_Records + output, "COVID-19");
   }
 
 //https://early-stage-diabetes-risk-prediction.onrender.com/api?Age=20&Gender=0&Polyuria=0&Polydipsia=0&sudden_weight_loss=0&weakness=0&Polyphagia=0&Genital_thrush=0&visual_blurring=0&Itching=0&Irritability=0&delayed_healing=0&partial_paresis=0&muscle_stiffness=0&Alopecia=0&Obesity=0
@@ -1208,6 +1214,12 @@ class _FormExampleState extends State<FormExample> {
       output = decoded['output'];
       _loading_output = false;
     });
+    String _Records = "";
+    _Records +=
+        "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}_";
+
+    await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+        .resultRecords(_Records + output, "Diabetes");
   }
 
   // https://personal-key-indicators-of-heart-disease.onrender.com/api?BMI=16.6&Smoking=1&AlcoholDrinking=0&Stroke=0&PhysicalHealth=3&MentalHealth=30&DiffWalking=0&Sex=0&AgeCategory=7&Diabetic=1&PhysicalActivity=1&GenHealth=3&SleepTime=5&Asthma=1&KidneyDisease=0&SkinCancer=1
@@ -1257,6 +1269,12 @@ class _FormExampleState extends State<FormExample> {
       output = decoded['output'];
       _loading_output = false;
     });
+    String _Records = "";
+    _Records +=
+        "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}_";
+
+    await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+        .resultRecords(_Records + output, "Heart Disease");
   }
 
   // https://lung-cancer-808h.onrender.com/api?GENDER=1&AGE=50&SMOKING=2&YELLOW_FINGERS=1&ANXIETY=1&PEER_PRESSURE=1&CHRONIC_DISEASE=1&FATIGUE=2&ALLERGY=2&WHEEZING=1&ALCOHOL_CONSUMING=2&COUGHING=2&SHORTNESS_OF_BREATH=1&SWALLOWING_DIFFICULTY=1&CHEST_PAIN=1
@@ -1304,6 +1322,13 @@ class _FormExampleState extends State<FormExample> {
       output = decoded['output'];
       _loading_output = false;
     });
+    String _Records = "";
+    _Records +=
+        "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}_";
+
+    await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+        .resultRecords(_Records + output, "Lung Cancer");
+
     //_showResult("Probability of Lung Cancer:", output);
   }
 

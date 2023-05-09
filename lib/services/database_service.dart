@@ -18,7 +18,11 @@ class DatabaseService {
       "age": 0,
       "gender": -1,
       "uid": uid,
-      "records": []
+      "records": [],
+      "COVID-19": [],
+      "Diabetes": [],
+      "Heart Disease": [],
+      "Lung Cancer": [],
     });
   }
 
@@ -30,10 +34,16 @@ class DatabaseService {
       //"gender": gender,
     });
   }
-  
+
   Future updateRecords(String newRecords) async {
     return await userCollection.doc(uid).update({
       "records": FieldValue.arrayUnion([newRecords])
+    });
+  }
+
+  Future resultRecords(String newRecords, String prediction) async {
+    return await userCollection.doc(uid).update({
+      prediction: FieldValue.arrayUnion([newRecords])
     });
   }
 
