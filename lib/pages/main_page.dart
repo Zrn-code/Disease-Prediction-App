@@ -87,6 +87,11 @@ class _MainPageState extends State<MainPage> {
         userName = value!;
       });
     });
+
+    final List<dynamic> result =
+        await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+            .getPredictionA(email);
+    print(result);
   }
 
   @override

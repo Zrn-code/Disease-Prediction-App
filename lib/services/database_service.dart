@@ -68,6 +68,21 @@ class DatabaseService {
     }
   }
 
+  Future<List<dynamic>> getPredictionA(String email) async {
+    QuerySnapshot snapshot =
+        await userCollection.where("email", isEqualTo: email).get();
+    QueryDocumentSnapshot firstDocumentSnapshot = snapshot.docs[0];
+    try {
+      List<dynamic> result = firstDocumentSnapshot.get('COVID-19');
+      return result;
+    } catch (e) {
+      // Handle the exception here
+      print('Error getting age: $e');
+      // Return a default value or rethrow the exception
+      return [];
+    }
+  }
+
   Future<String> getGender(String email) async {
     QuerySnapshot snapshot =
         await userCollection.where("email", isEqualTo: email).get();
