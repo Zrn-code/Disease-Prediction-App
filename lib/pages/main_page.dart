@@ -63,7 +63,7 @@ class _MainPageState extends State<MainPage> {
     gettingUserData();
     if (first_loading) {
       WidgetsBinding.instance
-          ?.addPostFrameCallback((_) => showDisclaimerDialog(context));
+          .addPostFrameCallback((_) => showDisclaimerDialog(context));
       first_loading = false;
     }
   }
@@ -233,7 +233,7 @@ class _MainPageState extends State<MainPage> {
                     style: TextStyle(color: Colors.black),
                   )),
               ListTile(
-                  onTap: () async {
+                  onTap: () {
                     showDisclaimerDialog(context);
                   },
                   contentPadding:
@@ -1363,18 +1363,18 @@ class _FormExampleState extends State<FormExample> {
       child: TextFormField(
         autofocus: true,
         controller: weightController,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.monitor_weight_rounded),
-          labelText: 'Weight(kg)',
-          hintText: 'Enter your weight in kg',
+          labelText: lang_map[lang]!["Weight"],
+          hintText: lang_map[lang]!["Enter your weight"],
         ),
         validator: (value) {
           if (value?.isEmpty ?? true) {
-            return 'Please enter your weight';
+            return lang_map[lang]!["Enter your weight"];
           }
           if (double.tryParse(value!) == null) {
-            return 'Please enter a valid weight';
+            return lang_map[lang]!["Enter a valid weight"];
           }
           return null;
         },
@@ -1391,18 +1391,18 @@ class _FormExampleState extends State<FormExample> {
       child: TextFormField(
         autofocus: true,
         controller: heightController,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.emoji_people_rounded),
-          labelText: 'Height(cm)',
-          hintText: 'Enter your height',
+          labelText: lang_map[lang]!["Height"],
+          hintText: lang_map[lang]!["Enter your height"],
         ),
         validator: (value) {
           if (value?.isEmpty ?? true) {
-            return 'Please enter your height';
+            return lang_map[lang]!["Enter your height"];
           }
           if (double.tryParse(value!) == null) {
-            return 'Please enter a valid height';
+            return lang_map[lang]!["Enter a valid height"];
           }
           return null;
         },
@@ -1419,20 +1419,20 @@ class _FormExampleState extends State<FormExample> {
       child: TextFormField(
         autofocus: true,
         controller: mentalHealthController,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.heart_broken_rounded),
-          labelText: 'mental health',
-          hintText: 'Bad feeling days last month.',
+          labelText: lang_map[lang]!["Mental Health"],
+          hintText: lang_map[lang]!["Mental Health desc"],
         ),
         validator: (value) {
           if (value?.isEmpty ?? true) {
-            return 'Please enter your mental health';
+            return lang_map[lang]!["Enter your Mental Health"];
           }
-          if (double.tryParse(value!) == null ||
-              int.parse(value) > 31 ||
+          if (int.tryParse(value!) == null ||
+              int.parse(value) > 30 ||
               int.parse(value) < 0) {
-            return 'Please enter in range 0 to 31';
+            return lang_map[lang]!["Enter 0 to 30"];
           }
           return null;
         },
@@ -1449,20 +1449,20 @@ class _FormExampleState extends State<FormExample> {
       child: TextFormField(
         autofocus: true,
         controller: physicalhealthController,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.mood_bad_rounded),
-          labelText: 'physical health',
-          hintText: 'Illness or injury last month.',
+          labelText: lang_map[lang]!["Physical Health"],
+          hintText: lang_map[lang]!["Physical Health desc"],
         ),
         validator: (value) {
           if (value?.isEmpty ?? true) {
-            return 'Please enter your physical health';
+            return lang_map[lang]!["Enter your Physical Health"];
           }
           if (int.tryParse(value!) == null ||
-              int.parse(value) > 31 ||
+              int.parse(value) > 30 ||
               int.parse(value) < 0) {
-            return 'Please enter in range 0 to 31';
+            return lang_map[lang]!["Enter 0 to 30"];
           }
           return null;
         },
@@ -1479,21 +1479,21 @@ class _FormExampleState extends State<FormExample> {
       child: TextFormField(
         autofocus: true,
         controller: sleepTimeController,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.bedtime_rounded),
-          labelText: 'sleep time',
-          hintText: 'Enter your sleep time(in hours)',
+          labelText: lang_map[lang]!["Sleep Time"],
+          hintText: lang_map[lang]!["Sleep Time desc"],
         ),
         validator: (value) {
           if (value?.isEmpty ?? true) {
-            return 'Please enter your sleep time';
+            return lang_map[lang]!["Enter your Sleep Time"];
           }
           if (double.tryParse(value!) == null) {
-            return 'Please enter a valid sleep time';
+            return lang_map[lang]!["Enter a valid Sleep Time"];
           }
           if (double.parse(value) > 24 || double.parse(value) < 0) {
-            return 'Please enter 0 to 24';
+            return lang_map[lang]!["Enter 0 to 24"];
           }
           return null;
         },
@@ -1521,20 +1521,19 @@ void showDisclaimerDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('"個人資料蒐集告知聲明暨同意書'),
-        content: SingleChildScrollView(
-          child: Text(
-              "依據個人資料保護法第八條第一項規定，e-health 向臺端告知下列事項，請臺端詳閱：\n\n一、本服務蒐集個人資料之目的：僅作為預測疾病所用。\n\n二、本服務蒐集臺端提供以下個人資料：年齡、性別、E-mail、身心狀況(如：症狀)。\n\n三、本服務利用臺端個人資料期間及對象：\n (一)期間：本服務存續期間。\n (二)對象：僅本服務，且僅有您本人得以存取。\n\n四、臺端可依據個資法第三條規定，就臺端的個人資料行使下列權利：\n (一)查詢或請求閱覽。\n (二)請求製給複製本。\n (三)請求補充或更正。\n (四)請求停止蒐集、處理或利用。\n (五)請求刪除，若請求刪除則帳號也將被刪除。\n\n五、臺端可自由選擇是否提供相關個人資料，惟如臺端拒絕提供個人相關資料，本服務將無法進行如上開蒐集目的之作業，致無法提供臺端各項服務。\n\n六、臺端了解此一同意符合個資法及相關法規之要求，具有書面同意本服務蒐集、處理及利用臺端的個人資料之效果。\n\n七、如需要修改或要求停止運用您的個人資料，可聯絡changcw.ee10@nycu.edu.tw，本服務將為您處理。"),
-        ),
+        scrollable: true,
+        title: Text(lang_map[lang]!["Personal Data Collection Statement"]),
+        content: Text(lang_map[lang]![
+            "Details of the Personal Data Collection Statement"]),
         actions: <Widget>[
           ElevatedButton(
-            child: Text('不同意'),
+            child: Text(lang_map[lang]!["Disagree"]),
             onPressed: () {
               //TODO: 實作不同意功能
             },
           ),
           ElevatedButton(
-            child: Text('同意'),
+            child: Text(lang_map[lang]!["Agree"]),
             onPressed: () {
               //TODO: 實作同意功能
               Navigator.of(context).pop();
@@ -1553,20 +1552,18 @@ void showDisclaimerPage(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('免責聲明'),
-        content: SingleChildScrollView(
-          child: Text(
-              '當您成為(https://e-health.page）網站（以下簡稱本服務）的用戶後，您已詳細閱讀及明確瞭解本『免責聲明』並同意，屬下列情況發生時本網站無需負擔任何責任：\n\n一、您使用本站服務之風險會由您個人承擔。用戶同意使用本服務各項服務系基於用戶的個人意願，並同意自負任何風險。 本服務之預測結果僅為參考，若有任何疑問請詢問專業醫師。\n\n二、「本網站」就各項服務，不負任何明示或默示之擔保責任。本服務不保證各項服務之稳定、安全、無誤、及不中斷；用戶明示承擔使用本服務之所有風險及可能發生之任何損害。 \n\n三、任何由於電腦病毒侵入或發作、因政府管制而造成的暫時性關開等影響網路正常經營之不可抗力而造成的資料毀損、丟失被盗用或被竄改等與本服務無關。特此聲明！'),
-        ),
+        title: Text(lang_map[lang]!["Disclaimer"]),
+        scrollable: true,
+        content: Text(lang_map[lang]!["Details of the Disclaimer"]),
         actions: <Widget>[
           ElevatedButton(
-            child: Text('不同意'),
+            child: Text(lang_map[lang]!["Disagree"]),
             onPressed: () {
               //TODO: 實作不同意功能
             },
           ),
           ElevatedButton(
-            child: Text('同意'),
+            child: Text(lang_map[lang]!["Agree"]),
             onPressed: () {
               //TODO: 實作同意功能
               Navigator.of(context).pop();

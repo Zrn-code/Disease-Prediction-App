@@ -127,6 +127,31 @@ const String data_ZH = '''
   "Good": "良好",
   "Fair": "一般",
   "Poor": "不好",
-  "Select your answer": "選擇你的答案"
+  "Select your answer": "選擇你的答案",
+  "Data Submitted": "數據已提交",
+  
+  "Enter your weight": "輸入你的體重",
+  "Enter a vaild weight": "請輸入有效的體重",
+  "Height": "身高(公分)",
+  "Enter your height": "輸入你的身高",
+  "Enter a vaild height": "請輸入有效的身高",
+  "Mental Health" : "心理健康",
+  "Mental Health desc" : "在過去三十天，你有幾天感到心理不適？",
+  "Enter your Mental Health" : "輸入你的心理健康",
+  "Physical Health" : "身體健康",
+  "Physical Health desc" : "在過去三十天，你有幾天感到身體不適？",
+  "Enter your Physical Health" : "輸入你的身體健康",
+  "Enter 0 to 30" : "輸入 0 到 30",
+  "Enter 0 to 24" : "輸入 0 到 24",
+  "Sleep Time" : "睡眠時間",
+  "Sleep Time desc" : "在過去24小時內，你睡了多少小時？",
+  "Enter your Sleep Time" : "輸入你的睡眠時間",
+  "Enter a vaild Sleep Time" : "請輸入有效的睡眠時間",
+  "Personal Data Collection Statement" : "個人資料蒐集告知聲明暨同意書",
+  "Details of the Personal Data Collection Statement": "依據個人資料保護法第八條第一項規定，e-health 向臺端告知下列事項，請臺端詳閱：\\n\\n一、本服務蒐集個人資料之目的：僅作為預測疾病所用。\\n\\n二、本服務蒐集臺端提供以下個人資料：年齡、性別、E-mail、身心狀況(如：症狀)。\\n\\n三、本服務利用臺端個人資料期間及對象：\\n (一)期間：本服務存續期間。\\n (二)對象：僅本服務，且僅有您本人得以存取。\\n\\n四、臺端可依據個資法第三條規定，就臺端的個人資料行使下列權利：\\n (一)查詢或請求閱覽。\\n (二)請求製給複製本。\\n (三)請求補充或更正。\\n (四)請求停止蒐集、處理或利用。\\n (五)請求刪除，若請求刪除則帳號也將被刪除。\\n\\n五、臺端可自由選擇是否提供相關個人資料，惟如臺端拒絕提供個人相關資料，本服務將無法進行如上開蒐集目的之作業，致無法提供臺端各項服務。\\n\\n六、臺端了解此一同意符合個資法及相關法規之要求，具有書面同意本服務蒐集、處理及利用臺端的個人資料之效果。\\n\\n七、如需要修改或要求停止運用您的個人資料，可聯絡changcw.ee10@nycu.edu.tw，本服務將為您處理。",
+  "Disclaimer" : "免責聲明",
+  "Details of the Disclaimer" : "當您成為(https://e-health.page）網站（以下簡稱本服務）的用戶後，您已詳細閱讀及明確瞭解本『免責聲明』並同意，屬下列情況發生時本網站無需負擔任何責任：\\n\\n一、您使用本站服務之風險會由您個人承擔。用戶同意使用本服務各項服務系基於用戶的個人意願，並同意自負任何風險。 本服務之預測結果僅為參考，若有任何疑問請詢問專業醫師。\\n\\n二、「本網站」就各項服務，不負任何明示或默示之擔保責任。本服務不保證各項服務之稳定、安全、無誤、及不中斷；用戶明示承擔使用本服務之所有風險及可能發生之任何損害。 \\n\\n三、任何由於電腦病毒侵入或發作、因政府管制而造成的暫時性關開等影響網路正常經營之不可抗力而造成的資料毀損、丟失被盗用或被竄改等與本服務無關。特此聲明！",
+  "Agree" : "我同意",
+  "Disagree" : "我不同意"
 }
 ''';
