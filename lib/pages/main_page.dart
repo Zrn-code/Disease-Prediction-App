@@ -30,12 +30,6 @@ import 'package:tap_to_expand/tap_to_expand.dart';
 import 'package:star_menu/star_menu.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({super.key});
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
 bool _loading_output = false;
 bool _isFirstPage = true;
 bool _submit = false;
@@ -45,10 +39,21 @@ double _height = 0;
 double _weight = 0;
 bool first_loading = true;
 
+List<dynamic> _resultA = [];
+List<dynamic> _resultB = [];
+List<dynamic> _resultC = [];
+List<dynamic> _resultD = [];
+
 Map<String, Map<String, dynamic>> lang_map = {
   "ZH": jsonDecode(data_ZH),
   "EN": jsonDecode(data_US)
 };
+
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
 
 class _MainPageState extends State<MainPage> {
   String userName = "";
@@ -87,11 +92,20 @@ class _MainPageState extends State<MainPage> {
         userName = value!;
       });
     });
-
-    final List<dynamic> result =
+    _resultA =
         await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
             .getPredictionA(email);
-    print(result);
+    _resultB =
+        await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+            .getPredictionB(email);
+    _resultC =
+        await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+            .getPredictionC(email);
+    _resultD =
+        await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+            .getPredictionD(email);
+    print(_resultA);
+    print(_resultB);
   }
 
   @override
@@ -248,11 +262,48 @@ class _MainPageState extends State<MainPage> {
                     "Test",
                     style: TextStyle(color: Colors.black),
                   )),
+              ListTile(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('結果'),
+                          content: SizedBox(
+                            height: 200.0,
+                            width: double.maxFinite,
+                            child: ListView.builder(
+                              itemCount: _resultA.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Text(_resultA[index]);
+                              },
+                            ),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                // 關閉對話框
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('關閉'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  leading: const Icon(Icons.exit_to_app),
+                  title: Text(
+                    "Test",
+                    style: TextStyle(color: Colors.black),
+                  )),
             ],
           ),
         ),
-        body: const Center(
-          child: FormExample(),
+        body: Center(
+          child: FormExample(email: email, userName: userName),
         ),
       ),
     );
@@ -260,7 +311,13 @@ class _MainPageState extends State<MainPage> {
 }
 
 class FormExample extends StatefulWidget {
-  const FormExample({super.key});
+  String userName = "";
+  String email = "";
+  FormExample({
+    Key? key,
+    required this.email,
+    required this.userName,
+  }) : super(key: key);
 
   @override
   State<FormExample> createState() => _FormExampleState();
@@ -286,6 +343,12 @@ class _FormExampleState extends State<FormExample> {
   TextEditingController physicalhealthController = TextEditingController();
   TextEditingController mentalHealthController = TextEditingController();
   TextEditingController sleepTimeController = TextEditingController();
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -346,6 +409,13 @@ class _FormExampleState extends State<FormExample> {
                                                     child: Text(lang_map[lang]![
                                                         "Go to Prediction"]),
                                                   ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  _showHistoryButton(
+                                                      context,
+                                                      widget.email,
+                                                      "Prediction A"),
                                                 ],
                                               ),
                                               title: Text(
@@ -393,6 +463,13 @@ class _FormExampleState extends State<FormExample> {
                                                     child: Text(lang_map[lang]![
                                                         "Go to Prediction"]),
                                                   ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  _showHistoryButton(
+                                                      context,
+                                                      widget.email,
+                                                      "Prediction B"),
                                                 ],
                                               ),
                                               title: Text(
@@ -440,6 +517,13 @@ class _FormExampleState extends State<FormExample> {
                                                     child: Text(lang_map[lang]![
                                                         "Go to Prediction"]),
                                                   ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  _showHistoryButton(
+                                                      context,
+                                                      widget.email,
+                                                      "Prediction C"),
                                                 ],
                                               ),
                                               title: Text(
@@ -487,6 +571,13 @@ class _FormExampleState extends State<FormExample> {
                                                     child: Text(lang_map[lang]![
                                                         "Go to Prediction"]),
                                                   ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  _showHistoryButton(
+                                                      context,
+                                                      widget.email,
+                                                      "Prediction D"),
                                                 ],
                                               ),
                                               title: Text(
@@ -1247,7 +1338,7 @@ class _FormExampleState extends State<FormExample> {
     url += prediction_C[5];
     url += '&MentalHealth=';
     url += prediction_C[6];
-    url += '&Diff =';
+    url += '&DiffWalking=';
     url += prediction_C[7];
     url += '&Sex=';
     url += prediction_C[8];
@@ -1267,6 +1358,8 @@ class _FormExampleState extends State<FormExample> {
     url += prediction_C[15];
     url += '&SkinCancer=';
     url += prediction_C[16];
+    debugPrint(url);
+
     var data = await fetchData(url);
     var decoded = await jsonDecode(data);
     debugPrint(url);
@@ -1603,4 +1696,69 @@ void showDisclaimerPage(BuildContext context) {
       );
     },
   );
+}
+
+void ShowResultHistory(
+    BuildContext context, String title, List<String> result) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(lang_map[lang]![title]),
+        content: SizedBox(
+          height: 200.0,
+          width: double.maxFinite,
+          child: ListView.builder(
+            itemCount: result.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Text(result[index]);
+            },
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // 關閉對話框
+              Navigator.of(context).pop();
+            },
+            child: Text('關閉'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+Widget _showHistoryButton(BuildContext context, String email, String title) {
+  return ElevatedButton(
+      style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+      onPressed: () async {
+        List<dynamic> result = [];
+
+        if (title == "Prediction A") {
+          _resultA =
+              await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+                  .getPredictionA(email);
+          result = _resultA;
+        } else if (title == "Prediction B") {
+          _resultB =
+              await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+                  .getPredictionB(email);
+          result = _resultB;
+        } else if (title == "Prediction C") {
+          _resultC =
+              await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+                  .getPredictionC(email);
+          result = _resultC;
+        } else if (title == "Prediction D") {
+          _resultD =
+              await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+                  .getPredictionD(email);
+          result = _resultD;
+        }
+        List<String> resultList = result.map((e) => e.toString()).toList();
+        print(resultList);
+        ShowResultHistory(context, title, resultList);
+      },
+      child: Text(lang_map[lang]!["Show History"]));
 }

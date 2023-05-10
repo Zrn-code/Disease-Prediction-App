@@ -150,6 +150,7 @@ const String data_US = '''
   "Disclaimer": "Disclaimer",
   "Details of the Disclaimer": "When you become a user of the (https://e-health.page) website (hereinafter referred to as \\"this service\\"), you have read and understood the \\"Disclaimer\\" in detail and agree that this website shall not be responsible for the following circumstances:\\n\\n1. The risks of using the services of this website shall be borne by the user personally. The user agrees to use the various services of this service based on their personal wishes and agrees to bear any risks themselves. The predictive results of this service are for reference only. If you have any questions, please consult a professional doctor.\\n\\n2. \\"This website\\" does not assume any express or implied warranty responsibility for any services it provides. This service does not guarantee the stability, security, accuracy, or uninterrupted operation of any of its services. Users expressly assume all risks and any damages that may occur from using this service.\\n\\n3. Any data damage, loss, theft, or tampering caused by force majeure events such as computer virus intrusion or attack, or temporary closure due to government control that affect the normal operation of the Internet and are not related to this service. Hereby declared!",
   "Agree": "I agree",
-  "Disagree": "I disagree"
+  "Disagree": "I disagree",
+  "Show History": "Show History"
 }
 ''';

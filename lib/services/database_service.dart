@@ -76,9 +76,46 @@ class DatabaseService {
       List<dynamic> result = firstDocumentSnapshot.get('COVID-19');
       return result;
     } catch (e) {
-      // Handle the exception here
-      print('Error getting age: $e');
-      // Return a default value or rethrow the exception
+      print("Error getting prediction: $e");
+      return [];
+    }
+  }
+
+  Future<List<dynamic>> getPredictionB(String email) async {
+    QuerySnapshot snapshot =
+        await userCollection.where("email", isEqualTo: email).get();
+    QueryDocumentSnapshot firstDocumentSnapshot = snapshot.docs[0];
+    try {
+      List<dynamic> result = firstDocumentSnapshot.get('Diabetes');
+      return result;
+    } catch (e) {
+      print("Error getting prediction: $e");
+      return [];
+    }
+  }
+
+  Future<List<dynamic>> getPredictionC(String email) async {
+    QuerySnapshot snapshot =
+        await userCollection.where("email", isEqualTo: email).get();
+    QueryDocumentSnapshot firstDocumentSnapshot = snapshot.docs[0];
+    try {
+      List<dynamic> result = firstDocumentSnapshot.get('Heart Disease');
+      return result;
+    } catch (e) {
+      print("Error getting prediction: $e");
+      return [];
+    }
+  }
+
+  Future<List<dynamic>> getPredictionD(String email) async {
+    QuerySnapshot snapshot =
+        await userCollection.where("email", isEqualTo: email).get();
+    QueryDocumentSnapshot firstDocumentSnapshot = snapshot.docs[0];
+    try {
+      List<dynamic> result = firstDocumentSnapshot.get('Lung Cancer');
+      return result;
+    } catch (e) {
+      print("Error getting prediction: $e");
       return [];
     }
   }
