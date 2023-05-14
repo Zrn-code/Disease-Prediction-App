@@ -40,6 +40,7 @@ dependencies:
   percent_indicator: ^4.2.3
   fluent_ui: ^3.9.1
   language_builder: ^0.1.2
+  collection: ^1.17.1
   
 dev_dependencies:
 

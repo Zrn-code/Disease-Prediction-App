@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 import '../helper/helper_functions.dart';
 import '../services/database_service.dart';
 import '../widgets/widgets.dart';
@@ -92,20 +94,6 @@ class _MainPageState extends State<MainPage> {
         userName = value!;
       });
     });
-    _resultA =
-        await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-            .getPredictionA(email);
-    _resultB =
-        await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-            .getPredictionB(email);
-    _resultC =
-        await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-            .getPredictionC(email);
-    _resultD =
-        await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-            .getPredictionD(email);
-    print(_resultA);
-    print(_resultB);
   }
 
   @override
@@ -262,43 +250,6 @@ class _MainPageState extends State<MainPage> {
                     "Test",
                     style: TextStyle(color: Colors.black),
                   )),
-              ListTile(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text('結果'),
-                          content: SizedBox(
-                            height: 200.0,
-                            width: double.maxFinite,
-                            child: ListView.builder(
-                              itemCount: _resultA.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Text(_resultA[index]);
-                              },
-                            ),
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                // 關閉對話框
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('關閉'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  leading: const Icon(Icons.exit_to_app),
-                  title: Text(
-                    "Test",
-                    style: TextStyle(color: Colors.black),
-                  )),
             ],
           ),
         ),
@@ -379,43 +330,62 @@ class _FormExampleState extends State<FormExample> {
                                               MainAxisAlignment.spaceEvenly,
                                           children: <Widget>[
                                             TapToExpand(
-                                              content: Column(
+                                              content: Row(
                                                 children: <Widget>[
-                                                  Text(
-                                                    lang_map[lang]![
-                                                        "Description A"],
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 18,
+                                                  Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.4,
+                                                    child: Text(
+                                                      lang_map[lang]![
+                                                          "Description A"],
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 18,
+                                                      ),
                                                     ),
                                                   ),
-                                                  const SizedBox(
-                                                    height: 10,
+                                                  Expanded(child: Container()),
+                                                  Column(
+                                                    children: [
+                                                      ElevatedButton(
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          backgroundColor:
+                                                              Colors.black,
+                                                        ),
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            _selectedField =
+                                                                "Prediction A";
+                                                            activeStep = 1;
+                                                            _submit = false;
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          children: [
+                                                            Icon(
+                                                                Icons
+                                                                    .arrow_forward_ios_rounded,
+                                                                color: Colors
+                                                                    .white),
+                                                            Text(lang_map[
+                                                                    lang]![
+                                                                "Go to Prediction"]),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      _showHistoryButton(
+                                                          context,
+                                                          widget.email,
+                                                          "Prediction A"),
+                                                    ],
                                                   ),
-                                                  ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      backgroundColor:
-                                                          Colors.black,
-                                                    ),
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        _selectedField =
-                                                            "Prediction A";
-                                                        activeStep = 1;
-                                                        _submit = false;
-                                                      });
-                                                    },
-                                                    child: Text(lang_map[lang]![
-                                                        "Go to Prediction"]),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  _showHistoryButton(
-                                                      context,
-                                                      widget.email,
-                                                      "Prediction A"),
                                                 ],
                                               ),
                                               title: Text(
@@ -432,44 +402,64 @@ class _FormExampleState extends State<FormExample> {
                                               openedHeight: 250,
                                             ),
                                             TapToExpand(
-                                              content: Column(
+                                              content: Row(
                                                 children: <Widget>[
-                                                  Text(
-                                                    lang_map[lang]![
-                                                        "Description B"],
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 18,
+                                                  Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.4,
+                                                    child: Text(
+                                                      lang_map[lang]![
+                                                          "Description B"],
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 18,
+                                                      ),
                                                     ),
                                                   ),
-                                                  const SizedBox(
-                                                    height: 10,
+                                                  Expanded(child: Container()),
+                                                  Column(
+                                                    children: [
+                                                      ElevatedButton(
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          backgroundColor:
+                                                              Colors.black,
+                                                        ),
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            _selectedField =
+                                                                "Prediction B";
+                                                            activeStep = 1;
+                                                            _subStep = 1;
+                                                            _selectedGender =
+                                                                true;
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          children: [
+                                                            Icon(
+                                                                Icons
+                                                                    .arrow_forward_ios_rounded,
+                                                                color: Colors
+                                                                    .white),
+                                                            Text(lang_map[
+                                                                    lang]![
+                                                                "Go to Prediction"]),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      _showHistoryButton(
+                                                          context,
+                                                          widget.email,
+                                                          "Prediction B"),
+                                                    ],
                                                   ),
-                                                  ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      backgroundColor:
-                                                          Colors.black,
-                                                    ),
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        _selectedField =
-                                                            "Prediction B";
-                                                        activeStep = 1;
-                                                        _subStep = 1;
-                                                        _selectedGender = true;
-                                                      });
-                                                    },
-                                                    child: Text(lang_map[lang]![
-                                                        "Go to Prediction"]),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  _showHistoryButton(
-                                                      context,
-                                                      widget.email,
-                                                      "Prediction B"),
                                                 ],
                                               ),
                                               title: Text(
@@ -486,44 +476,64 @@ class _FormExampleState extends State<FormExample> {
                                               openedHeight: 300,
                                             ),
                                             TapToExpand(
-                                              content: Column(
+                                              content: Row(
                                                 children: <Widget>[
-                                                  Text(
-                                                    lang_map[lang]![
-                                                        "Description C"],
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 18,
+                                                  Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.4,
+                                                    child: Text(
+                                                      lang_map[lang]![
+                                                          "Description C"],
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 18,
+                                                      ),
                                                     ),
                                                   ),
-                                                  const SizedBox(
-                                                    height: 10,
+                                                  Expanded(child: Container()),
+                                                  Column(
+                                                    children: [
+                                                      ElevatedButton(
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          backgroundColor:
+                                                              Colors.black,
+                                                        ),
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            _selectedField =
+                                                                "Prediction C";
+                                                            activeStep = 1;
+                                                            _subStep = 1;
+                                                            _selectedGender =
+                                                                true;
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          children: [
+                                                            Icon(
+                                                                Icons
+                                                                    .arrow_forward_ios_rounded,
+                                                                color: Colors
+                                                                    .white),
+                                                            Text(lang_map[
+                                                                    lang]![
+                                                                "Go to Prediction"]),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      _showHistoryButton(
+                                                          context,
+                                                          widget.email,
+                                                          "Prediction C"),
+                                                    ],
                                                   ),
-                                                  ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      backgroundColor:
-                                                          Colors.black,
-                                                    ),
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        _selectedField =
-                                                            "Prediction C";
-                                                        activeStep = 1;
-                                                        _subStep = 1;
-                                                        _selectedGender = true;
-                                                      });
-                                                    },
-                                                    child: Text(lang_map[lang]![
-                                                        "Go to Prediction"]),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  _showHistoryButton(
-                                                      context,
-                                                      widget.email,
-                                                      "Prediction C"),
                                                 ],
                                               ),
                                               title: Text(
@@ -540,44 +550,64 @@ class _FormExampleState extends State<FormExample> {
                                               openedHeight: 280,
                                             ),
                                             TapToExpand(
-                                              content: Column(
+                                              content: Row(
                                                 children: <Widget>[
-                                                  Text(
-                                                    lang_map[lang]![
-                                                        "Description D"],
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 18,
+                                                  Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.4,
+                                                    child: Text(
+                                                      lang_map[lang]![
+                                                          "Description D"],
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 18,
+                                                      ),
                                                     ),
                                                   ),
-                                                  const SizedBox(
-                                                    height: 10,
+                                                  Expanded(child: Container()),
+                                                  Column(
+                                                    children: [
+                                                      ElevatedButton(
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          backgroundColor:
+                                                              Colors.black,
+                                                        ),
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            _selectedField =
+                                                                "Prediction D";
+                                                            activeStep = 1;
+                                                            _subStep = 1;
+                                                            _selectedGender =
+                                                                true;
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          children: [
+                                                            Icon(
+                                                                Icons
+                                                                    .arrow_forward_ios_rounded,
+                                                                color: Colors
+                                                                    .white),
+                                                            Text(lang_map[
+                                                                    lang]![
+                                                                "Go to Prediction"]),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      _showHistoryButton(
+                                                          context,
+                                                          widget.email,
+                                                          "Prediction D"),
+                                                    ],
                                                   ),
-                                                  ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      backgroundColor:
-                                                          Colors.black,
-                                                    ),
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        _selectedField =
-                                                            "Prediction D";
-                                                        activeStep = 1;
-                                                        _subStep = 1;
-                                                        _selectedGender = true;
-                                                      });
-                                                    },
-                                                    child: Text(lang_map[lang]![
-                                                        "Go to Prediction"]),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  _showHistoryButton(
-                                                      context,
-                                                      widget.email,
-                                                      "Prediction D"),
                                                 ],
                                               ),
                                               title: Text(
@@ -1218,9 +1248,6 @@ class _FormExampleState extends State<FormExample> {
     String _newRecord = "Covid19:";
     _newRecord +=
         "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}_";
-    String _Records = "";
-    _Records +=
-        "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}_";
 
     for (int i = 1; i <= 8; i++) {
       _newRecord += "${_titles_A[i]}:${prediction_A[i]}_";
@@ -1260,7 +1287,7 @@ class _FormExampleState extends State<FormExample> {
         .updateRecords(_newRecord);
     //debugPrint(_Records + output);
     await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-        .resultRecords(_Records + output, "COVID-19");
+        .resultRecords(currentTime() + output, "COVID-19");
   }
 
 //https://early-stage-diabetes-risk-prediction.onrender.com/api?Age=20&Gender=0&Polyuria=0&Polydipsia=0&sudden_weight_loss=0&weakness=0&Polyphagia=0&Genital_thrush=0&visual_blurring=0&Itching=0&Irritability=0&delayed_healing=0&partial_paresis=0&muscle_stiffness=0&Alopecia=0&Obesity=0
@@ -1310,12 +1337,9 @@ class _FormExampleState extends State<FormExample> {
       output = decoded['output'];
       _loading_output = false;
     });
-    String _Records = "";
-    _Records +=
-        "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}_";
 
     await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-        .resultRecords(_Records + output, "Diabetes");
+        .resultRecords(currentTime() + output, "Diabetes");
   }
 
   // https://personal-key-indicators-of-heart-disease.onrender.com/api?BMI=16.6&Smoking=1&AlcoholDrinking=0&Stroke=0&PhysicalHealth=3&MentalHealth=30&DiffWalking=0&Sex=0&AgeCategory=7&Diabetic=1&PhysicalActivity=1&GenHealth=3&SleepTime=5&Asthma=1&KidneyDisease=0&SkinCancer=1
@@ -1367,12 +1391,9 @@ class _FormExampleState extends State<FormExample> {
       output = decoded['output'];
       _loading_output = false;
     });
-    String _Records = "";
-    _Records +=
-        "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}_";
 
     await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-        .resultRecords(_Records + output, "Heart Disease");
+        .resultRecords(currentTime() + output, "Heart Disease");
   }
 
   // https://lung-cancer-808h.onrender.com/api?GENDER=1&AGE=50&SMOKING=2&YELLOW_FINGERS=1&ANXIETY=1&PEER_PRESSURE=1&CHRONIC_DISEASE=1&FATIGUE=2&ALLERGY=2&WHEEZING=1&ALCOHOL_CONSUMING=2&COUGHING=2&SHORTNESS_OF_BREATH=1&SWALLOWING_DIFFICULTY=1&CHEST_PAIN=1
@@ -1420,12 +1441,9 @@ class _FormExampleState extends State<FormExample> {
       output = decoded['output'];
       _loading_output = false;
     });
-    String _Records = "";
-    _Records +=
-        "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}_";
 
     await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-        .resultRecords(_Records + output, "Lung Cancer");
+        .resultRecords(currentTime() + output, "Lung Cancer");
 
     //_showResult("Probability of Lung Cancer:", output);
   }
@@ -1646,8 +1664,16 @@ void showDisclaimerDialog(BuildContext context) {
       return AlertDialog(
         scrollable: true,
         title: Text(lang_map[lang]!["Personal Data Collection Statement"]),
-        content: Text(lang_map[lang]![
-            "Details of the Personal Data Collection Statement"]),
+        content: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.5,
+            maxWidth: MediaQuery.of(context).size.width * 0.8,
+          ),
+          child: SingleChildScrollView(
+            child: Text(lang_map[lang]![
+                "Details of the Personal Data Collection Statement"]),
+          ),
+        ),
         actions: <Widget>[
           ElevatedButton(
             child: Text(lang_map[lang]!["Disagree"]),
@@ -1677,7 +1703,15 @@ void showDisclaimerPage(BuildContext context) {
       return AlertDialog(
         title: Text(lang_map[lang]!["Disclaimer"]),
         scrollable: true,
-        content: Text(lang_map[lang]!["Details of the Disclaimer"]),
+        content: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.5,
+            maxWidth: MediaQuery.of(context).size.width * 0.8,
+          ),
+          child: SingleChildScrollView(
+            child: Text(lang_map[lang]!["Details of the Disclaimer"]),
+          ),
+        ),
         actions: <Widget>[
           ElevatedButton(
             child: Text(lang_map[lang]!["Disagree"]),
@@ -1699,31 +1733,100 @@ void showDisclaimerPage(BuildContext context) {
 }
 
 void ShowResultHistory(
-    BuildContext context, String title, List<String> result) {
+    BuildContext context, String title, List<String> _result) {
   showDialog(
     context: context,
-    builder: (context) {
+    builder: (BuildContext context) {
       return AlertDialog(
         title: Text(lang_map[lang]![title]),
-        content: SizedBox(
-          height: 200.0,
-          width: double.maxFinite,
-          child: ListView.builder(
-            itemCount: result.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Text(result[index]);
-            },
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: _result.isEmpty
+                ? [Text(lang_map[lang]!["No History"])]
+                : _result
+                    .groupListsBy(
+                      (s) => s.split('_')[0],
+                    )
+                    .map(
+                      (date, list) => MapEntry(
+                        date,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(date),
+                                TextButton(
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text(date),
+                                          content: SingleChildScrollView(
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(lang_map[lang]![
+                                                        "Time"]),
+                                                    Text(lang_map[lang]![
+                                                        "Result"]),
+                                                  ],
+                                                ),
+                                                Divider(),
+                                                Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: list.map(
+                                                    (s) {
+                                                      final splitStr =
+                                                          s.split('_');
+                                                      return Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                bottom: 8.0),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                                '${splitStr[1]}'),
+                                                            Text(
+                                                                '${splitStr[2]}'),
+                                                          ],
+                                                        ),
+                                                      );
+                                                    },
+                                                  ).toList(),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Text(lang_map[lang]!["Details"]),
+                                ),
+                              ],
+                            ),
+                            Divider(),
+                          ],
+                        ),
+                      ),
+                    )
+                    .values
+                    .toList(),
           ),
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              // 關閉對話框
-              Navigator.of(context).pop();
-            },
-            child: Text('關閉'),
-          ),
-        ],
       );
     },
   );
@@ -1756,9 +1859,21 @@ Widget _showHistoryButton(BuildContext context, String email, String title) {
                   .getPredictionD(email);
           result = _resultD;
         }
+
         List<String> resultList = result.map((e) => e.toString()).toList();
         print(resultList);
+
         ShowResultHistory(context, title, resultList);
       },
-      child: Text(lang_map[lang]!["Show History"]));
+      child: Row(children: [
+        Icon(Icons.history),
+        Text(lang_map[lang]!["Show History"]),
+      ]));
+}
+
+String currentTime() {
+  DateTime now = DateTime.now();
+  String nowTime =
+      "${now.year}/${now.month}/${now.day}_${now.hour}:${now.minute}:${now.second}_";
+  return nowTime;
 }
