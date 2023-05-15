@@ -329,300 +329,65 @@ class _FormExampleState extends State<FormExample> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceEvenly,
                                           children: <Widget>[
-                                            TapToExpand(
-                                              content: Row(
-                                                children: <Widget>[
-                                                  Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.4,
-                                                    child: Text(
-                                                      lang_map[lang]![
-                                                          "Description A"],
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 18,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Expanded(child: Container()),
-                                                  Column(
-                                                    children: [
-                                                      ElevatedButton(
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          backgroundColor:
-                                                              Colors.black,
-                                                        ),
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            _selectedField =
-                                                                "Prediction A";
-                                                            activeStep = 1;
-                                                            _submit = false;
-                                                          });
-                                                        },
-                                                        child: Row(
-                                                          children: [
-                                                            Icon(
-                                                                Icons
-                                                                    .arrow_forward_ios_rounded,
-                                                                color: Colors
-                                                                    .white),
-                                                            Text(lang_map[
-                                                                    lang]![
-                                                                "Go to Prediction"]),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      _showHistoryButton(
-                                                          context,
-                                                          widget.email,
-                                                          "Prediction A"),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              title: Text(
-                                                lang_map[lang]!["Prediction A"],
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 20,
-                                                ),
-                                              ),
-                                              onTapPadding: 10,
-                                              closedHeight: 70,
-                                              scrollable: true,
-                                              borderRadius: 10,
-                                              openedHeight: 250,
-                                            ),
-                                            TapToExpand(
-                                              content: Row(
-                                                children: <Widget>[
-                                                  Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.4,
-                                                    child: Text(
-                                                      lang_map[lang]![
-                                                          "Description B"],
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 18,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Expanded(child: Container()),
-                                                  Column(
-                                                    children: [
-                                                      ElevatedButton(
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          backgroundColor:
-                                                              Colors.black,
-                                                        ),
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            _selectedField =
-                                                                "Prediction B";
-                                                            activeStep = 1;
-                                                            _subStep = 1;
-                                                            _selectedGender =
-                                                                true;
-                                                          });
-                                                        },
-                                                        child: Row(
-                                                          children: [
-                                                            Icon(
-                                                                Icons
-                                                                    .arrow_forward_ios_rounded,
-                                                                color: Colors
-                                                                    .white),
-                                                            Text(lang_map[
-                                                                    lang]![
-                                                                "Go to Prediction"]),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      _showHistoryButton(
-                                                          context,
-                                                          widget.email,
-                                                          "Prediction B"),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              title: Text(
-                                                lang_map[lang]!["Prediction B"],
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 20,
-                                                ),
-                                              ),
-                                              onTapPadding: 10,
-                                              closedHeight: 70,
-                                              scrollable: true,
-                                              borderRadius: 10,
-                                              openedHeight: 300,
-                                            ),
-                                            TapToExpand(
-                                              content: Row(
-                                                children: <Widget>[
-                                                  Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.4,
-                                                    child: Text(
-                                                      lang_map[lang]![
-                                                          "Description C"],
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 18,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Expanded(child: Container()),
-                                                  Column(
-                                                    children: [
-                                                      ElevatedButton(
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          backgroundColor:
-                                                              Colors.black,
-                                                        ),
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            _selectedField =
-                                                                "Prediction C";
-                                                            activeStep = 1;
-                                                            _subStep = 1;
-                                                            _selectedGender =
-                                                                true;
-                                                          });
-                                                        },
-                                                        child: Row(
-                                                          children: [
-                                                            Icon(
-                                                                Icons
-                                                                    .arrow_forward_ios_rounded,
-                                                                color: Colors
-                                                                    .white),
-                                                            Text(lang_map[
-                                                                    lang]![
-                                                                "Go to Prediction"]),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      _showHistoryButton(
-                                                          context,
-                                                          widget.email,
-                                                          "Prediction C"),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              title: Text(
-                                                lang_map[lang]!["Prediction C"],
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 20,
-                                                ),
-                                              ),
-                                              onTapPadding: 10,
-                                              closedHeight: 70,
-                                              scrollable: true,
-                                              borderRadius: 10,
-                                              openedHeight: 280,
-                                            ),
-                                            TapToExpand(
-                                              content: Row(
-                                                children: <Widget>[
-                                                  Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.4,
-                                                    child: Text(
-                                                      lang_map[lang]![
-                                                          "Description D"],
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 18,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Expanded(child: Container()),
-                                                  Column(
-                                                    children: [
-                                                      ElevatedButton(
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          backgroundColor:
-                                                              Colors.black,
-                                                        ),
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            _selectedField =
-                                                                "Prediction D";
-                                                            activeStep = 1;
-                                                            _subStep = 1;
-                                                            _selectedGender =
-                                                                true;
-                                                          });
-                                                        },
-                                                        child: Row(
-                                                          children: [
-                                                            Icon(
-                                                                Icons
-                                                                    .arrow_forward_ios_rounded,
-                                                                color: Colors
-                                                                    .white),
-                                                            Text(lang_map[
-                                                                    lang]![
-                                                                "Go to Prediction"]),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      _showHistoryButton(
-                                                          context,
-                                                          widget.email,
-                                                          "Prediction D"),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              title: Text(
-                                                lang_map[lang]!["Prediction D"],
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 20,
-                                                ),
-                                              ),
-                                              onTapPadding: 10,
-                                              closedHeight: 70,
-                                              scrollable: true,
-                                              borderRadius: 10,
-                                              openedHeight: 200,
-                                            ),
+                                            _buildTapToExpand(
+                                                context,
+                                                "Prediction A",
+                                                "Description A",
+                                                "Prediction A",
+                                                widget.email,
+                                                70,
+                                                250, () {
+                                              setState(() {
+                                                _selectedField = "Prediction A";
+                                                activeStep = 1;
+                                                _submit = false;
+                                              });
+                                            }),
+                                            _buildTapToExpand(
+                                                context,
+                                                "Prediction B",
+                                                "Description B",
+                                                "Prediction B",
+                                                widget.email,
+                                                70,
+                                                300, () {
+                                              setState(() {
+                                                _selectedField = "Prediction B";
+                                                activeStep = 1;
+                                                _subStep = 1;
+                                                _selectedGender = true;
+                                              });
+                                            }),
+                                            _buildTapToExpand(
+                                                context,
+                                                "Prediction C",
+                                                "Description C",
+                                                "Prediction C",
+                                                widget.email,
+                                                70,
+                                                250, () {
+                                              setState(() {
+                                                _selectedField = "Prediction C";
+                                                activeStep = 1;
+                                                _subStep = 1;
+                                                _selectedGender = true;
+                                              });
+                                            }),
+                                            _buildTapToExpand(
+                                                context,
+                                                "Prediction D",
+                                                "Description D",
+                                                "Prediction D",
+                                                widget.email,
+                                                70,
+                                                250, () {
+                                              setState(() {
+                                                _selectedField = "Prediction D";
+                                                activeStep = 1;
+                                                _subStep = 1;
+                                                _selectedGender = true;
+                                              });
+                                            }),
                                           ],
                                         ),
                                       ],
@@ -1876,4 +1641,62 @@ String currentTime() {
   String nowTime =
       "${now.year}/${now.month}/${now.day}_${now.hour}:${now.minute}:${now.second}_";
   return nowTime;
+}
+
+Widget _buildTapToExpand(
+    BuildContext context,
+    String title,
+    String description,
+    String prediction,
+    String email,
+    double closedHeight,
+    double openedHeight,
+    Function() onPressed) {
+  return TapToExpand(
+    content: Row(
+      children: <Widget>[
+        Container(
+          width: MediaQuery.of(context).size.width * 0.4,
+          child: Text(
+            lang_map[lang]![description],
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+            ),
+          ),
+        ),
+        Expanded(child: Container()),
+        Column(
+          children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+              ),
+              onPressed: onPressed,
+              child: Row(
+                children: [
+                  Icon(Icons.arrow_forward_ios_rounded, color: Colors.white),
+                  Text(lang_map[lang]!["Go to Prediction"]),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            _showHistoryButton(context, email, prediction),
+          ],
+        ),
+      ],
+    ),
+    title: Text(
+      lang_map[lang]![title],
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 20,
+      ),
+    ),
+    onTapPadding: 10,
+    closedHeight: closedHeight,
+    scrollable: true,
+    borderRadius: 10,
+    openedHeight: openedHeight,
+  );
 }
