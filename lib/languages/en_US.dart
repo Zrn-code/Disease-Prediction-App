@@ -155,6 +155,8 @@ const String data_US = '''
   "Details": "Details",
   "Time": "Time",
   "Result": "Result",
-  "No History": "No History"
+  "No History": "No History",
+  "Record Type": "Record Type",
+  "Date": "Date"
 }
 ''';

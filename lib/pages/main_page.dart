@@ -1626,7 +1626,6 @@ Widget _showHistoryButton(BuildContext context, String email, String title) {
         }
 
         List<String> resultList = result.map((e) => e.toString()).toList();
-        print(resultList);
 
         ShowResultHistory(context, title, resultList);
       },

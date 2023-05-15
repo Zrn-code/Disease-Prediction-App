@@ -156,6 +156,8 @@ const String data_ZH = '''
   "Details" : "詳細資料",
   "Time" : "時間",
   "Result" : "結果",
-  "No History" : "沒有歷史紀錄"
+  "No History" : "沒有歷史紀錄",
+  "Record Type" : "紀錄類型",
+  "Date" : "日期"
 }
 ''';
