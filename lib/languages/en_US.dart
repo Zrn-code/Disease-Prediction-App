@@ -157,6 +157,10 @@ const String data_US = '''
   "Result": "Result",
   "No History": "No History",
   "Record Type": "Record Type",
-  "Date": "Date"
+  "Date": "Date",
+  "Mark1": "(b) Object: only this service, and only the user himself/herself can access it.",
+  "Mark2": "The predictive results of this service are for reference only. If you have any questions, please consult a professional doctor.",
+  "Agree1": "I agree to the Personal Data Collection Notice and Consent Form",
+  "Agree2": "I agree to the Disclaimer"
 }
 ''';

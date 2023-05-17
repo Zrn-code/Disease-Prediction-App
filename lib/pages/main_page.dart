@@ -239,17 +239,6 @@ class _MainPageState extends State<MainPage> {
                     lang_map[lang]!["Log Out"],
                     style: TextStyle(color: Colors.black),
                   )),
-              ListTile(
-                  onTap: () {
-                    showDisclaimerDialog(context);
-                  },
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  leading: Icon(Icons.warning, color: Colors.red),
-                  title: Text(
-                    "Test",
-                    style: TextStyle(color: Colors.black),
-                  )),
             ],
           ),
         ),
@@ -1425,6 +1414,7 @@ void showDisclaimerDialog(BuildContext context) {
   // 第一頁
   showDialog(
     context: context,
+    barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
         scrollable: true,
@@ -1435,24 +1425,48 @@ void showDisclaimerDialog(BuildContext context) {
             maxWidth: MediaQuery.of(context).size.width * 0.8,
           ),
           child: SingleChildScrollView(
-            child: Text(lang_map[lang]![
-                "Details of the Personal Data Collection Statement"]),
+            child: RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                    text: lang_map[lang]![
+                            "Details of the Personal Data Collection Statement"]
+                        .substring(
+                            0,
+                            lang_map[lang]![
+                                    "Details of the Personal Data Collection Statement"]
+                                .indexOf(lang_map[lang]!["Mark1"])),
+                  ),
+                  TextSpan(
+                    text: lang_map[lang]!["Mark1"],
+                    style: TextStyle(decoration: TextDecoration.underline),
+                  ),
+                  TextSpan(
+                    text: lang_map[lang]![
+                            "Details of the Personal Data Collection Statement"]
+                        .substring(lang_map[lang]![
+                                    "Details of the Personal Data Collection Statement"]
+                                .indexOf(lang_map[lang]!["Mark1"]) +
+                            lang_map[lang]!["Mark1"].length),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
         actions: <Widget>[
-          ElevatedButton(
-            child: Text(lang_map[lang]!["Disagree"]),
-            onPressed: () {
-              //TODO: 實作不同意功能
-            },
-          ),
-          ElevatedButton(
-            child: Text(lang_map[lang]!["Agree"]),
-            onPressed: () {
-              //TODO: 實作同意功能
-              Navigator.of(context).pop();
-              showDisclaimerPage(context);
-            },
+          Align(
+            alignment: Alignment.center,
+            child: ElevatedButton(
+              child: Text(
+                lang_map[lang]!["Agree1"],
+                textAlign: TextAlign.center,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                showDisclaimerPage(context);
+              },
+            ),
           ),
         ],
       );
@@ -1464,6 +1478,7 @@ void showDisclaimerPage(BuildContext context) {
   // 第二頁
   showDialog(
     context: context,
+    barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(lang_map[lang]!["Disclaimer"]),
@@ -1474,22 +1489,44 @@ void showDisclaimerPage(BuildContext context) {
             maxWidth: MediaQuery.of(context).size.width * 0.8,
           ),
           child: SingleChildScrollView(
-            child: Text(lang_map[lang]!["Details of the Disclaimer"]),
+            child: RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                    text: lang_map[lang]!["Details of the Disclaimer"]
+                        .substring(
+                            0,
+                            lang_map[lang]!["Details of the Disclaimer"]
+                                .indexOf(lang_map[lang]!["Mark2"])),
+                  ),
+                  TextSpan(
+                    text: lang_map[lang]!["Mark2"],
+                    style: TextStyle(decoration: TextDecoration.underline),
+                  ),
+                  TextSpan(
+                    text: lang_map[lang]!["Details of the Disclaimer"]
+                        .substring(lang_map[lang]!["Details of the Disclaimer"]
+                                .indexOf(lang_map[lang]!["Mark2"]) +
+                            lang_map[lang]!["Mark2"].length),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
         actions: <Widget>[
-          ElevatedButton(
-            child: Text(lang_map[lang]!["Disagree"]),
-            onPressed: () {
-              //TODO: 實作不同意功能
-            },
-          ),
-          ElevatedButton(
-            child: Text(lang_map[lang]!["Agree"]),
-            onPressed: () {
-              //TODO: 實作同意功能
-              Navigator.of(context).pop();
-            },
+          Align(
+            alignment: Alignment.center,
+            child: ElevatedButton(
+              child: Text(
+                lang_map[lang]!["Agree2"],
+                textAlign: TextAlign.center,
+              ),
+              onPressed: () {
+                //TODO: 實作同意功能
+                Navigator.of(context).pop();
+              },
+            ),
           ),
         ],
       );
