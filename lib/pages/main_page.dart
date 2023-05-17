@@ -13,6 +13,7 @@ import '../data/url.dart';
 import '../widgets/colors.dart';
 import 'login_page.dart';
 import '../widgets/animatedList.dart';
+import '../widgets/TapExpand.dart';
 
 import '../languages/en_US.dart';
 import '../languages/zh_TW.dart';
@@ -25,11 +26,8 @@ import 'package:animation_list/animation_list.dart';
 import 'package:flutter_application/form/options.dart';
 import 'package:flutter_application/pages/profile_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:im_stepper/stepper.dart';
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:tap_to_expand/tap_to_expand.dart';
-import 'package:star_menu/star_menu.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 bool _loading_output = false;
@@ -323,9 +321,7 @@ class _FormExampleState extends State<FormExample> {
                                                 "Prediction A",
                                                 "Description A",
                                                 "Prediction A",
-                                                widget.email,
-                                                70,
-                                                250, () {
+                                                widget.email, () {
                                               setState(() {
                                                 _selectedField = "Prediction A";
                                                 activeStep = 1;
@@ -337,9 +333,7 @@ class _FormExampleState extends State<FormExample> {
                                                 "Prediction B",
                                                 "Description B",
                                                 "Prediction B",
-                                                widget.email,
-                                                70,
-                                                300, () {
+                                                widget.email, () {
                                               setState(() {
                                                 _selectedField = "Prediction B";
                                                 activeStep = 1;
@@ -352,9 +346,7 @@ class _FormExampleState extends State<FormExample> {
                                                 "Prediction C",
                                                 "Description C",
                                                 "Prediction C",
-                                                widget.email,
-                                                70,
-                                                250, () {
+                                                widget.email, () {
                                               setState(() {
                                                 _selectedField = "Prediction C";
                                                 activeStep = 1;
@@ -367,9 +359,7 @@ class _FormExampleState extends State<FormExample> {
                                                 "Prediction D",
                                                 "Description D",
                                                 "Prediction D",
-                                                widget.email,
-                                                70,
-                                                250, () {
+                                                widget.email, () {
                                               setState(() {
                                                 _selectedField = "Prediction D";
                                                 activeStep = 1;
@@ -1436,10 +1426,13 @@ void showDisclaimerDialog(BuildContext context) {
                             lang_map[lang]![
                                     "Details of the Personal Data Collection Statement"]
                                 .indexOf(lang_map[lang]!["Mark1"])),
+                    style: TextStyle(color: Colors.black),
                   ),
                   TextSpan(
                     text: lang_map[lang]!["Mark1"],
-                    style: TextStyle(decoration: TextDecoration.underline),
+                    style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        color: Colors.black),
                   ),
                   TextSpan(
                     text: lang_map[lang]![
@@ -1448,6 +1441,7 @@ void showDisclaimerDialog(BuildContext context) {
                                     "Details of the Personal Data Collection Statement"]
                                 .indexOf(lang_map[lang]!["Mark1"]) +
                             lang_map[lang]!["Mark1"].length),
+                    style: TextStyle(color: Colors.black),
                   ),
                 ],
               ),
@@ -1498,16 +1492,20 @@ void showDisclaimerPage(BuildContext context) {
                             0,
                             lang_map[lang]!["Details of the Disclaimer"]
                                 .indexOf(lang_map[lang]!["Mark2"])),
+                    style: TextStyle(color: Colors.black),
                   ),
                   TextSpan(
                     text: lang_map[lang]!["Mark2"],
-                    style: TextStyle(decoration: TextDecoration.underline),
+                    style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        color: Colors.black),
                   ),
                   TextSpan(
                     text: lang_map[lang]!["Details of the Disclaimer"]
                         .substring(lang_map[lang]!["Details of the Disclaimer"]
                                 .indexOf(lang_map[lang]!["Mark2"]) +
                             lang_map[lang]!["Mark2"].length),
+                    style: TextStyle(color: Colors.black),
                   ),
                 ],
               ),
@@ -1635,41 +1633,44 @@ void ShowResultHistory(
 }
 
 Widget _showHistoryButton(BuildContext context, String email, String title) {
-  return ElevatedButton(
-      style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
-      onPressed: () async {
-        List<dynamic> result = [];
+  return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+      ),
+      child: IconButton(
+        onPressed: () async {
+          List<dynamic> result = [];
 
-        if (title == "Prediction A") {
-          _resultA =
-              await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-                  .getPredictionA(email);
-          result = _resultA;
-        } else if (title == "Prediction B") {
-          _resultB =
-              await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-                  .getPredictionB(email);
-          result = _resultB;
-        } else if (title == "Prediction C") {
-          _resultC =
-              await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-                  .getPredictionC(email);
-          result = _resultC;
-        } else if (title == "Prediction D") {
-          _resultD =
-              await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-                  .getPredictionD(email);
-          result = _resultD;
-        }
+          if (title == "Prediction A") {
+            _resultA = await DatabaseService(
+                    uid: FirebaseAuth.instance.currentUser!.uid)
+                .getPredictionA(email);
+            result = _resultA;
+          } else if (title == "Prediction B") {
+            _resultB = await DatabaseService(
+                    uid: FirebaseAuth.instance.currentUser!.uid)
+                .getPredictionB(email);
+            result = _resultB;
+          } else if (title == "Prediction C") {
+            _resultC = await DatabaseService(
+                    uid: FirebaseAuth.instance.currentUser!.uid)
+                .getPredictionC(email);
+            result = _resultC;
+          } else if (title == "Prediction D") {
+            _resultD = await DatabaseService(
+                    uid: FirebaseAuth.instance.currentUser!.uid)
+                .getPredictionD(email);
+            result = _resultD;
+          }
 
-        List<String> resultList = result.map((e) => e.toString()).toList();
+          List<String> resultList = result.map((e) => e.toString()).toList();
 
-        ShowResultHistory(context, title, resultList);
-      },
-      child: Row(children: [
-        Icon(Icons.history),
-        Text(lang_map[lang]!["Show History"]),
-      ]));
+          ShowResultHistory(context, title, resultList);
+        },
+        icon: Icon(Icons.history_rounded),
+        color: Colors.blue,
+      ));
 }
 
 String currentTime() {
@@ -1679,60 +1680,56 @@ String currentTime() {
   return nowTime;
 }
 
-Widget _buildTapToExpand(
-    BuildContext context,
-    String title,
-    String description,
-    String prediction,
-    String email,
-    double closedHeight,
-    double openedHeight,
-    Function() onPressed) {
-  return TapToExpand(
-    content: Row(
-      children: <Widget>[
-        Container(
-          width: MediaQuery.of(context).size.width * 0.4,
-          child: Text(
-            lang_map[lang]![description],
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-            ),
-          ),
-        ),
-        Expanded(child: Container()),
-        Column(
-          children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
-              ),
-              onPressed: onPressed,
-              child: Row(
-                children: [
-                  Icon(Icons.arrow_forward_ios_rounded, color: Colors.white),
-                  Text(lang_map[lang]!["Go to Prediction"]),
-                ],
+Widget _buildTapToExpand(BuildContext context, String title, String description,
+    String prediction, String email, Function() onPressed) {
+  return LayoutBuilder(
+    builder: (BuildContext context, BoxConstraints constraints) {
+      return TapToExpand(
+        content: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width * 0.45,
+              child: Text(
+                lang_map[lang]![description],
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
               ),
             ),
-            const SizedBox(height: 10),
-            _showHistoryButton(context, email, prediction),
+            Expanded(child: Container()),
+            Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    onPressed: onPressed,
+                    icon: Icon(Icons.arrow_forward, color: Colors.blue),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                _showHistoryButton(context, email, prediction),
+              ],
+            ),
           ],
         ),
-      ],
-    ),
-    title: Text(
-      lang_map[lang]![title],
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: 20,
-      ),
-    ),
-    onTapPadding: 10,
-    closedHeight: closedHeight,
-    scrollable: true,
-    borderRadius: 10,
-    openedHeight: openedHeight,
+        title: Text(
+          lang_map[lang]![title],
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+          ),
+        ),
+        onTapPadding: 10,
+        closedHeight: 70,
+        scrollable: true,
+        borderRadius: 10,
+        openedHeight: 200,
+      );
+    },
   );
 }
