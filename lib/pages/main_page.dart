@@ -571,7 +571,7 @@ class _FormExampleState extends State<FormExample> {
                                   inputPhysicalHealthForm(),
                                   inputMentalHealthForm(),
                                   buildRow(
-                                    "General Health:",
+                                    lang_map[lang]!["General Health"]! + ":",
                                     (val) {
                                       setState(() {
                                         prediction_C[12] = val;
@@ -947,15 +947,18 @@ class _FormExampleState extends State<FormExample> {
                                             )
                                           : DelayedWidget(
                                               child: CircularPercentIndicator(
-                                                radius: 160.0,
-                                                lineWidth: 30.0,
-                                                animationDuration: 100,
-                                                linearGradient: gradientRed,
-                                                percent:
-                                                    double.parse(output) * 0.01,
-                                                center: Text(
-                                                    "Prediction $output %"),
-                                              ),
+                                                  radius: 160.0,
+                                                  lineWidth: 30.0,
+                                                  animationDuration: 100,
+                                                  linearGradient: gradientRed,
+                                                  percent:
+                                                      double.parse(output) *
+                                                          0.01,
+                                                  center: Text(
+                                                    lang_map[lang]![
+                                                            "Prediction Result"] +
+                                                        ": $output %",
+                                                  )),
                                             ),
                                       const SizedBox(
                                         height: 20,

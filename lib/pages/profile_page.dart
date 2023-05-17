@@ -305,6 +305,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                     setState(() {
                                       if (widget.index > 0) {
                                         widget.index -= 1;
+                                      } else {
+                                        widget.index = 3;
                                       }
                                     });
                                   },
@@ -319,6 +321,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   setState(() {
                                     if (widget.index < 3) {
                                       widget.index += 1;
+                                    } else {
+                                      widget.index = 0;
                                     }
                                   });
                                 },
