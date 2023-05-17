@@ -9,6 +9,7 @@ const String data_US = '''
   "Next Step": "Next Step",
   "Submit Form": "Submit Form",
   "Return to Menu": "Return to Menu",
+  "Prediction Result": "Prediction Result",
   "Data Submitted": "Data Submitted",
   "Prediction Records": "Prediction Records",
   "No Record Found": "No records yet",

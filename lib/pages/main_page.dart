@@ -215,6 +215,10 @@ class _MainPageState extends State<MainPage> {
                                   )),
                               IconButton(
                                   onPressed: () async {
+                                    _resultA = [];
+                                    _resultB = [];
+                                    _resultC = [];
+                                    _resultD = [];
                                     await authService.signOut();
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
@@ -1635,45 +1639,78 @@ void ShowResultHistory(
   );
 }
 
+Future<List<String>> _getResultList(String email, String title) async {
+  List<dynamic> result = [];
+
+  if (title == "Prediction A") {
+    if (_resultA.isEmpty) {
+      _resultA =
+          await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+              .getPredictionA(email);
+    }
+    result = _resultA;
+  } else if (title == "Prediction B") {
+    if (_resultB.isEmpty) {
+      _resultB =
+          await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+              .getPredictionB(email);
+    }
+    result = _resultB;
+  } else if (title == "Prediction C") {
+    if (_resultC.isEmpty) {
+      _resultC =
+          await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+              .getPredictionC(email);
+    }
+    result = _resultC;
+  } else if (title == "Prediction D") {
+    if (_resultD.isEmpty) {
+      _resultD =
+          await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+              .getPredictionD(email);
+    }
+    result = _resultD;
+  }
+
+  return result.map((e) => e.toString()).toList();
+}
+
 Widget _showHistoryButton(BuildContext context, String email, String title) {
-  return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.circle,
-      ),
-      child: IconButton(
-        onPressed: () async {
-          List<dynamic> result = [];
-
-          if (title == "Prediction A") {
-            _resultA = await DatabaseService(
-                    uid: FirebaseAuth.instance.currentUser!.uid)
-                .getPredictionA(email);
-            result = _resultA;
-          } else if (title == "Prediction B") {
-            _resultB = await DatabaseService(
-                    uid: FirebaseAuth.instance.currentUser!.uid)
-                .getPredictionB(email);
-            result = _resultB;
-          } else if (title == "Prediction C") {
-            _resultC = await DatabaseService(
-                    uid: FirebaseAuth.instance.currentUser!.uid)
-                .getPredictionC(email);
-            result = _resultC;
-          } else if (title == "Prediction D") {
-            _resultD = await DatabaseService(
-                    uid: FirebaseAuth.instance.currentUser!.uid)
-                .getPredictionD(email);
-            result = _resultD;
-          }
-
-          List<String> resultList = result.map((e) => e.toString()).toList();
-
-          ShowResultHistory(context, title, resultList);
-        },
-        icon: Icon(Icons.history_rounded),
-        color: Colors.blue,
-      ));
+  return FutureBuilder<List<String>>(
+    future: _getResultList(email, title),
+    builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        // 如果数据还在加载中，则显示蓝色的圆圈
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.circle,
+          ),
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+          ),
+        );
+      } else if (snapshot.hasError) {
+        // 如果加载数据时发生错误，则显示错误信息
+        return Text('Error: ${snapshot.error}');
+      } else {
+        // 加载完成，显示按钮和数据
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.circle,
+          ),
+          child: IconButton(
+            onPressed: () {
+              ShowResultHistory(context, title, snapshot.data!);
+            },
+            icon: Icon(Icons.history_rounded),
+            color: Colors.blue,
+          ),
+        );
+      }
+    },
+  );
 }
 
 String currentTime() {
