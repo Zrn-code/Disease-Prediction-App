@@ -66,7 +66,7 @@ class ExampleCard extends StatelessWidget {
                   height: 5,
                 ),
                 Container(
-                  constraints: BoxConstraints(
+                  constraints: const BoxConstraints(
                     maxWidth: 760,
                   ),
                   width: MediaQuery.of(context).size.width * 0.75,

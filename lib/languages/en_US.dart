@@ -162,6 +162,7 @@ const String data_US = '''
   "Mark1": "(b) Object: only this service, and only the user himself/herself can access it.",
   "Mark2": "The predictive results of this service are for reference only. If you have any questions, please consult a professional doctor.",
   "Agree1": "I agree to the Personal Data Collection Notice and Consent Form",
-  "Agree2": "I agree to the Disclaimer"
+  "Agree2": "I agree to the Disclaimer",
+  "Short Disclaimer": "This prediction system is for reference only."
 }
 ''';

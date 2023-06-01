@@ -26,7 +26,7 @@ class CustomDropdownButtonExampleState
   @override
   void initState() {
     super.initState();
-    dropdownValue = "Choose " + widget.list.first;
+    dropdownValue = "Choose ${widget.list.first}";
   }
 
   @override
@@ -51,7 +51,7 @@ class CustomDropdownButtonExampleState
           barrierColor: Colors.black.withOpacity(0.5),
           hint: Text(
             lang_map[lang]!["Select your answer"],
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 14,
                 color: Colors.black45,
                 fontWeight: FontWeight.bold),
@@ -70,21 +70,22 @@ class CustomDropdownButtonExampleState
               .toList(),
           validator: (value) {
             if (value == null) {
-              return 'Please select ' + widget.labelText;
+              return 'Please select ${widget.labelText}';
             }
             return null;
           },
           onChanged: (String? value) {
-            if (value == lang_map[lang]!['Excellent'])
+            if (value == lang_map[lang]!['Excellent']) {
               widget.onChanged('4');
-            else if (value == lang_map[lang]!['Very Good'])
+            } else if (value == lang_map[lang]!['Very Good']) {
               widget.onChanged('3');
-            else if (value == lang_map[lang]!['Good'])
+            } else if (value == lang_map[lang]!['Good']) {
               widget.onChanged('2');
-            else if (value == lang_map[lang]!['Poor'])
+            } else if (value == lang_map[lang]!['Poor']) {
               widget.onChanged('1');
-            else
+            } else {
               widget.onChanged('0');
+            }
 
             setState(() {
               dropdownValue = value!;
@@ -123,7 +124,7 @@ Widget buildRow(String label, Function onChanged) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      SizedBox(
+      const SizedBox(
         height: 20,
       ),
       CustomDropdownButtonExample(

@@ -43,11 +43,12 @@ class _LoginScreenState extends State<LoginScreen> {
       selectedLanguage: language,
       changeLanguageCallback: (LanguageOption? _language) {
         if (_language != null) {
-          if (mounted)
+          if (mounted) {
             setState(() {
               language = _language;
               lang = _language.code;
             });
+          }
 
           DialogBuilder(context).showResultDialog(language.code == "ZH"
               ? '成功將語言調整為: ${_language.value}'

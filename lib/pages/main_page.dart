@@ -17,7 +17,6 @@ import '../widgets/TapExpand.dart';
 
 import '../languages/en_US.dart';
 import '../languages/zh_TW.dart';
-import 'dart:ui';
 import 'dart:convert';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:delayed_widget/delayed_widget.dart';
@@ -31,7 +30,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 bool _loading_output = false;
-bool _isFirstPage = true;
+
 bool _submit = false;
 int _age = 0;
 double _bmi = 0;
@@ -151,13 +150,13 @@ class _MainPageState extends State<MainPage> {
                   leading: const Icon(Icons.person),
                   title: Text(
                     lang_map[lang]!["Profile"],
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
                   )),
               ListTile(
                 leading: const Icon(Icons.language),
                 title: Text(
                   lang_map[lang]!["Language"],
-                  style: TextStyle(color: Colors.black),
+                  style: const TextStyle(color: Colors.black),
                 ),
                 onTap: () {
                   showDialog(
@@ -165,7 +164,7 @@ class _MainPageState extends State<MainPage> {
                       builder: ((context) {
                         return AlertDialog(
                             title: Text(lang_map[lang]!["Language"]),
-                            content: Container(
+                            content: SizedBox(
                               height: 100,
                               child: Column(
                                 children: [
@@ -239,7 +238,7 @@ class _MainPageState extends State<MainPage> {
                   leading: const Icon(Icons.exit_to_app),
                   title: Text(
                     lang_map[lang]!["Log Out"],
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
                   )),
             ],
           ),
@@ -308,10 +307,11 @@ class _FormExampleState extends State<FormExample> {
                               if (_selectedField == "Prediction")
                                 DelayedWidget(
                                   animationDuration:
-                                      Duration(microseconds: 500),
-                                  delayDuration: Duration(microseconds: 300),
+                                      const Duration(microseconds: 500),
+                                  delayDuration:
+                                      const Duration(microseconds: 300),
                                   child: Container(
-                                    padding: EdgeInsets.all(16.0),
+                                    padding: const EdgeInsets.all(16.0),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -452,7 +452,7 @@ class _FormExampleState extends State<FormExample> {
                                 ),
                               if (_selectedField == "Prediction A" &&
                                   _submit == true)
-                                Container(
+                                SizedBox(
                                   height: 500,
                                   width:
                                       MediaQuery.of(context).size.width * 0.8,
@@ -555,7 +555,7 @@ class _FormExampleState extends State<FormExample> {
                                 )),
                               if (_selectedField == "Prediction B" &&
                                   _submit == true)
-                                Container(
+                                SizedBox(
                                   height: 500,
                                   width:
                                       MediaQuery.of(context).size.width * 0.8,
@@ -600,8 +600,7 @@ class _FormExampleState extends State<FormExample> {
                                 ]),
                               if (_selectedField == "Prediction C" &&
                                   _subStep == 2)
-                                Container(
-                                    child: Column(
+                                Column(
                                   children: [
                                     if (_submit == false)
                                       SizedBox(
@@ -714,10 +713,10 @@ class _FormExampleState extends State<FormExample> {
                                         ],
                                       )
                                   ],
-                                )),
+                                ),
                               if (_selectedField == "Prediction C" &&
                                   _submit == true)
-                                Container(
+                                SizedBox(
                                   width:
                                       MediaQuery.of(context).size.width * 0.8,
                                   height: 500,
@@ -828,7 +827,7 @@ class _FormExampleState extends State<FormExample> {
                                 ),
                               if (_selectedField == "Prediction D" &&
                                   _submit == true)
-                                Container(
+                                SizedBox(
                                   width:
                                       MediaQuery.of(context).size.width * 0.8,
                                   height: 500,
@@ -838,7 +837,7 @@ class _FormExampleState extends State<FormExample> {
                                         item['title'], item['index']);
                                   }).toList()),
                                 ),
-                              SizedBox(height: 16.0),
+                              const SizedBox(height: 16.0),
                               if ((_selectedField == "Prediction A" ||
                                       _selectedField == "Prediction B" ||
                                       _selectedField == "Prediction C" ||
@@ -860,7 +859,8 @@ class _FormExampleState extends State<FormExample> {
                                               SnackBar(
                                                 content: Text(lang_map[lang]![
                                                     "Data Submitted"]),
-                                                duration: Duration(seconds: 1),
+                                                duration:
+                                                    const Duration(seconds: 1),
                                               ),
                                             );
                                             _submitPredictionA(url_A);
@@ -876,7 +876,8 @@ class _FormExampleState extends State<FormExample> {
                                               SnackBar(
                                                 content: Text(lang_map[lang]![
                                                     "Data Submitted"]),
-                                                duration: Duration(seconds: 1),
+                                                duration:
+                                                    const Duration(seconds: 1),
                                               ),
                                             );
                                             _submitPredictionB(url_B);
@@ -892,7 +893,8 @@ class _FormExampleState extends State<FormExample> {
                                               SnackBar(
                                                 content: Text(lang_map[lang]![
                                                     "Data Submitted"]),
-                                                duration: Duration(seconds: 1),
+                                                duration:
+                                                    const Duration(seconds: 1),
                                               ),
                                             );
 
@@ -910,7 +912,8 @@ class _FormExampleState extends State<FormExample> {
                                               SnackBar(
                                                 content: Text(lang_map[lang]![
                                                     "Data Submitted"]),
-                                                duration: Duration(seconds: 1),
+                                                duration:
+                                                    const Duration(seconds: 1),
                                               ),
                                             );
                                             _submitPredictionD(url_D);
@@ -940,45 +943,46 @@ class _FormExampleState extends State<FormExample> {
                                           fontWeight: FontWeight.bold)),
                                 ),
                               if (activeStep == 2)
-                                Container(
-                                  child: Column(
-                                    children: [
-                                      _loading_output
-                                          ? LoadingAnimationWidget
-                                              .staggeredDotsWave(
-                                              color: Colors.black,
-                                              size: 200,
-                                            )
-                                          : DelayedWidget(
-                                              child: CircularPercentIndicator(
-                                                  radius: 160.0,
-                                                  lineWidth: 30.0,
-                                                  animationDuration: 100,
-                                                  linearGradient: gradientRed,
-                                                  percent:
-                                                      double.parse(output) *
-                                                          0.01,
-                                                  center: Text(
-                                                    lang_map[lang]![
-                                                            "Prediction Result"] +
-                                                        ": $output %",
-                                                  )),
-                                            ),
-                                      const SizedBox(
-                                        height: 20,
+                                Column(
+                                  children: [
+                                    _loading_output
+                                        ? LoadingAnimationWidget
+                                            .staggeredDotsWave(
+                                            color: Colors.black,
+                                            size: 200,
+                                          )
+                                        : DelayedWidget(
+                                            child: CircularPercentIndicator(
+                                                radius: 160.0,
+                                                lineWidth: 30.0,
+                                                animationDuration: 100,
+                                                linearGradient: gradientRed,
+                                                percent:
+                                                    double.parse(output) * 0.01,
+                                                center: Text(
+                                                  lang_map[lang]![
+                                                          "Prediction Result"] +
+                                                      ": $output %",
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20),
+                                                )),
+                                          ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        initial_state();
+                                      },
+                                      child: Text(
+                                        lang_map[lang]!["Return to Menu"],
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
                                       ),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          initial_state();
-                                        },
-                                        child: Text(
-                                          lang_map[lang]!["Return to Menu"],
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                    )
+                                  ],
                                 )
                             ]))))));
   }
@@ -1220,8 +1224,8 @@ class _FormExampleState extends State<FormExample> {
         autofocus: true,
         controller: ageController,
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          prefixIcon: Icon(Icons.cake_rounded),
+          border: const OutlineInputBorder(),
+          prefixIcon: const Icon(Icons.cake_rounded),
           labelText: lang_map[lang]!["Age"],
           hintText: lang_map[lang]!["Enter your Age"],
         ),
@@ -1256,8 +1260,8 @@ class _FormExampleState extends State<FormExample> {
         autofocus: true,
         controller: weightController,
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          prefixIcon: Icon(Icons.monitor_weight_rounded),
+          border: const OutlineInputBorder(),
+          prefixIcon: const Icon(Icons.monitor_weight_rounded),
           labelText: lang_map[lang]!["Weight"],
           hintText: lang_map[lang]!["Enter your weight"],
         ),
@@ -1284,8 +1288,8 @@ class _FormExampleState extends State<FormExample> {
         autofocus: true,
         controller: heightController,
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          prefixIcon: Icon(Icons.emoji_people_rounded),
+          border: const OutlineInputBorder(),
+          prefixIcon: const Icon(Icons.emoji_people_rounded),
           labelText: lang_map[lang]!["Height"],
           hintText: lang_map[lang]!["Enter your height"],
         ),
@@ -1312,8 +1316,8 @@ class _FormExampleState extends State<FormExample> {
         autofocus: true,
         controller: mentalHealthController,
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          prefixIcon: Icon(Icons.heart_broken_rounded),
+          border: const OutlineInputBorder(),
+          prefixIcon: const Icon(Icons.heart_broken_rounded),
           labelText: lang_map[lang]!["Mental Health"],
           hintText: lang_map[lang]!["Mental Health desc"],
         ),
@@ -1342,8 +1346,8 @@ class _FormExampleState extends State<FormExample> {
         autofocus: true,
         controller: physicalhealthController,
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          prefixIcon: Icon(Icons.mood_bad_rounded),
+          border: const OutlineInputBorder(),
+          prefixIcon: const Icon(Icons.mood_bad_rounded),
           labelText: lang_map[lang]!["Physical Health"],
           hintText: lang_map[lang]!["Physical Health desc"],
         ),
@@ -1372,8 +1376,8 @@ class _FormExampleState extends State<FormExample> {
         autofocus: true,
         controller: sleepTimeController,
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          prefixIcon: Icon(Icons.bedtime_rounded),
+          border: const OutlineInputBorder(),
+          prefixIcon: const Icon(Icons.bedtime_rounded),
           labelText: lang_map[lang]!["Sleep Time"],
           hintText: lang_map[lang]!["Sleep Time desc"],
         ),
@@ -1433,11 +1437,11 @@ void showDisclaimerDialog(BuildContext context) {
                             lang_map[lang]![
                                     "Details of the Personal Data Collection Statement"]
                                 .indexOf(lang_map[lang]!["Mark1"])),
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
                   ),
                   TextSpan(
                     text: lang_map[lang]!["Mark1"],
-                    style: TextStyle(
+                    style: const TextStyle(
                         decoration: TextDecoration.underline,
                         color: Colors.black),
                   ),
@@ -1448,7 +1452,7 @@ void showDisclaimerDialog(BuildContext context) {
                                     "Details of the Personal Data Collection Statement"]
                                 .indexOf(lang_map[lang]!["Mark1"]) +
                             lang_map[lang]!["Mark1"].length),
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
                   ),
                 ],
               ),
@@ -1499,11 +1503,11 @@ void showDisclaimerPage(BuildContext context) {
                             0,
                             lang_map[lang]!["Details of the Disclaimer"]
                                 .indexOf(lang_map[lang]!["Mark2"])),
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
                   ),
                   TextSpan(
                     text: lang_map[lang]!["Mark2"],
-                    style: TextStyle(
+                    style: const TextStyle(
                         decoration: TextDecoration.underline,
                         color: Colors.black),
                   ),
@@ -1512,7 +1516,7 @@ void showDisclaimerPage(BuildContext context) {
                         .substring(lang_map[lang]!["Details of the Disclaimer"]
                                 .indexOf(lang_map[lang]!["Mark2"]) +
                             lang_map[lang]!["Mark2"].length),
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
                   ),
                 ],
               ),
@@ -1540,7 +1544,7 @@ void showDisclaimerPage(BuildContext context) {
 }
 
 void ShowResultHistory(
-    BuildContext context, String title, List<String> _result) {
+    BuildContext context, String title, List<String> result) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -1549,9 +1553,9 @@ void ShowResultHistory(
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: _result.isEmpty
+            children: result.isEmpty
                 ? [Text(lang_map[lang]!["No History"])]
-                : _result
+                : result
                     .groupListsBy(
                       (s) => s.split('_')[0],
                     )
@@ -1586,7 +1590,7 @@ void ShowResultHistory(
                                                         "Result"]),
                                                   ],
                                                 ),
-                                                Divider(),
+                                                const Divider(),
                                                 Column(
                                                   mainAxisSize:
                                                       MainAxisSize.min,
@@ -1604,15 +1608,19 @@ void ShowResultHistory(
                                                               MainAxisAlignment
                                                                   .spaceBetween,
                                                           children: [
-                                                            Text(
-                                                                '${splitStr[1]}'),
-                                                            Text(
-                                                                '${splitStr[2]}'),
+                                                            Text(splitStr[1]),
+                                                            Text(splitStr[2]),
                                                           ],
                                                         ),
                                                       );
                                                     },
                                                   ).toList(),
+                                                ),
+                                                Text(
+                                                  lang_map[lang]![
+                                                      "Short Disclaimer"],
+                                                  style: const TextStyle(
+                                                      color: Colors.red),
                                                 ),
                                               ],
                                             ),
@@ -1625,7 +1633,7 @@ void ShowResultHistory(
                                 ),
                               ],
                             ),
-                            Divider(),
+                            const Divider(),
                           ],
                         ),
                       ),
@@ -1680,23 +1688,20 @@ Widget _showHistoryButton(BuildContext context, String email, String title) {
     future: _getResultList(email, title),
     builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-        // 如果数据还在加载中，则显示蓝色的圆圈
         return Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,
           ),
-          child: CircularProgressIndicator(
+          child: const CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
           ),
         );
       } else if (snapshot.hasError) {
-        // 如果加载数据时发生错误，则显示错误信息
         return Text('Error: ${snapshot.error}');
       } else {
-        // 加载完成，显示按钮和数据
         return Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,
           ),
@@ -1704,7 +1709,7 @@ Widget _showHistoryButton(BuildContext context, String email, String title) {
             onPressed: () {
               ShowResultHistory(context, title, snapshot.data!);
             },
-            icon: Icon(Icons.history_rounded),
+            icon: const Icon(Icons.history_rounded),
             color: Colors.blue,
           ),
         );
@@ -1728,11 +1733,11 @@ Widget _buildTapToExpand(BuildContext context, String title, String description,
         content: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width * 0.45,
               child: Text(
                 lang_map[lang]![description],
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
                 ),
@@ -1742,13 +1747,13 @@ Widget _buildTapToExpand(BuildContext context, String title, String description,
             Column(
               children: [
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
                     onPressed: onPressed,
-                    icon: Icon(Icons.arrow_forward, color: Colors.blue),
+                    icon: const Icon(Icons.arrow_forward, color: Colors.blue),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -1759,7 +1764,7 @@ Widget _buildTapToExpand(BuildContext context, String title, String description,
         ),
         title: Text(
           lang_map[lang]![title],
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 20,
           ),
