@@ -10,6 +10,8 @@ The Disease Prediction Web App offers the following features:
 
 1. **Login and Registration**: Users can create an account and log in to access the application. The authentication system is integrated with Firebase for secure and reliable user management.
 
+![image](https://github.com/Zrn-code/Disease-Prediction-App/assets/63348689/397225d0-8d85-486f-a18f-94a666c538cb)
+
 2. **Disease Selection**: Users can select a specific disease they want to predict from a list of available options. The app provides various disease prediction models to choose from.
 
 3. **Card-based Data Input**: The app utilizes a user-friendly card-based design for collecting relevant data from users. This intuitive interface allows users to input their symptoms, medical history, or any other necessary information required for disease prediction.
