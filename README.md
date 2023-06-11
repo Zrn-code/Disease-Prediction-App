@@ -1,5 +1,4 @@
 # Disease Prediction Web App by Flutter
-============
 
 This is a healthcare-related web application developed using Flutter. Users can input their physical condition, and through an AI-trained model, the app can predict the likelihood of developing a disease and encourage users to take preventive measures.
 
@@ -20,6 +19,12 @@ The Disease Prediction Web App offers the following features:
 5. **Language Switching**: The app supports multiple languages, including English and Chinese. Users can easily switch between languages based on their preferences or requirements.
 
 6. **Prediction History**: The app keeps a record of users' previous disease predictions. Users can review their prediction history to track their health status over time.
+
+## Concluded Disease Prediction Model
+1. COVID Prediction
+2. Diabetes mellitus Prediction
+3. Heart Disease Prediction
+4. Lung Cancer Prediction
 
 ## Demo Website
 
